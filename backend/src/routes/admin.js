@@ -2,7 +2,7 @@ const express = require('express');
 const router  = express.Router();
 const { getDb } = require('../config/database');
 const { authMiddleware } = require('../middleware/auth');
-const { initWhatsApp } = require('../whatsapp/client');
+const { initWhatsApp, getState } = require('../whatsapp/client');
 
 router.use(authMiddleware);
 
@@ -107,9 +107,21 @@ router.delete('/usuarios/:id', (req, res) => {
 });
 
 // POST /api/admin/whatsapp/reconectar
+// body: { limpar_sessao: true } → apaga a sessão salva e força novo QR
 router.post('/whatsapp/reconectar', async (req, res) => {
   try {
-    await initWhatsApp();
+    const limparSessao = !!req.body?.limpar_sessao;
+    await initWhatsApp({ limparSessao });
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ erro: err.message });
+  }
+});
+
+// POST /api/admin/whatsapp/desconectar  → força logout e novo QR Code
+router.post('/whatsapp/desconectar', async (req, res) => {
+  try {
+    await initWhatsApp({ limparSessao: true });
     res.json({ ok: true });
   } catch (err) {
     res.status(500).json({ erro: err.message });

@@ -25,10 +25,27 @@ let lastError = null;
 let reconnectTimer = null;
 let reconnectCount = 0;
 
-async function initWhatsApp() {
+function closeSocket() {
+  if (!sock) return;
+  try { sock.ws?.close(); } catch {}
+  sock = null;
+}
+
+async function initWhatsApp({ limparSessao = false } = {}) {
+  closeSocket();
   clearReconnectTimer();
-  statusConexao = statusConexao === 'conectado' ? 'conectado' : 'conectando';
+  statusConexao = 'conectando';
+  qrCodeBase64 = null;
   lastError = null;
+
+  if (limparSessao) {
+    const sessionDir = path.resolve(SESSION_PATH);
+    if (fs.existsSync(sessionDir)) {
+      fs.rmSync(sessionDir, { recursive: true, force: true });
+      logger.info('Sessão WhatsApp removida para nova autenticação');
+    }
+    reconnectCount = 0;
+  }
 
   try {
     prepareSessionDir();

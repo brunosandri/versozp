@@ -34,10 +34,16 @@
           <p id="status-texto" class="text-sm font-semibold text-gray-700">Verificando...</p>
           <p id="status-detalhe" class="text-xs text-gray-400 mt-0.5 hidden"></p>
         </div>
-        <button id="btn-reconectar" onclick="reconectar()"
-          class="text-xs font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg transition-colors shrink-0 border border-gray-200">
-          Reconectar
-        </button>
+        <div class="flex gap-2 shrink-0">
+          <button id="btn-reconectar" onclick="reconectar()"
+            class="text-xs font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg transition-colors border border-gray-200">
+            Reconectar
+          </button>
+          <button id="btn-novo-qr" onclick="novoQr()"
+            class="text-xs font-semibold bg-amber-50 hover:bg-amber-100 text-amber-700 px-3 py-1.5 rounded-lg transition-colors border border-amber-200">
+            Novo QR
+          </button>
+        </div>
       </div>
 
       <!-- QR Code -->
@@ -135,24 +141,52 @@
       }
     }
 
+    async function setButtonsDisabled(disabled) {
+      ['btn-reconectar', 'btn-novo-qr'].forEach(id => {
+        document.getElementById(id).disabled = disabled;
+      });
+    }
+
     async function reconectar() {
       const btn = document.getElementById('btn-reconectar');
-      btn.disabled = true;
       btn.textContent = 'Aguarde...';
+      setButtonsDisabled(true);
       ultimoQr = null;
 
       try {
         await fetch('/api/admin/whatsapp/reconectar', {
           method: 'POST',
-          headers: { 'Authorization': 'Bearer ' + TOKEN },
+          headers: { 'Authorization': 'Bearer ' + TOKEN, 'Content-Type': 'application/json' },
         });
-        await new Promise(r => setTimeout(r, 1500));
+        await new Promise(r => setTimeout(r, 2000));
         verificar();
       } finally {
         setTimeout(() => {
-          btn.disabled = false;
           btn.textContent = 'Reconectar';
+          setButtonsDisabled(false);
         }, 4000);
+      }
+    }
+
+    async function novoQr() {
+      if (!confirm('Isso vai encerrar a sessão atual e gerar um novo QR para escanear. Continuar?')) return;
+      const btn = document.getElementById('btn-novo-qr');
+      btn.textContent = 'Aguarde...';
+      setButtonsDisabled(true);
+      ultimoQr = null;
+
+      try {
+        await fetch('/api/admin/whatsapp/desconectar', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + TOKEN, 'Content-Type': 'application/json' },
+        });
+        await new Promise(r => setTimeout(r, 2500));
+        verificar();
+      } finally {
+        setTimeout(() => {
+          btn.textContent = 'Novo QR';
+          setButtonsDisabled(false);
+        }, 5000);
       }
     }
 
