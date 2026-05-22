@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VersoZap — Conectar WhatsApp</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-50 flex flex-col">
+
+  <!-- Navbar -->
+  <nav class="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <a href="/dashboard.html" class="text-gray-400 hover:text-gray-600 text-sm">← Painel</a>
+    </div>
+    <div class="flex items-center gap-2 font-bold text-gray-800">
+      <span>📱</span> Conectar WhatsApp
+    </div>
+    <div class="w-20"></div>
+  </nav>
+
+  <div class="flex-1 flex items-center justify-center p-4">
+    <div class="w-full max-w-sm space-y-4">
+
+      <!-- Status -->
+      <div class="bg-white rounded-2xl border border-gray-200 p-4 flex items-center gap-3">
+        <div id="dot" class="w-3 h-3 rounded-full bg-gray-300 shrink-0"></div>
+        <div class="flex-1 min-w-0">
+          <p id="status-texto" class="text-sm font-medium text-gray-700">Verificando...</p>
+          <p id="status-detalhe" class="text-xs text-gray-400 mt-0.5 hidden"></p>
+        </div>
+        <button id="btn-reconectar" onclick="reconectar()"
+          class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg transition-colors shrink-0">
+          Reconectar
+        </button>
+      </div>
+
+      <!-- QR Code -->
+      <div id="card-qr" class="hidden bg-white rounded-2xl border border-gray-200 p-6 text-center">
+        <p class="text-sm text-gray-500 mb-4">
+          Abra o WhatsApp no celular → <strong>Dispositivos conectados</strong> → <strong>Conectar dispositivo</strong> → escaneie o código
+        </p>
+        <div class="relative inline-block">
+          <img id="qr-img" src="" alt="QR Code"
+            class="w-56 h-56 rounded-xl border border-gray-200 object-contain">
+          <div id="qr-overlay" class="hidden absolute inset-0 bg-white/80 rounded-xl flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-2xl mb-1">⏳</div>
+              <p class="text-xs text-gray-500">Atualizando QR...</p>
+            </div>
+          </div>
+        </div>
+        <p class="text-xs text-gray-400 mt-4">O código expira a cada ~20 segundos. Aguarde o novo se expirar.</p>
+      </div>
+
+      <!-- Conectado -->
+      <div id="card-ok" class="hidden bg-green-50 border border-green-200 rounded-2xl p-6 text-center">
+        <div class="text-4xl mb-3">✅</div>
+        <h2 class="font-semibold text-green-800 mb-1">WhatsApp conectado!</h2>
+        <p class="text-sm text-green-600">O bot está pronto para enviar os versículos.</p>
+        <a href="/dashboard.html"
+          class="mt-4 inline-block text-sm bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg transition-colors">
+          Ir para o painel
+        </a>
+      </div>
+
+      <!-- Erro -->
+      <div id="card-erro" class="hidden bg-red-50 border border-red-200 rounded-2xl p-4">
+        <p id="erro-msg" class="text-sm text-red-700 text-center"></p>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const TOKEN = localStorage.getItem('vzToken');
+    if (!TOKEN) window.location.replace('/admin.html');
+
+    const statusMap = {
+      conectado:     { cor: 'bg-green-500', label: 'Conectado' },
+      aguardando_qr: { cor: 'bg-yellow-400', label: 'Aguardando escaneamento do QR Code' },
+      conectando:    { cor: 'bg-blue-400',  label: 'Conectando ao WhatsApp...' },
+      reconectando:  { cor: 'bg-orange-400', label: 'Reconectando...' },
+      desconectado:  { cor: 'bg-red-500',   label: 'Desconectado' },
+    };
+
+    let ultimoQr = null;
+
+    async function verificar() {
+      try {
+        const r = await fetch('/api/whatsapp/status');
+        if (!r.ok) return;
+        const d = await r.json();
+
+        const info = statusMap[d.status] || { cor: 'bg-gray-400', label: d.status };
+        document.getElementById('dot').className = 'w-3 h-3 rounded-full shrink-0 ' + info.cor;
+        document.getElementById('status-texto').textContent = info.label;
+
+        const detalheEl = document.getElementById('status-detalhe');
+        if (d.tentativasReconexao > 0) {
+          detalheEl.textContent = `Tentativa ${d.tentativasReconexao}`;
+          detalheEl.classList.remove('hidden');
+        } else {
+          detalheEl.classList.add('hidden');
+        }
+
+        const cardQr  = document.getElementById('card-qr');
+        const cardOk  = document.getElementById('card-ok');
+        const cardErr = document.getElementById('card-erro');
+
+        cardQr.classList.add('hidden');
+        cardOk.classList.add('hidden');
+        cardErr.classList.add('hidden');
+
+        if (d.status === 'conectado') {
+          cardOk.classList.remove('hidden');
+        } else if (d.qr) {
+          cardQr.classList.remove('hidden');
+          const qrImg = document.getElementById('qr-img');
+          if (d.qr !== ultimoQr) {
+            ultimoQr = d.qr;
+            qrImg.src = d.qr;
+          }
+        } else if (d.erro) {
+          cardErr.classList.remove('hidden');
+          document.getElementById('erro-msg').textContent =
+            d.erro.message || 'Erro ao conectar. Tente reconectar.';
+        }
+      } catch {
+        // rede indisponível, tenta de novo no próximo tick
+      }
+    }
+
+    async function reconectar() {
+      const btn = document.getElementById('btn-reconectar');
+      btn.disabled = true;
+      btn.textContent = 'Aguarde...';
+      ultimoQr = null;
+
+      try {
+        await fetch('/api/admin/whatsapp/reconectar', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + TOKEN },
+        });
+        await new Promise(r => setTimeout(r, 1500));
+        verificar();
+      } finally {
+        setTimeout(() => {
+          btn.disabled = false;
+          btn.textContent = 'Reconectar';
+        }, 4000);
+      }
+    }
+
+    verificar();
+    setInterval(verificar, 3000);
+  </script>
+</body>
+</html>

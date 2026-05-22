@@ -43,10 +43,16 @@
       <div class="bg-white rounded-2xl border border-gray-200 p-6">
         <div class="flex items-center justify-between mb-4">
           <h2 class="font-semibold text-gray-800">Conexão WhatsApp</h2>
-          <button onclick="reconectar()" id="btn-reconectar"
-            class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg transition-colors">
-            Reconectar
-          </button>
+          <div class="flex gap-2">
+            <a href="/whatsapp.html"
+              class="text-xs bg-green-50 hover:bg-green-100 text-green-700 px-3 py-1.5 rounded-lg transition-colors">
+              Ver QR Code
+            </a>
+            <button onclick="reconectar()" id="btn-reconectar"
+              class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg transition-colors">
+              Reconectar
+            </button>
+          </div>
         </div>
 
         <div id="wa-status" class="flex items-center gap-2 mb-4">
