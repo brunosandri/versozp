@@ -3,6 +3,7 @@ const bcrypt   = require('bcryptjs');
 const jwt      = require('jsonwebtoken');
 const { getDb } = require('../config/database');
 const userAuth = require('../middleware/userAuth');
+const { SECRET } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -41,7 +42,7 @@ router.post('/register', async (req, res) => {
       db.prepare('INSERT INTO progresso_usuario (usuario_id) VALUES (?)').run(usuarioId);
     }
 
-    const token = jwt.sign({ id: usuarioId, email, role: 'user' }, process.env.JWT_SECRET, { expiresIn: '30d' });
+    const token = jwt.sign({ id: usuarioId, email, role: 'user' }, SECRET, { expiresIn: '30d' });
     res.json({ token, email, nome: nome || null });
   } catch (err) {
     if (err.message?.includes('UNIQUE')) return res.status(400).json({ erro: 'Email já cadastrado' });
@@ -61,7 +62,7 @@ router.post('/login', async (req, res) => {
   const ok = await bcrypt.compare(senha, usuario.senha_hash);
   if (!ok) return res.status(401).json({ erro: 'Email ou senha inválidos' });
 
-  const token = jwt.sign({ id: usuario.id, email: usuario.email, role: 'user' }, process.env.JWT_SECRET, { expiresIn: '30d' });
+  const token = jwt.sign({ id: usuario.id, email: usuario.email, role: 'user' }, SECRET, { expiresIn: '30d' });
   res.json({ token, email: usuario.email, nome: usuario.nome });
 });
 

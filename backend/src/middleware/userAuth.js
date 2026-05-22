@@ -1,11 +1,12 @@
 const jwt = require('jsonwebtoken');
+const { SECRET } = require('./auth');
 
 function userAuth(req, res, next) {
   const auth = req.headers.authorization;
   if (!auth?.startsWith('Bearer ')) return res.status(401).json({ erro: 'Token ausente' });
 
   try {
-    const payload = jwt.verify(auth.slice(7), process.env.JWT_SECRET);
+    const payload = jwt.verify(auth.slice(7), SECRET);
     if (payload.role !== 'user') return res.status(403).json({ erro: 'Acesso negado' });
     req.userId = payload.id;
     next();
