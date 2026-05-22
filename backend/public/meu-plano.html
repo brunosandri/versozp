@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VersoZap — Meu Plano</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- Navbar -->
+  <nav class="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between sticky top-0 z-10">
+    <div class="flex items-center gap-2">
+      <span class="text-xl">📖</span>
+      <span class="font-bold text-gray-800">VersoZap</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span id="nav-nome" class="text-xs text-gray-500 hidden sm:block"></span>
+      <button onclick="sair()" class="text-xs text-red-500 hover:text-red-700 font-medium">Sair</button>
+    </div>
+  </nav>
+
+  <div class="max-w-xl mx-auto px-4 py-8 space-y-6">
+
+    <!-- Progresso -->
+    <div class="bg-white rounded-2xl border border-gray-200 p-6">
+      <h2 class="font-semibold text-gray-800 mb-4">Meu progresso</h2>
+
+      <div id="sem-plano" class="hidden text-center py-4">
+        <p class="text-gray-500 text-sm mb-3">Você ainda não tem um plano de leitura.</p>
+        <p class="text-gray-400 text-xs">Configure um plano nas configurações abaixo.</p>
+      </div>
+
+      <div id="com-plano">
+        <div class="flex items-end justify-between mb-2">
+          <div>
+            <p id="plano-nome" class="font-medium text-gray-700 text-sm"></p>
+            <p id="plano-progresso" class="text-3xl font-bold text-green-600 mt-1"></p>
+          </div>
+          <div class="text-right">
+            <p id="plano-pct" class="text-sm font-semibold text-gray-500"></p>
+            <p class="text-xs text-gray-400 mt-0.5">concluído</p>
+          </div>
+        </div>
+
+        <div class="w-full bg-gray-100 rounded-full h-2.5 mb-4">
+          <div id="barra-progresso" class="bg-green-500 h-2.5 rounded-full transition-all duration-500" style="width:0%"></div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 text-sm">
+          <div class="bg-gray-50 rounded-xl p-3">
+            <p class="text-xs text-gray-400 mb-0.5">Último envio</p>
+            <p id="ultimo-envio" class="font-medium text-gray-700">—</p>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-3">
+            <p class="text-xs text-gray-400 mb-0.5">Última leitura confirmada</p>
+            <p id="ultima-leitura" class="font-medium text-gray-700">—</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Configurações -->
+    <div class="bg-white rounded-2xl border border-gray-200 p-6">
+      <h2 class="font-semibold text-gray-800 mb-4">Configurações</h2>
+
+      <div id="alert-config" class="hidden mb-4 p-3 rounded-lg text-sm"></div>
+
+      <form id="form-config" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+          <input id="cfg-nome" type="text"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Horário de envio</label>
+            <input id="cfg-horario" type="time"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Versão da Bíblia</label>
+            <select id="cfg-versao"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-white">
+              <option value="NVI">NVI</option>
+              <option value="ARC">ARC</option>
+              <option value="ACF">ACF</option>
+              <option value="NVT">NVT</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Plano de leitura</label>
+          <select id="cfg-plano"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-white">
+            <option value="">Sem plano</option>
+          </select>
+        </div>
+        <button type="submit" id="btn-salvar"
+          class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg text-sm transition-colors">
+          Salvar configurações
+        </button>
+      </form>
+    </div>
+
+  </div>
+
+  <script>
+    const TOKEN = localStorage.getItem('userToken');
+    if (!TOKEN) window.location.replace('/login.html');
+
+    document.getElementById('nav-nome').textContent =
+      localStorage.getItem('userName') || localStorage.getItem('userEmail') || '';
+
+    function sair() {
+      localStorage.removeItem('userToken');
+      localStorage.removeItem('userEmail');
+      localStorage.removeItem('userName');
+      window.location.replace('/login.html');
+    }
+
+    function authHeader() {
+      return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN };
+    }
+
+    function formatarData(iso) {
+      if (!iso) return '—';
+      return new Date(iso).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    }
+
+    async function carregarPerfil() {
+      try {
+        const r = await fetch('/api/usuario/me', { headers: authHeader() });
+        if (r.status === 401) { sair(); return; }
+        const u = await r.json();
+
+        document.getElementById('nav-nome').textContent = u.nome || u.email || '';
+        document.getElementById('cfg-nome').value    = u.nome || '';
+        document.getElementById('cfg-horario').value = u.horario_envio || '07:00';
+        document.getElementById('cfg-versao').value  = u.versao_biblia || 'NVI';
+
+        if (u.plano_id && u.total_dias) {
+          document.getElementById('sem-plano').classList.add('hidden');
+          document.getElementById('com-plano').classList.remove('hidden');
+
+          const dia   = u.dia_atual || 1;
+          const total = u.total_dias;
+          const pct   = Math.round(((dia - 1) / total) * 100);
+
+          document.getElementById('plano-nome').textContent      = u.plano_nome || '';
+          document.getElementById('plano-progresso').textContent = `Dia ${dia} de ${total}`;
+          document.getElementById('plano-pct').textContent       = `${pct}%`;
+          document.getElementById('barra-progresso').style.width = pct + '%';
+          document.getElementById('ultimo-envio').textContent    = formatarData(u.ultimo_envio);
+          document.getElementById('ultima-leitura').textContent  = formatarData(u.ultima_leitura);
+        } else {
+          document.getElementById('sem-plano').classList.remove('hidden');
+          document.getElementById('com-plano').classList.add('hidden');
+        }
+
+        // Preenche o select de planos após carregar o perfil
+        await carregarPlanos(u.plano_id);
+      } catch {
+        // silencioso — retry na próxima carga
+      }
+    }
+
+    async function carregarPlanos(planoAtual) {
+      try {
+        const r = await fetch('/api/inscricao/planos');
+        const planos = await r.json();
+        const sel = document.getElementById('cfg-plano');
+        sel.innerHTML = '<option value="">Sem plano</option>' +
+          planos.map(p => `<option value="${p.id}" ${p.id == planoAtual ? 'selected' : ''}>${p.nome}</option>`).join('');
+      } catch {}
+    }
+
+    const alertConfig = document.getElementById('alert-config');
+
+    function showAlert(msg, ok = false) {
+      alertConfig.textContent = msg;
+      alertConfig.className = 'mb-4 p-3 rounded-lg text-sm ' +
+        (ok ? 'bg-green-50 text-green-700 border border-green-200'
+            : 'bg-red-50 text-red-700 border border-red-200');
+      alertConfig.classList.remove('hidden');
+      setTimeout(() => alertConfig.classList.add('hidden'), 4000);
+    }
+
+    document.getElementById('form-config').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btn-salvar');
+      btn.disabled = true;
+      btn.textContent = 'Salvando...';
+
+      try {
+        const r = await fetch('/api/usuario/me', {
+          method: 'PUT',
+          headers: authHeader(),
+          body: JSON.stringify({
+            nome:         document.getElementById('cfg-nome').value || null,
+            horario_envio: document.getElementById('cfg-horario').value,
+            versao_biblia: document.getElementById('cfg-versao').value,
+            plano_id:     document.getElementById('cfg-plano').value || null,
+          }),
+        });
+        if (!r.ok) { showAlert('Erro ao salvar'); return; }
+        showAlert('Configurações salvas!', true);
+        carregarPerfil();
+      } catch {
+        showAlert('Erro de conexão');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Salvar configurações';
+      }
+    });
+
+    carregarPerfil();
+  </script>
+</body>
+</html>

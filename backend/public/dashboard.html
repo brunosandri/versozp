@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VersoZap — Painel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- Navbar -->
+  <nav class="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between sticky top-0 z-10">
+    <div class="flex items-center gap-2">
+      <span class="text-xl">📖</span>
+      <span class="font-bold text-gray-800">VersoZap</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span id="nav-email" class="text-xs text-gray-500 hidden sm:block"></span>
+      <button onclick="sair()" class="text-xs text-red-500 hover:text-red-700 font-medium">Sair</button>
+    </div>
+  </nav>
+
+  <div class="max-w-5xl mx-auto px-4 py-6 space-y-6">
+
+    <!-- Tabs -->
+    <div class="flex gap-1 bg-gray-100 p-1 rounded-xl w-fit">
+      <button onclick="showTab('whatsapp')" id="tab-whatsapp"
+        class="tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-white shadow text-gray-800">
+        📱 WhatsApp
+      </button>
+      <button onclick="showTab('assinantes')" id="tab-assinantes"
+        class="tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:text-gray-800">
+        👥 Assinantes
+      </button>
+      <button onclick="showTab('stats')" id="tab-stats"
+        class="tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:text-gray-800">
+        📊 Estatísticas
+      </button>
+    </div>
+
+    <!-- Tab: WhatsApp -->
+    <div id="section-whatsapp" class="space-y-4">
+      <div class="bg-white rounded-2xl border border-gray-200 p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="font-semibold text-gray-800">Conexão WhatsApp</h2>
+          <button onclick="reconectar()" id="btn-reconectar"
+            class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg transition-colors">
+            Reconectar
+          </button>
+        </div>
+
+        <div id="wa-status" class="flex items-center gap-2 mb-4">
+          <div id="wa-dot" class="w-3 h-3 rounded-full bg-gray-300"></div>
+          <span id="wa-texto" class="text-sm text-gray-600">Verificando...</span>
+        </div>
+
+        <div id="wa-qr-container" class="hidden text-center">
+          <p class="text-sm text-gray-500 mb-3">Escaneie com o WhatsApp do número que vai enviar os versículos</p>
+          <img id="wa-qr" src="" alt="QR Code"
+            class="w-64 h-64 mx-auto rounded-xl border border-gray-200 object-contain">
+        </div>
+
+        <div id="wa-conectado" class="hidden bg-green-50 border border-green-200 rounded-xl p-4 text-center">
+          <div class="text-2xl mb-1">✅</div>
+          <p class="text-sm font-medium text-green-700">WhatsApp conectado e pronto para enviar!</p>
+        </div>
+
+        <div id="wa-erro" class="hidden bg-red-50 border border-red-200 rounded-xl p-4">
+          <p class="text-sm text-red-700" id="wa-erro-msg"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Assinantes -->
+    <div id="section-assinantes" class="hidden space-y-4">
+
+      <!-- Adicionar assinante -->
+      <div class="bg-white rounded-2xl border border-gray-200 p-6">
+        <h2 class="font-semibold text-gray-800 mb-4">Adicionar assinante</h2>
+        <div id="alert-add" class="hidden mb-3 p-3 rounded-lg text-sm"></div>
+
+        <form id="form-add" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Nome</label>
+            <input id="add-nome" type="text" placeholder="Nome do assinante"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">WhatsApp *</label>
+            <input id="add-telefone" type="tel" required placeholder="556799999999"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Plano</label>
+            <select id="add-plano"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-white">
+              <option value="">Sem plano</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Horário</label>
+            <input id="add-horario" type="time" value="07:00"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Versão da Bíblia</label>
+            <select id="add-versao"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-white">
+              <option value="NVI">NVI</option>
+              <option value="ARC">ARC</option>
+              <option value="ACF">ACF</option>
+              <option value="NVT">NVT</option>
+            </select>
+          </div>
+          <div class="flex items-end">
+            <button type="submit"
+              class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg text-sm transition-colors">
+              Adicionar
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Lista de assinantes -->
+      <div class="bg-white rounded-2xl border border-gray-200 p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="font-semibold text-gray-800">Assinantes</h2>
+          <button onclick="carregarUsuarios()" class="text-xs text-gray-500 hover:text-gray-700">↻ Atualizar</button>
+        </div>
+        <div id="lista-usuarios" class="space-y-2">
+          <p class="text-sm text-gray-400 text-center py-4">Carregando...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Estatísticas -->
+    <div id="section-stats" class="hidden">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-white rounded-2xl border border-gray-200 p-5 text-center">
+          <div id="stat-ativos" class="text-3xl font-bold text-green-600">—</div>
+          <div class="text-xs text-gray-500 mt-1">Ativos</div>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-200 p-5 text-center">
+          <div id="stat-inativos" class="text-3xl font-bold text-gray-400">—</div>
+          <div class="text-xs text-gray-500 mt-1">Inativos</div>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-200 p-5 text-center">
+          <div id="stat-hoje" class="text-3xl font-bold text-blue-600">—</div>
+          <div class="text-xs text-gray-500 mt-1">Envios hoje</div>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-200 p-5 text-center">
+          <div id="stat-taxa" class="text-3xl font-bold text-purple-600">—</div>
+          <div class="text-xs text-gray-500 mt-1">Taxa leitura</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modal editar -->
+  <div id="modal" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-semibold text-gray-800">Editar assinante</h3>
+        <button onclick="fecharModal()" class="text-gray-400 hover:text-gray-600 text-xl leading-none">&times;</button>
+      </div>
+      <div id="alert-edit" class="hidden mb-3 p-3 rounded-lg text-sm"></div>
+      <form id="form-edit" class="space-y-3">
+        <input type="hidden" id="edit-id">
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">Nome</label>
+          <input id="edit-nome" type="text"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">Horário</label>
+          <input id="edit-horario" type="time"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">Plano</label>
+          <select id="edit-plano"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-white">
+            <option value="">Sem plano</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">Versão</label>
+          <select id="edit-versao"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-white">
+            <option value="NVI">NVI</option>
+            <option value="ARC">ARC</option>
+            <option value="ACF">ACF</option>
+            <option value="NVT">NVT</option>
+          </select>
+        </div>
+        <div class="flex gap-2 pt-1">
+          <button type="submit"
+            class="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-2 rounded-lg text-sm transition-colors">
+            Salvar
+          </button>
+          <button type="button" onclick="fecharModal()"
+            class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 rounded-lg text-sm transition-colors">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const TOKEN = localStorage.getItem('vzToken');
+    if (!TOKEN) window.location.replace('/admin.html');
+
+    document.getElementById('nav-email').textContent = localStorage.getItem('vzEmail') || '';
+
+    function authHeader() {
+      return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN };
+    }
+
+    async function api(path, opts = {}) {
+      const r = await fetch(path, { ...opts, headers: { ...authHeader(), ...(opts.headers || {}) } });
+      if (r.status === 401) { sair(); return null; }
+      return r;
+    }
+
+    function sair() {
+      localStorage.removeItem('vzToken');
+      localStorage.removeItem('vzEmail');
+      window.location.replace('/admin.html');
+    }
+
+    // ── Tabs ──────────────────────────────────────────────────────────────────
+    function showTab(tab) {
+      ['whatsapp', 'assinantes', 'stats'].forEach(t => {
+        document.getElementById('section-' + t).classList.toggle('hidden', t !== tab);
+        const btn = document.getElementById('tab-' + t);
+        if (t === tab) {
+          btn.classList.add('bg-white', 'shadow', 'text-gray-800');
+          btn.classList.remove('text-gray-600', 'hover:text-gray-800');
+        } else {
+          btn.classList.remove('bg-white', 'shadow', 'text-gray-800');
+          btn.classList.add('text-gray-600', 'hover:text-gray-800');
+        }
+      });
+      if (tab === 'assinantes') { carregarUsuarios(); carregarPlanos(); }
+      if (tab === 'stats') carregarStats();
+    }
+
+    // ── WhatsApp ──────────────────────────────────────────────────────────────
+    async function verificarWhatsApp() {
+      try {
+        const r = await fetch('/api/whatsapp/status');
+        const d = await r.json();
+
+        const dot   = document.getElementById('wa-dot');
+        const texto = document.getElementById('wa-texto');
+        const qrC   = document.getElementById('wa-qr-container');
+        const ok    = document.getElementById('wa-conectado');
+        const erro  = document.getElementById('wa-erro');
+
+        qrC.classList.add('hidden');
+        ok.classList.add('hidden');
+        erro.classList.add('hidden');
+
+        const statusMap = {
+          conectado:     { cor: 'bg-green-500', label: 'Conectado' },
+          aguardando_qr: { cor: 'bg-yellow-400', label: 'Aguardando escaneamento do QR' },
+          conectando:    { cor: 'bg-blue-400',  label: 'Conectando...' },
+          reconectando:  { cor: 'bg-orange-400', label: 'Reconectando...' },
+          desconectado:  { cor: 'bg-red-500',   label: 'Desconectado' },
+        };
+        const info = statusMap[d.status] || { cor: 'bg-gray-400', label: d.status };
+
+        dot.className = 'w-3 h-3 rounded-full ' + info.cor;
+        texto.textContent = info.label;
+
+        if (d.status === 'conectado') {
+          ok.classList.remove('hidden');
+        } else if (d.qr) {
+          document.getElementById('wa-qr').src = d.qr;
+          qrC.classList.remove('hidden');
+        } else if (d.erro) {
+          document.getElementById('wa-erro-msg').textContent = d.erro.message || 'Erro desconhecido';
+          erro.classList.remove('hidden');
+        }
+      } catch {}
+    }
+
+    async function reconectar() {
+      const btn = document.getElementById('btn-reconectar');
+      btn.disabled = true;
+      btn.textContent = 'Reconectando...';
+      try {
+        await api('/api/admin/whatsapp/reconectar', { method: 'POST' });
+        setTimeout(verificarWhatsApp, 2000);
+      } finally {
+        setTimeout(() => { btn.disabled = false; btn.textContent = 'Reconectar'; }, 3000);
+      }
+    }
+
+    verificarWhatsApp();
+    setInterval(verificarWhatsApp, 5000);
+
+    // ── Planos ────────────────────────────────────────────────────────────────
+    let planosCache = [];
+
+    async function carregarPlanos() {
+      if (planosCache.length) return;
+      try {
+        const r = await api('/api/admin/planos');
+        if (!r) return;
+        planosCache = await r.json();
+        ['add-plano', 'edit-plano'].forEach(id => {
+          const sel = document.getElementById(id);
+          const extra = planosCache.map(p =>
+            `<option value="${p.id}">${p.nome}</option>`
+          ).join('');
+          sel.innerHTML = '<option value="">Sem plano</option>' + extra;
+        });
+      } catch {}
+    }
+
+    // ── Assinantes ────────────────────────────────────────────────────────────
+    async function carregarUsuarios() {
+      const el = document.getElementById('lista-usuarios');
+      try {
+        const r = await api('/api/admin/usuarios');
+        if (!r) return;
+        const lista = await r.json();
+
+        if (!lista.length) {
+          el.innerHTML = '<p class="text-sm text-gray-400 text-center py-4">Nenhum assinante ainda</p>';
+          return;
+        }
+
+        el.innerHTML = lista.map(u => {
+          const ativo = u.ativo === 1;
+          const progresso = u.total_dias ? `Dia ${u.dia_atual}/${u.total_dias}` : '—';
+          const horario = u.horario_envio || '—';
+          const nome = u.nome || u.telefone;
+          return `
+          <div class="flex items-center justify-between p-3 rounded-xl border ${ativo ? 'border-gray-100 bg-gray-50' : 'border-gray-100 bg-gray-100 opacity-60'} gap-2">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-medium text-gray-800 truncate">${escHtml(nome)}</span>
+                ${ativo ? '' : '<span class="text-xs text-gray-400 bg-gray-200 px-1.5 py-0.5 rounded">inativo</span>'}
+              </div>
+              <div class="text-xs text-gray-500 mt-0.5 flex flex-wrap gap-2">
+                <span>📱 ${escHtml(u.telefone)}</span>
+                <span>🕐 ${horario}</span>
+                <span>${escHtml(u.plano_nome || 'Sem plano')} · ${progresso}</span>
+              </div>
+            </div>
+            <div class="flex gap-1 shrink-0">
+              <button onclick='abrirModal(${JSON.stringify(u)})'
+                class="text-xs bg-blue-50 hover:bg-blue-100 text-blue-700 px-2 py-1 rounded-lg transition-colors">
+                Editar
+              </button>
+              ${ativo ? `
+              <button onclick="desativar(${u.id})"
+                class="text-xs bg-red-50 hover:bg-red-100 text-red-700 px-2 py-1 rounded-lg transition-colors">
+                Remover
+              </button>` : ''}
+            </div>
+          </div>`;
+        }).join('');
+      } catch {
+        el.innerHTML = '<p class="text-sm text-red-400 text-center py-4">Erro ao carregar</p>';
+      }
+    }
+
+    function escHtml(str) {
+      return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function formatarTelefone(tel) {
+      const nums = tel.replace(/\D/g, '');
+      if (nums.startsWith('55')) return nums;
+      if (nums.length >= 10) return '55' + nums;
+      return nums;
+    }
+
+    const alertAdd = document.getElementById('alert-add');
+
+    function showAlertAdd(msg, ok = false) {
+      alertAdd.textContent = msg;
+      alertAdd.className = 'mb-3 p-3 rounded-lg text-sm ' +
+        (ok ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200');
+      alertAdd.classList.remove('hidden');
+    }
+
+    document.getElementById('form-add').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      alertAdd.classList.add('hidden');
+      const tel = formatarTelefone(document.getElementById('add-telefone').value);
+
+      try {
+        const r = await api('/api/admin/usuarios', {
+          method: 'POST',
+          body: JSON.stringify({
+            telefone: tel,
+            nome: document.getElementById('add-nome').value || null,
+            versao_biblia: document.getElementById('add-versao').value,
+            plano_id: document.getElementById('add-plano').value || null,
+            horario_envio: document.getElementById('add-horario').value,
+          }),
+        });
+        if (!r) return;
+        const d = await r.json();
+        if (!r.ok) { showAlertAdd(d.erro || 'Erro'); return; }
+
+        showAlertAdd('Assinante adicionado!', true);
+        document.getElementById('form-add').reset();
+        document.getElementById('add-horario').value = '07:00';
+        carregarUsuarios();
+      } catch {
+        showAlertAdd('Erro de conexão');
+      }
+    });
+
+    async function desativar(id) {
+      if (!confirm('Desativar este assinante?')) return;
+      await api('/api/admin/usuarios/' + id, { method: 'DELETE' });
+      carregarUsuarios();
+    }
+
+    // ── Modal editar ──────────────────────────────────────────────────────────
+    async function abrirModal(u) {
+      await carregarPlanos();
+      document.getElementById('edit-id').value    = u.id;
+      document.getElementById('edit-nome').value  = u.nome || '';
+      document.getElementById('edit-horario').value = u.horario_envio || '07:00';
+      document.getElementById('edit-versao').value  = u.versao_biblia || 'NVI';
+      document.getElementById('edit-plano').value   = u.plano_id || '';
+      document.getElementById('alert-edit').classList.add('hidden');
+      document.getElementById('modal').classList.remove('hidden');
+    }
+
+    function fecharModal() {
+      document.getElementById('modal').classList.add('hidden');
+    }
+
+    const alertEdit = document.getElementById('alert-edit');
+
+    document.getElementById('form-edit').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      alertEdit.classList.add('hidden');
+      const id = document.getElementById('edit-id').value;
+
+      try {
+        const r = await api('/api/admin/usuarios/' + id, {
+          method: 'PUT',
+          body: JSON.stringify({
+            nome: document.getElementById('edit-nome').value || null,
+            horario_envio: document.getElementById('edit-horario').value,
+            versao_biblia: document.getElementById('edit-versao').value,
+            plano_id: document.getElementById('edit-plano').value || null,
+          }),
+        });
+        if (!r) return;
+        if (!r.ok) {
+          const d = await r.json();
+          alertEdit.textContent = d.erro || 'Erro';
+          alertEdit.className = 'mb-3 p-3 rounded-lg text-sm bg-red-50 text-red-700 border border-red-200';
+          alertEdit.classList.remove('hidden');
+          return;
+        }
+        fecharModal();
+        carregarUsuarios();
+      } catch {
+        alertEdit.textContent = 'Erro de conexão';
+        alertEdit.className = 'mb-3 p-3 rounded-lg text-sm bg-red-50 text-red-700 border border-red-200';
+        alertEdit.classList.remove('hidden');
+      }
+    });
+
+    // ── Stats ─────────────────────────────────────────────────────────────────
+    async function carregarStats() {
+      try {
+        const r = await api('/api/admin/stats');
+        if (!r) return;
+        const d = await r.json();
+        document.getElementById('stat-ativos').textContent  = d.totalAtivos;
+        document.getElementById('stat-inativos').textContent = d.totalInativos;
+        document.getElementById('stat-hoje').textContent   = d.mensagensHoje;
+        document.getElementById('stat-taxa').textContent   = d.taxaLeitura + '%';
+      } catch {}
+    }
+
+    // Verificar token ao carregar
+    fetch('/api/auth/me', { headers: { 'Authorization': 'Bearer ' + TOKEN } })
+      .then(r => { if (!r.ok) sair(); });
+  </script>
+</body>
+</html>

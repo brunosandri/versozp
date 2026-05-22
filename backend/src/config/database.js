@@ -111,6 +111,16 @@ async function init() {
 
   `);
 
+  // Adiciona colunas de auth do usuário se ainda não existirem
+  const cols = db.pragma('table_info(usuarios)').map(c => c.name);
+  if (!cols.includes('email')) {
+    db.exec('ALTER TABLE usuarios ADD COLUMN email TEXT');
+    db.exec('CREATE UNIQUE INDEX IF NOT EXISTS idx_usuarios_email ON usuarios(email) WHERE email IS NOT NULL');
+  }
+  if (!cols.includes('senha_hash')) {
+    db.exec('ALTER TABLE usuarios ADD COLUMN senha_hash TEXT');
+  }
+
   logger.info({ path: DB_PATH }, 'Schema do banco criado/verificado');
   return db;
 }

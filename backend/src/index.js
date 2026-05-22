@@ -18,6 +18,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 // Rotas públicas
 app.use('/api/auth',      require('./routes/auth'));
+app.use('/api/usuario',   require('./routes/usuario-auth'));
 app.use('/api/inscricao', require('./routes/inscricao'));
 
 // Rotas admin (protegidas por JWT dentro de cada router)
