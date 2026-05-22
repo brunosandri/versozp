@@ -6,44 +6,68 @@
   <title>VersoZap — Entrar</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+<body class="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-emerald-50 flex items-center justify-center p-4">
   <div class="w-full max-w-sm">
+
+    <!-- Logo -->
     <div class="text-center mb-8">
-      <a href="/" class="text-4xl mb-2 block">📖</a>
-      <h1 class="text-2xl font-bold text-gray-800">VersoZap</h1>
-      <p class="text-gray-500 text-sm mt-1">Acesse seu painel de leitura</p>
+      <a href="/" class="inline-flex flex-col items-center gap-1 group">
+        <span class="text-5xl">📖</span>
+        <span class="font-extrabold text-xl text-gray-900 group-hover:text-emerald-600 transition-colors">VersoZap</span>
+      </a>
+      <p class="text-gray-500 text-sm mt-2">Acesse seu painel de leitura</p>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-      <div id="alert" class="hidden mb-4 p-3 rounded-lg text-sm"></div>
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+      <div id="alert" class="hidden mb-4 p-3 rounded-xl text-sm"></div>
 
       <form id="form-login" class="space-y-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <label class="block text-sm font-semibold text-gray-700 mb-1.5">Email</label>
           <input id="email" type="email" autocomplete="email" required
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow"
             placeholder="seu@email.com">
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="text-sm font-semibold text-gray-700">Senha</label>
+          </div>
           <input id="senha" type="password" autocomplete="current-password" required
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow"
             placeholder="••••••••">
         </div>
         <button type="submit" id="btn-login"
-          class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg text-sm transition-colors">
+          class="w-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold py-2.5 px-4 rounded-xl text-sm transition-colors shadow-sm">
           Entrar
         </button>
       </form>
 
-      <p class="text-center text-sm text-gray-500 mt-4">
+      <div class="relative my-5">
+        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-100"></div></div>
+        <div class="relative flex justify-center"><span class="bg-white px-3 text-xs text-gray-400">ou continue com</span></div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <button onclick="loginSocial('google')"
+          class="flex items-center justify-center gap-2 border border-gray-200 hover:bg-gray-50 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 transition-colors">
+          <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#EA4335" d="M5.27 9.76A7.08 7.08 0 0 1 19 10.5h-7v3h4a4 4 0 0 1-6.12 2.17L5.27 9.76Z"/><path fill="#4285F4" d="M5.27 9.76 1.5 7.1A11.47 11.47 0 0 0 .5 12c0 1.85.45 3.6 1.24 5.14l3.9-2.94A7 7 0 0 1 5 12c0-.77.1-1.54.27-2.24Z"/><path fill="#FBBC05" d="M12 4.93c1.86 0 3.54.64 4.86 1.69L19.82 3.6A11.47 11.47 0 0 0 12 .5a11.47 11.47 0 0 0-10.5 6.6l3.77 2.66A7.08 7.08 0 0 1 12 4.93Z"/><path fill="#34A853" d="M12 19.07c-2.43 0-4.55-1.22-5.83-3.07l-3.9 2.93A11.47 11.47 0 0 0 12 23.5c2.93 0 5.65-1.06 7.73-2.8L16 17.81A7 7 0 0 1 12 19.07Z"/></svg>
+          Google
+        </button>
+        <button onclick="loginSocial('facebook')"
+          class="flex items-center justify-center gap-2 border border-gray-200 hover:bg-gray-50 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 transition-colors">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073C24 5.41 18.627 0 12 0S0 5.41 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.514c-1.49 0-1.955.927-1.955 1.877v2.255h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073Z"/></svg>
+          Facebook
+        </button>
+      </div>
+
+      <p class="text-center text-sm text-gray-500 mt-5">
         Ainda não tem conta?
-        <a href="/signup.html" class="text-green-600 hover:underline font-medium">Criar conta</a>
+        <a href="/signup.html" class="text-emerald-600 hover:text-emerald-700 font-semibold">Criar conta grátis</a>
       </p>
     </div>
 
-    <p class="text-center mt-4">
-      <a href="/" class="text-xs text-gray-400 hover:underline">← Voltar ao início</a>
+    <p class="text-center mt-5">
+      <a href="/" class="text-xs text-gray-400 hover:text-gray-600 transition-colors">← Voltar ao início</a>
     </p>
   </div>
 
@@ -54,8 +78,12 @@
 
     function showAlert(msg) {
       alertEl.textContent = msg;
-      alertEl.className = 'mb-4 p-3 rounded-lg text-sm bg-red-50 text-red-700 border border-red-200';
+      alertEl.className = 'mb-4 p-3 rounded-xl text-sm bg-red-50 text-red-700 border border-red-100';
       alertEl.classList.remove('hidden');
+    }
+
+    function loginSocial(provider) {
+      showAlert('Login social em breve. Use email e senha por enquanto.');
     }
 
     document.getElementById('form-login').addEventListener('submit', async (e) => {
@@ -63,6 +91,7 @@
       const btn = document.getElementById('btn-login');
       btn.disabled = true;
       btn.textContent = 'Entrando...';
+      alertEl.classList.add('hidden');
 
       try {
         const r = await fetch('/api/usuario/login', {

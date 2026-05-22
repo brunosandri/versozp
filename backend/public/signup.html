@@ -6,88 +6,112 @@
   <title>VersoZap — Criar conta</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center p-4">
-  <div class="w-full max-w-md">
+<body class="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-emerald-50 flex items-center justify-center p-4">
+  <div class="w-full max-w-md py-8">
+
+    <!-- Logo -->
     <div class="text-center mb-8">
-      <a href="/" class="text-5xl mb-3 block">📖</a>
-      <h1 class="text-3xl font-bold text-gray-800">VersoZap</h1>
-      <p class="text-gray-600 mt-2">Crie sua conta e comece a ler a Bíblia hoje</p>
+      <a href="/" class="inline-flex flex-col items-center gap-1 group">
+        <span class="text-5xl">📖</span>
+        <span class="font-extrabold text-xl text-gray-900 group-hover:text-emerald-600 transition-colors">VersoZap</span>
+      </a>
+      <p class="text-gray-500 text-sm mt-2">Crie sua conta e comece a ler a Bíblia hoje</p>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6">
-      <div id="alert" class="hidden mb-4 p-3 rounded-lg text-sm"></div>
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+      <div id="alert" class="hidden mb-4 p-3 rounded-xl text-sm"></div>
 
       <form id="form-signup" class="space-y-4">
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1.5">Nome</label>
+          <input id="nome" type="text"
+            class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow"
+            placeholder="Como prefere ser chamado?">
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1.5">Email <span class="text-red-400">*</span></label>
+          <input id="email" type="email" required
+            class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow"
+            placeholder="seu@email.com">
+        </div>
         <div class="grid grid-cols-2 gap-3">
-          <div class="col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
-            <input id="nome" type="text"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="Como prefere ser chamado?">
-          </div>
-          <div class="col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-1">Email <span class="text-red-500">*</span></label>
-            <input id="email" type="email" required
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="seu@email.com">
-          </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Senha <span class="text-red-500">*</span></label>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Senha <span class="text-red-400">*</span></label>
             <input id="senha" type="password" required minlength="6"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+              class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow"
               placeholder="Mín. 6 caracteres">
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Confirmar senha <span class="text-red-500">*</span></label>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Confirmar <span class="text-red-400">*</span></label>
             <input id="confirmar" type="password" required
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+              class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow"
               placeholder="Repita a senha">
           </div>
-          <div class="col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-1">WhatsApp <span class="text-red-500">*</span></label>
-            <input id="telefone" type="tel" required
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="(67) 99999-9999">
-            <p class="text-xs text-gray-400 mt-1">Somente Brasil. Inclua o DDD.</p>
-          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1.5">WhatsApp <span class="text-red-400">*</span></label>
+          <input id="telefone" type="tel" required
+            class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow"
+            placeholder="(67) 99999-9999">
+          <p class="text-xs text-gray-400 mt-1">Somente Brasil. Inclua o DDD.</p>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Plano de leitura</label>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Plano de leitura</label>
             <select id="plano_id"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-white">
+              class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white transition-shadow">
               <option value="">Carregando...</option>
             </select>
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Horário de envio</label>
+            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Horário</label>
             <input id="horario_envio" type="time" value="07:00"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+              class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow">
           </div>
-          <div class="col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-1">Versão da Bíblia</label>
-            <select id="versao_biblia"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-white">
-              <option value="NVI">NVI — Nova Versão Internacional</option>
-              <option value="ARC">ARC — Almeida Revista e Corrigida</option>
-              <option value="ACF">ACF — Almeida Corrigida Fiel</option>
-              <option value="NVT">NVT — Nova Versão Transformadora</option>
-            </select>
-          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1.5">Versão da Bíblia</label>
+          <select id="versao_biblia"
+            class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white transition-shadow">
+            <option value="NVI">NVI — Nova Versão Internacional</option>
+            <option value="ARC">ARC — Almeida Revista e Corrigida</option>
+            <option value="ACF">ACF — Almeida Corrigida Fiel</option>
+            <option value="NVT">NVT — Nova Versão Transformadora</option>
+          </select>
         </div>
 
         <button type="submit" id="btn"
-          class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg text-sm transition-colors mt-2">
+          class="w-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold py-3 px-4 rounded-xl text-sm transition-colors shadow-sm mt-2">
           Criar minha conta 🙏
         </button>
       </form>
 
-      <p class="text-center text-sm text-gray-500 mt-4">
+      <div class="relative my-5">
+        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-100"></div></div>
+        <div class="relative flex justify-center"><span class="bg-white px-3 text-xs text-gray-400">ou cadastre-se com</span></div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <button onclick="cadastroSocial('google')"
+          class="flex items-center justify-center gap-2 border border-gray-200 hover:bg-gray-50 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 transition-colors">
+          <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#EA4335" d="M5.27 9.76A7.08 7.08 0 0 1 19 10.5h-7v3h4a4 4 0 0 1-6.12 2.17L5.27 9.76Z"/><path fill="#4285F4" d="M5.27 9.76 1.5 7.1A11.47 11.47 0 0 0 .5 12c0 1.85.45 3.6 1.24 5.14l3.9-2.94A7 7 0 0 1 5 12c0-.77.1-1.54.27-2.24Z"/><path fill="#FBBC05" d="M12 4.93c1.86 0 3.54.64 4.86 1.69L19.82 3.6A11.47 11.47 0 0 0 12 .5a11.47 11.47 0 0 0-10.5 6.6l3.77 2.66A7.08 7.08 0 0 1 12 4.93Z"/><path fill="#34A853" d="M12 19.07c-2.43 0-4.55-1.22-5.83-3.07l-3.9 2.93A11.47 11.47 0 0 0 12 23.5c2.93 0 5.65-1.06 7.73-2.8L16 17.81A7 7 0 0 1 12 19.07Z"/></svg>
+          Google
+        </button>
+        <button onclick="cadastroSocial('facebook')"
+          class="flex items-center justify-center gap-2 border border-gray-200 hover:bg-gray-50 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 transition-colors">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073C24 5.41 18.627 0 12 0S0 5.41 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.514c-1.49 0-1.955.927-1.955 1.877v2.255h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073Z"/></svg>
+          Facebook
+        </button>
+      </div>
+
+      <p class="text-center text-sm text-gray-500 mt-5">
         Já tem conta?
-        <a href="/login.html" class="text-green-600 hover:underline font-medium">Entrar</a>
+        <a href="/login.html" class="text-emerald-600 hover:text-emerald-700 font-semibold">Entrar</a>
       </p>
     </div>
 
-    <p class="text-center mt-4">
-      <a href="/" class="text-xs text-gray-400 hover:underline">← Voltar ao início</a>
+    <p class="text-center mt-5">
+      <a href="/" class="text-xs text-gray-400 hover:text-gray-600 transition-colors">← Voltar ao início</a>
     </p>
   </div>
 
@@ -108,10 +132,16 @@
 
     const alertEl = document.getElementById('alert');
 
-    function showAlert(msg) {
+    function showAlert(msg, ok = false) {
       alertEl.textContent = msg;
-      alertEl.className = 'mb-4 p-3 rounded-lg text-sm bg-red-50 text-red-700 border border-red-200';
+      alertEl.className = 'mb-4 p-3 rounded-xl text-sm ' +
+        (ok ? 'bg-emerald-50 text-emerald-700 border border-emerald-100'
+            : 'bg-red-50 text-red-700 border border-red-100');
       alertEl.classList.remove('hidden');
+    }
+
+    function cadastroSocial(provider) {
+      showAlert('Cadastro social em breve. Use email e senha por enquanto.');
     }
 
     document.getElementById('form-signup').addEventListener('submit', async (e) => {
@@ -130,12 +160,12 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            nome:         document.getElementById('nome').value || null,
-            email:        document.getElementById('email').value,
+            nome:          document.getElementById('nome').value || null,
+            email:         document.getElementById('email').value,
             senha,
-            telefone:     document.getElementById('telefone').value,
+            telefone:      document.getElementById('telefone').value,
             versao_biblia: document.getElementById('versao_biblia').value,
-            plano_id:     document.getElementById('plano_id').value || null,
+            plano_id:      document.getElementById('plano_id').value || null,
             horario_envio: document.getElementById('horario_envio').value,
           }),
         });

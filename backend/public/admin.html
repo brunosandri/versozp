@@ -6,44 +6,46 @@
   <title>VersoZap — Admin</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+<body class="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center p-4">
   <div class="w-full max-w-sm">
     <div class="text-center mb-8">
-      <a href="/" class="text-4xl mb-2 block">📖</a>
-      <h1 class="text-2xl font-bold text-gray-800">VersoZap</h1>
-      <p class="text-gray-500 text-sm mt-1">Painel Administrativo</p>
+      <a href="/" class="inline-flex flex-col items-center gap-1">
+        <span class="text-5xl">📖</span>
+        <span class="font-extrabold text-xl text-gray-900">VersoZap</span>
+      </a>
+      <p class="text-gray-500 text-sm mt-2">Painel Administrativo</p>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-      <div id="alert" class="hidden mb-4 p-3 rounded-lg text-sm"></div>
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+      <div id="alert" class="hidden mb-4 p-3 rounded-xl text-sm"></div>
 
       <form id="form-login" class="space-y-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <label class="block text-sm font-semibold text-gray-700 mb-1.5">Email</label>
           <input id="email" type="email" autocomplete="email" required
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow"
             placeholder="admin@exemplo.com">
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
+          <label class="block text-sm font-semibold text-gray-700 mb-1.5">Senha</label>
           <input id="senha" type="password" autocomplete="current-password" required
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow"
             placeholder="••••••••">
         </div>
         <button type="submit" id="btn-login"
-          class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg text-sm transition-colors">
+          class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-4 rounded-xl text-sm transition-colors shadow-sm">
           Entrar
         </button>
       </form>
 
-      <p class="text-center text-sm text-gray-500 mt-4">
+      <p class="text-center text-sm text-gray-500 mt-5">
         Primeiro acesso?
-        <a href="/register.html" class="text-green-600 hover:underline font-medium">Criar conta admin</a>
+        <a href="/register.html" class="text-emerald-600 hover:text-emerald-700 font-semibold">Criar conta admin</a>
       </p>
     </div>
 
-    <p class="text-center mt-4">
-      <a href="/" class="text-xs text-gray-400 hover:underline">← Voltar ao início</a>
+    <p class="text-center mt-5">
+      <a href="/" class="text-xs text-gray-400 hover:text-gray-600 transition-colors">← Voltar ao início</a>
     </p>
   </div>
 
@@ -54,7 +56,7 @@
 
     function showAlert(msg) {
       alertEl.textContent = msg;
-      alertEl.className = 'mb-4 p-3 rounded-lg text-sm bg-red-50 text-red-700 border border-red-200';
+      alertEl.className = 'mb-4 p-3 rounded-xl text-sm bg-red-50 text-red-700 border border-red-100';
       alertEl.classList.remove('hidden');
     }
 
