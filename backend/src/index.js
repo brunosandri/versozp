@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3000;
 // Middlewares
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../../frontend/public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 // Rotas públicas
 app.use('/api/auth',      require('./routes/auth'));
