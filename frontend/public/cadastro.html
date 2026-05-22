@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VersoZap — Inscrição</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center p-4">
+  <div class="w-full max-w-md">
+    <div class="text-center mb-8">
+      <div class="text-5xl mb-3">📖</div>
+      <h1 class="text-3xl font-bold text-gray-800">VersoZap</h1>
+      <p class="text-gray-600 mt-2">Receba trechos da Bíblia todo dia no seu WhatsApp</p>
+    </div>
+
+    <div id="card-form" class="bg-white rounded-2xl shadow-md border border-gray-100 p-6">
+      <div id="alert" class="hidden mb-4 p-3 rounded-lg text-sm"></div>
+
+      <form id="form-cadastro" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Seu nome</label>
+          <input id="nome" type="text"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            placeholder="Como prefere ser chamado?">
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">WhatsApp <span class="text-red-500">*</span></label>
+          <input id="telefone" type="tel" required
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            placeholder="(67) 99999-9999">
+          <p class="text-xs text-gray-400 mt-1">Somente Brasil. Inclua o DDD.</p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Plano de leitura</label>
+          <select id="plano_id"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white">
+            <option value="">Carregando planos...</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Horário de recebimento</label>
+          <input id="horario_envio" type="time" value="07:00"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+          <p class="text-xs text-gray-400 mt-1">Horário de Brasília</p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Versão da Bíblia</label>
+          <select id="versao_biblia"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white">
+            <option value="NVI">NVI — Nova Versão Internacional</option>
+            <option value="ARC">ARC — Almeida Revista e Corrigida</option>
+            <option value="ACF">ACF — Almeida Corrigida Fiel</option>
+            <option value="NVT">NVT — Nova Versão Transformadora</option>
+          </select>
+        </div>
+
+        <button type="submit" id="btn"
+          class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg text-sm transition-colors mt-2">
+          Quero receber versículos diários 🙏
+        </button>
+      </form>
+    </div>
+
+    <div id="card-sucesso" class="hidden bg-white rounded-2xl shadow-md border border-gray-100 p-8 text-center">
+      <div class="text-5xl mb-4">✅</div>
+      <h2 class="text-xl font-bold text-gray-800 mb-2">Inscrição realizada!</h2>
+      <p class="text-gray-600 text-sm" id="msg-sucesso"></p>
+      <button onclick="location.reload()"
+        class="mt-6 text-sm text-green-600 hover:underline">Inscrever outro número</button>
+    </div>
+
+    <p class="text-center text-xs text-gray-400 mt-6">
+      Para cancelar a inscrição, responda <strong>SAIR</strong> a qualquer mensagem recebida.
+    </p>
+  </div>
+
+  <script>
+    async function carregarPlanos() {
+      try {
+        const r = await fetch('/api/inscricao/planos');
+        const planos = await r.json();
+        const sel = document.getElementById('plano_id');
+        sel.innerHTML = planos.map(p =>
+          `<option value="${p.id}">${p.nome}</option>`
+        ).join('');
+      } catch {
+        document.getElementById('plano_id').innerHTML = '<option value="">Erro ao carregar</option>';
+      }
+    }
+
+    function formatarTelefone(tel) {
+      const nums = tel.replace(/\D/g, '');
+      if (nums.startsWith('55')) return nums;
+      if (nums.length === 11 || nums.length === 10) return '55' + nums;
+      return nums;
+    }
+
+    const alertEl = document.getElementById('alert');
+
+    function showAlert(msg) {
+      alertEl.textContent = msg;
+      alertEl.className = 'mb-4 p-3 rounded-lg text-sm bg-red-50 text-red-700 border border-red-200';
+      alertEl.classList.remove('hidden');
+    }
+
+    document.getElementById('form-cadastro').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btn');
+      btn.disabled = true;
+      btn.textContent = 'Aguarde...';
+      alertEl.classList.add('hidden');
+
+      const tel = formatarTelefone(document.getElementById('telefone').value);
+
+      try {
+        const r = await fetch('/api/inscricao', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            telefone: tel,
+            nome: document.getElementById('nome').value || null,
+            versao_biblia: document.getElementById('versao_biblia').value,
+            plano_id: document.getElementById('plano_id').value || null,
+            horario_envio: document.getElementById('horario_envio').value,
+          }),
+        });
+        const d = await r.json();
+        if (!r.ok) { showAlert(d.erro || 'Erro ao fazer inscrição'); return; }
+
+        document.getElementById('card-form').classList.add('hidden');
+        document.getElementById('card-sucesso').classList.remove('hidden');
+        document.getElementById('msg-sucesso').textContent = d.mensagem;
+      } catch {
+        showAlert('Erro de conexão. Tente novamente.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Quero receber versículos diários 🙏';
+      }
+    });
+
+    carregarPlanos();
+  </script>
+</body>
+</html>

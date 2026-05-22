@@ -1,0 +1,7 @@
+node_modules/
+.env
+data/versozap.db
+data/wa_session/
+data/bibles/*.json
+*.log
+.DS_Store

@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node src/index.js)",
+      "Bash(echo \"PID=$!\")",
+      "Bash(sleep 4 && cat /tmp/server.log)",
+      "Read(//tmp/**)",
+      "Bash(curl -s -o /dev/null -w '%{http_code}' http://localhost:3000__TRACKED_VAR__)",
+      "Bash(curl -s http://localhost:3000/api/admin/stats)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d\\)\")",
+      "Bash(curl -s http://localhost:3000/api/inscricao/planos)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(p['slug'], '-', p['nome']\\) for p in d]\")",
+      "Bash(curl -s http://localhost:3000/api/whatsapp/status)",
+      "Bash(node -e \"process.stdin||\\(o=>{process.stdout.write\\(JSON.stringify\\(JSON.parse\\(o\\),null,2\\)\\)}\\)\")"
+    ]
+  }
+}

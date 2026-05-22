@@ -1,0 +1,28 @@
+{
+  "name": "versozap-backend",
+  "version": "1.0.0",
+  "description": "VersoZap - Leitura bíblica diária via WhatsApp",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon --ignore data/ --ignore node_modules/ src/index.js",
+    "seed": "node scripts/importBible.js",
+    "test:send": "node scripts/testSend.js"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.5",
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^12.10.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.3",
+    "node-cron": "^3.0.3",
+    "pino": "^8.19.0",
+    "pino-pretty": "^11.0.0",
+    "qrcode": "^1.5.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
