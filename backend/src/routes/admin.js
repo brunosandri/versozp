@@ -54,7 +54,7 @@ router.post('/usuarios', (req, res) => {
     const tel = telefone.replace(/\D/g, '');
     if (tel.length < 10) return res.status(400).json({ erro: 'Telefone inválido (mínimo 10 dígitos)' });
 
-    if (horario_envio && !/^\d{2}:\d{2}$/.test(horario_envio)) {
+    if (horario_envio && !/^([01]\d|2[0-3]):[0-5]\d$/.test(horario_envio)) {
       return res.status(400).json({ erro: 'Horário inválido (use HH:MM)' });
     }
 
@@ -79,7 +79,7 @@ router.put('/usuarios/:id', (req, res) => {
   const { nome, versao_biblia, plano_id, horario_envio, tamanho_porcao, lembrete_ativo, ativo } = req.body;
   const db = getDb();
 
-  if (horario_envio && !/^\d{2}:\d{2}$/.test(horario_envio)) {
+  if (horario_envio && !/^([01]\d|2[0-3]):[0-5]\d$/.test(horario_envio)) {
     return res.status(400).json({ erro: 'Horário inválido (use HH:MM)' });
   }
 

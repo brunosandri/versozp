@@ -11,7 +11,17 @@
       "Bash(curl -s http://localhost:3000/api/inscricao/planos)",
       "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(p['slug'], '-', p['nome']\\) for p in d]\")",
       "Bash(curl -s http://localhost:3000/api/whatsapp/status)",
-      "Bash(node -e \"process.stdin||\\(o=>{process.stdout.write\\(JSON.stringify\\(JSON.parse\\(o\\),null,2\\)\\)}\\)\")"
+      "Bash(node -e \"process.stdin||\\(o=>{process.stdout.write\\(JSON.stringify\\(JSON.parse\\(o\\),null,2\\)\\)}\\)\")",
+      "Bash(curl -s -X POST http://localhost:3000/api/auth/register -H 'Content-Type: application/json' -d '{\"email\":\"outro@versozap.com\",\"senha\":\"123456\"}')",
+      "Bash(curl -s -X POST http://localhost:3000/api/auth/login -H 'Content-Type: application/json' -d '{\"email\":\"bruno@versozap.com\",\"senha\":\"123456\"}')",
+      "Bash(curl -s http://localhost:3000/api/auth/me -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJicnVub0B2ZXJzb3phcC5jb20iLCJpYXQiOjE3Nzk0NzI0OTQsImV4cCI6MTc4MDA3NzI5NH0.mpelQRNECXYcUP2p4syXHv3e1ynJLrLzA8i1AahmBHk')",
+      "Bash(curl -s http://localhost:3000/api/admin/stats -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJicnVub0B2ZXJzb3phcC5jb20iLCJpYXQiOjE3Nzk0NzI0OTQsImV4cCI6MTc4MDA3NzI5NH0.mpelQRNECXYcUP2p4syXHv3e1ynJLrLzA8i1AahmBHk')",
+      "Bash(curl -s http://localhost:3000/api/admin/planos -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJicnVub0B2ZXJzb3phcC5jb20iLCJpYXQiOjE3Nzk0NzI0OTQsImV4cCI6MTc4MDA3NzI5NH0.mpelQRNECXYcUP2p4syXHv3e1ynJLrLzA8i1AahmBHk')",
+      "Bash(curl -s -X PUT http://localhost:3000/api/admin/usuarios/2 -H 'Content-Type: application/json' -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJicnVub0B2ZXJzb3phcC5jb20iLCJpYXQiOjE3Nzk0NzI0OTQsImV4cCI6MTc4MDA3NzI5NH0.mpelQRNECXYcUP2p4syXHv3e1ynJLrLzA8i1AahmBHk' -d '{\"nome\":\"Teste Editado\",\"horario_envio\":\"10:00\"}')",
+      "Bash(curl -s -X DELETE http://localhost:3000/api/admin/usuarios/2 -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJicnVub0B2ZXJzb3phcC5jb20iLCJpYXQiOjE3Nzk0NzI0OTQsImV4cCI6MTc4MDA3NzI5NH0.mpelQRNECXYcUP2p4syXHv3e1ynJLrLzA8i1AahmBHk')",
+      "Bash(curl -s -X POST http://localhost:3000/api/admin/usuarios -H 'Content-Type: application/json' -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJicnVub0B2ZXJzb3phcC5jb20iLCJpYXQiOjE3Nzk0NzI0OTQsImV4cCI6MTc4MDA3NzI5NH0.mpelQRNECXYcUP2p4syXHv3e1ynJLrLzA8i1AahmBHk' -d '{\"telefone\":\"5567777777777\",\"horario_envio\":\"25:99\"}')",
+      "Bash(curl -s http://localhost:3000/api/admin/stats -H 'Authorization: Bearer token_invalido')",
+      "Bash(curl -s -X DELETE http://localhost:3000/api/admin/usuarios/3 -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJicnVub0B2ZXJzb3phcC5jb20iLCJpYXQiOjE3Nzk0NzI0OTQsImV4cCI6MTc4MDA3NzI5NH0.mpelQRNECXYcUP2p4syXHv3e1ynJLrLzA8i1AahmBHk')"
     ]
   }
 }
