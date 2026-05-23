@@ -4,273 +4,214 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>versozap — meu painel</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; }
-    body { font-family: 'DM Sans', sans-serif; background: #f5f5f5; color: #0a0a0a; min-height: 100vh; }
-    h1, h2, h3, .font-display { font-family: 'Space Grotesk', sans-serif; }
-
-    .shadow-brutal   { box-shadow: 6px 6px 0px #0a0a0a; }
-    .shadow-brutal-sm{ box-shadow: 4px 4px 0px #0a0a0a; }
-    .border-brutal   { border: 4px solid #0a0a0a; }
-
-    .btn-bounce {
-      transition: transform .3s cubic-bezier(.175,.885,.32,1.275), box-shadow .3s cubic-bezier(.175,.885,.32,1.275);
-    }
-    .btn-bounce:hover  { transform: scale(1.04) translateY(-2px); }
-    .btn-bounce:active { transform: scale(.97); box-shadow: 2px 2px 0px #0a0a0a !important; }
-
-    @keyframes wobble {
-      0%  { transform: rotate(0deg); }
-      25% { transform: rotate(-4deg); }
-      75% { transform: rotate(4deg); }
-      100%{ transform: rotate(0deg); }
-    }
-    .btn-wobble:hover { animation: wobble .5s ease-in-out; }
-
-    input, select {
-      font-family: 'DM Sans', sans-serif;
-      border: 4px solid #0a0a0a; border-radius: 0; outline: none; background: #fff;
-      width: 100%; padding: 11px 14px; font-size: 14px; font-weight: 500;
-      transition: box-shadow .15s ease;
-    }
-    input:focus, select:focus { box-shadow: 4px 4px 0px #0a0a0a; }
-
-    label { display:block; font-family:'Space Grotesk'; font-weight:800; font-size:.75rem; letter-spacing:.05em; text-transform:uppercase; margin-bottom:5px; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#F8F4E8;--ink:#09090B;--acid:#D2E823;}
+    body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;cursor:none;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.03;pointer-events:none;z-index:9999;}
+    #cursor{position:fixed;width:32px;height:32px;border-radius:100%;background:white;mix-blend-mode:difference;pointer-events:none;z-index:99998;left:0;top:0;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
+    .btn-hard{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:var(--acid);padding:14px 28px;border-radius:10px;border:2px solid var(--ink);box-shadow:4px 4px 0 0 var(--ink);font-family:'Dela Gothic One',sans-serif;font-size:.82rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s;letter-spacing:.02em;width:100%;}
+    .btn-hard:hover{transform:translate(2px,2px);box-shadow:0 0 0 0 var(--ink);}
+    .btn-hard:active{transform:translateY(4px);}
+    .btn-ghost{display:inline-flex;align-items:center;justify-content:center;background:transparent;color:var(--ink);padding:7px 14px;border-radius:8px;border:2px solid var(--ink);font-family:'Dela Gothic One',sans-serif;font-size:.65rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s;letter-spacing:.02em;box-shadow:2px 2px 0 0 var(--ink);}
+    .btn-ghost:hover{transform:translate(2px,2px);box-shadow:0 0 0 0 var(--ink);}
+    .btn-ghost:active{transform:translateY(2px);}
+    input,select{font-family:'Space Grotesk',sans-serif;border:2px solid var(--ink);border-radius:8px;outline:none;background:#fff;color:var(--ink);width:100%;padding:11px 14px;font-size:14px;font-weight:500;transition:box-shadow .15s;}
+    input::placeholder{color:#aaa;}
+    input:focus,select:focus{box-shadow:4px 4px 0 0 var(--ink);}
+    select option{background:#fff;}
+    label{display:block;font-family:'Dela Gothic One',sans-serif;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;color:var(--ink);}
   </style>
 </head>
 <body>
+<div id="cursor"></div>
 
-  <!-- Nav bar -->
-  <nav style="background:#0a0a0a;border-bottom:4px solid #0a0a0a;position:sticky;top:0;z-index:20;">
-    <div style="max-width:680px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;">
-      <a href="/" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
-        <span style="background:#ccff00;border:3px solid #ccff00;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:14px;">📖</span>
-        <span style="font-family:'Space Grotesk';font-weight:900;color:#fff;font-size:.95rem;letter-spacing:-.02em;">versozap</span>
-      </a>
-      <div style="display:flex;align-items:center;gap:12px;">
-        <span id="nav-nome" style="font-size:12px;font-weight:600;color:#aaa;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
-        <button onclick="sair()"
-          style="background:transparent;border:3px solid #ff0099;color:#ff0099;padding:6px 14px;font-family:'Space Grotesk';font-weight:800;font-size:11px;letter-spacing:.02em;cursor:pointer;"
-          class="btn-bounce">
-          sair
-        </button>
-      </div>
+<!-- Nav -->
+<nav style="background:var(--ink);position:sticky;top:0;z-index:20;border-bottom:2px solid var(--ink);">
+  <div style="max-width:680px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;">
+    <a href="/" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+      <span style="background:var(--acid);border:2px solid var(--acid);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:14px;">📖</span>
+      <span style="font-family:'Dela Gothic One';color:#F8F4E8;font-size:.95rem;letter-spacing:.02em;">VERSOZAP</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span id="nav-nome" style="font-size:12px;font-weight:600;color:#555;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+      <button onclick="sair()" class="btn-ghost" style="color:#F8F4E8;border-color:#2a2a25;box-shadow:none;">SAIR</button>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <div style="max-width:680px;margin:0 auto;padding:24px 16px;display:flex;flex-direction:column;gap:16px;">
+<div style="max-width:680px;margin:0 auto;padding:28px 20px;display:flex;flex-direction:column;gap:16px;">
 
-    <!-- Stats row -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
-      <div style="background:#ccff00;border:4px solid #0a0a0a;box-shadow:4px 4px 0px #0a0a0a;padding:16px;text-align:center;transform:rotate(-.5deg);">
-        <p id="stat-dia" style="font-family:'Space Grotesk';font-weight:900;font-size:1.8rem;line-height:1;letter-spacing:-.02em;">—</p>
-        <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-top:4px;">dia atual</p>
-      </div>
-      <div style="background:#7000ff;border:4px solid #0a0a0a;box-shadow:4px 4px 0px #0a0a0a;padding:16px;text-align:center;transform:rotate(.5deg);">
-        <p id="stat-pct" style="font-family:'Space Grotesk';font-weight:900;font-size:1.8rem;line-height:1;letter-spacing:-.02em;color:#ccff00;">—</p>
-        <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#fff;margin-top:4px;">concluído</p>
-      </div>
-      <div style="background:#0a0a0a;border:4px solid #0a0a0a;box-shadow:4px 4px 0px rgba(0,0,0,.3);padding:16px;text-align:center;transform:rotate(-.3deg);">
-        <p id="stat-status" style="font-family:'Space Grotesk';font-weight:900;font-size:1.8rem;line-height:1;">✅</p>
-        <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#aaa;margin-top:4px;">leu hoje</p>
-      </div>
+  <!-- Stats row -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+    <div style="background:var(--acid);border:2px solid var(--ink);border-radius:12px;padding:18px;text-align:center;box-shadow:4px 4px 0 0 var(--ink);transform:rotate(-.5deg);">
+      <p id="stat-dia" style="font-family:'Dela Gothic One';font-size:2rem;line-height:1;letter-spacing:-.02em;">—</p>
+      <p style="font-family:'Dela Gothic One';font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;margin-top:5px;color:#333;">DIA ATUAL</p>
     </div>
-
-    <!-- Progresso -->
-    <div style="background:#fff;border:4px solid #0a0a0a;box-shadow:6px 6px 0px #0a0a0a;">
-      <div style="background:#ff0099;padding:14px 20px;border-bottom:4px solid #0a0a0a;display:flex;align-items:center;justify-content:space-between;">
-        <p style="font-family:'Space Grotesk';font-weight:900;font-size:1rem;color:#fff;letter-spacing:-.02em;">meu progresso</p>
-        <span id="badge-plano" style="display:none;background:#fff;border:2px solid #0a0a0a;padding:3px 10px;font-family:'Space Grotesk';font-weight:800;font-size:11px;color:#ff0099;"></span>
-      </div>
-      <div style="padding:20px;">
-        <div id="sem-plano" style="display:none;text-align:center;padding:28px 0;">
-          <p style="font-size:3rem;margin-bottom:8px;">📋</p>
-          <p style="font-family:'Space Grotesk';font-weight:800;font-size:.95rem;">nenhum plano selecionado</p>
-          <p style="font-size:.8rem;color:#888;margin-top:4px;">configure um plano nas configurações abaixo.</p>
-        </div>
-        <div id="com-plano" style="display:none;">
-          <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:10px;">
-            <p id="plano-progresso" style="font-family:'Space Grotesk';font-weight:900;font-size:2.2rem;line-height:1;letter-spacing:-.03em;"></p>
-            <p id="plano-pct" style="font-family:'Space Grotesk';font-weight:800;font-size:1rem;color:#7000ff;margin-bottom:4px;"></p>
-          </div>
-          <!-- Progress bar -->
-          <div style="background:#f0f0f0;border:3px solid #0a0a0a;height:14px;margin-bottom:16px;">
-            <div id="barra-progresso" style="background:#ccff00;border-right:3px solid #0a0a0a;height:100%;transition:width .7s cubic-bezier(.175,.885,.32,1.275);width:0%;"></div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <div style="background:#f5f5f5;border:3px solid #0a0a0a;padding:12px;">
-              <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#888;margin-bottom:4px;">último envio</p>
-              <p id="ultimo-envio" style="font-family:'Space Grotesk';font-weight:800;font-size:.95rem;">—</p>
-            </div>
-            <div style="background:#f5f5f5;border:3px solid #0a0a0a;padding:12px;">
-              <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#888;margin-bottom:4px;">última leitura</p>
-              <p id="ultima-leitura" style="font-family:'Space Grotesk';font-weight:800;font-size:.95rem;">—</p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div style="background:var(--ink);border:2px solid var(--ink);border-radius:12px;padding:18px;text-align:center;box-shadow:4px 4px 0 0 var(--acid);transform:rotate(.5deg);">
+      <p id="stat-pct" style="font-family:'Dela Gothic One';font-size:2rem;line-height:1;letter-spacing:-.02em;color:var(--acid);">—</p>
+      <p style="font-family:'Dela Gothic One';font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:#666;margin-top:5px;">CONCLUÍDO</p>
     </div>
-
-    <!-- Configurações -->
-    <div style="background:#fff;border:4px solid #0a0a0a;box-shadow:6px 6px 0px #0a0a0a;">
-      <div style="background:#ccff00;padding:14px 20px;border-bottom:4px solid #0a0a0a;">
-        <p style="font-family:'Space Grotesk';font-weight:900;font-size:1rem;letter-spacing:-.02em;">configurações</p>
-      </div>
-      <div style="padding:20px;">
-        <div id="alert-config" style="display:none;border:3px solid #0a0a0a;padding:10px 14px;margin-bottom:16px;font-size:13px;font-weight:600;box-shadow:3px 3px 0px #0a0a0a;"></div>
-
-        <form id="form-config" style="display:flex;flex-direction:column;gap:14px;">
-          <div>
-            <label>nome</label>
-            <input id="cfg-nome" type="text" placeholder="como prefere ser chamado?">
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <div>
-              <label>horário de envio</label>
-              <input id="cfg-horario" type="time">
-            </div>
-            <div>
-              <label>versão da bíblia</label>
-              <select id="cfg-versao">
-                <option value="NVI">NVI</option>
-                <option value="ARC">ARC</option>
-                <option value="ACF">ACF</option>
-                <option value="NVT">NVT</option>
-              </select>
-            </div>
-          </div>
-          <div>
-            <label>plano de leitura</label>
-            <select id="cfg-plano">
-              <option value="">sem plano</option>
-            </select>
-          </div>
-          <button type="submit" id="btn-salvar"
-            style="background:#0a0a0a;color:#ccff00;border:4px solid #0a0a0a;box-shadow:6px 6px 0px rgba(0,0,0,.3);padding:14px;font-family:'Space Grotesk';font-weight:900;font-size:1rem;letter-spacing:-.01em;cursor:pointer;"
-            class="btn-bounce btn-wobble w-full">
-            salvar configurações
-          </button>
-        </form>
-      </div>
+    <div style="background:var(--bg);border:2px solid var(--ink);border-radius:12px;padding:18px;text-align:center;box-shadow:4px 4px 0 0 var(--ink);transform:rotate(-.3deg);">
+      <p id="stat-status" style="font-family:'Dela Gothic One';font-size:2rem;line-height:1;">✅</p>
+      <p style="font-family:'Dela Gothic One';font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:#888;margin-top:5px;">LEU HOJE</p>
     </div>
-
   </div>
 
-  <script>
-    const TOKEN = localStorage.getItem('userToken');
-    if (!TOKEN) window.location.replace('/login.html');
+  <!-- Progresso -->
+  <div style="background:#fff;border:2px solid var(--ink);border-radius:14px;overflow:hidden;box-shadow:4px 4px 0 0 var(--ink);">
+    <div style="background:var(--ink);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;">
+      <p style="font-family:'Dela Gothic One';font-size:.9rem;color:#F8F4E8;text-transform:uppercase;letter-spacing:.02em;">MEU PROGRESSO</p>
+      <span id="badge-plano" style="display:none;background:var(--acid);border:2px solid var(--acid);padding:3px 10px;border-radius:999px;font-family:'Dela Gothic One';font-size:.6rem;color:var(--ink);letter-spacing:.05em;"></span>
+    </div>
+    <div style="padding:20px;">
+      <div id="sem-plano" style="display:none;text-align:center;padding:28px 0;">
+        <p style="font-size:3rem;margin-bottom:8px;">📋</p>
+        <p style="font-family:'Dela Gothic One';font-size:.9rem;text-transform:uppercase;">NENHUM PLANO SELECIONADO</p>
+        <p style="font-size:.8rem;color:#888;margin-top:4px;">configure um plano nas configurações abaixo.</p>
+      </div>
+      <div id="com-plano" style="display:none;">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:12px;">
+          <p id="plano-progresso" style="font-family:'Dela Gothic One';font-size:2rem;line-height:1;letter-spacing:-.03em;"></p>
+          <p id="plano-pct" style="font-family:'Dela Gothic One';font-size:.85rem;color:#888;margin-bottom:3px;"></p>
+        </div>
+        <div style="background:#f0ece0;border:2px solid var(--ink);border-radius:6px;height:14px;margin-bottom:18px;overflow:hidden;">
+          <div id="barra-progresso" style="background:var(--acid);height:100%;transition:width .7s cubic-bezier(.175,.885,.32,1.275);width:0%;border-right:2px solid var(--ink);"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div style="background:var(--bg);border:2px solid var(--ink);border-radius:8px;padding:12px;">
+            <p style="font-family:'Dela Gothic One';font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:#888;margin-bottom:4px;">ÚLTIMO ENVIO</p>
+            <p id="ultimo-envio" style="font-family:'Dela Gothic One';font-size:.9rem;">—</p>
+          </div>
+          <div style="background:var(--bg);border:2px solid var(--ink);border-radius:8px;padding:12px;">
+            <p style="font-family:'Dela Gothic One';font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:#888;margin-bottom:4px;">ÚLTIMA LEITURA</p>
+            <p id="ultima-leitura" style="font-family:'Dela Gothic One';font-size:.9rem;">—</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    document.getElementById('nav-nome').textContent =
-      localStorage.getItem('userName') || localStorage.getItem('userEmail') || '';
+  <!-- Configurações -->
+  <div style="background:#fff;border:2px solid var(--ink);border-radius:14px;overflow:hidden;box-shadow:4px 4px 0 0 var(--ink);">
+    <div style="background:var(--acid);padding:14px 20px;border-bottom:2px solid var(--ink);">
+      <p style="font-family:'Dela Gothic One';font-size:.9rem;color:var(--ink);text-transform:uppercase;letter-spacing:.02em;">CONFIGURAÇÕES</p>
+    </div>
+    <div style="padding:20px;">
+      <div id="alert-config" style="display:none;border:2px solid var(--ink);border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:13px;font-weight:600;box-shadow:3px 3px 0 0 var(--ink);"></div>
+      <form id="form-config" style="display:flex;flex-direction:column;gap:14px;">
+        <div>
+          <label>NOME</label>
+          <input id="cfg-nome" type="text" placeholder="como prefere ser chamado?">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label>HORÁRIO DE ENVIO</label>
+            <input id="cfg-horario" type="time">
+          </div>
+          <div>
+            <label>VERSÃO DA BÍBLIA</label>
+            <select id="cfg-versao">
+              <option value="NVI">NVI</option>
+              <option value="ARC">ARC</option>
+              <option value="ACF">ACF</option>
+              <option value="NVT">NVT</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label>PLANO DE LEITURA</label>
+          <select id="cfg-plano"><option value="">sem plano</option></select>
+        </div>
+        <button type="submit" id="btn-salvar" class="btn-hard" style="margin-top:4px;">SALVAR CONFIGURAÇÕES</button>
+      </form>
+    </div>
+  </div>
 
-    function sair() {
-      ['userToken','userEmail','userName'].forEach(k => localStorage.removeItem(k));
-      window.location.replace('/login.html');
-    }
+</div>
 
-    function authHeader() {
-      return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN };
-    }
-
-    function formatarData(iso) {
-      if (!iso) return '—';
-      return new Date(iso).toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric' });
-    }
-
-    const alertConfig = document.getElementById('alert-config');
-    function showAlert(msg, ok = false) {
-      alertConfig.textContent = msg;
-      alertConfig.style.background = ok ? '#ccff00' : '#ff0099';
-      alertConfig.style.color = '#0a0a0a';
-      alertConfig.style.display = 'block';
-      setTimeout(() => { alertConfig.style.display = 'none'; }, 4000);
-    }
-
-    async function carregarPerfil() {
-      try {
-        const r = await fetch('/api/usuario/me', { headers: authHeader() });
-        if (r.status === 401) { sair(); return; }
-        const u = await r.json();
-
-        document.getElementById('nav-nome').textContent = u.nome || u.email || '';
-        document.getElementById('cfg-nome').value    = u.nome || '';
-        document.getElementById('cfg-horario').value = u.horario_envio || '07:00';
-        document.getElementById('cfg-versao').value  = u.versao_biblia || 'NVI';
-
-        const leuHojeEl = document.getElementById('stat-status');
-        leuHojeEl.textContent = u.leu_hoje ? '✅' : '📖';
-
-        if (u.plano_id && u.total_dias) {
-          document.getElementById('sem-plano').style.display = 'none';
-          document.getElementById('com-plano').style.display = 'block';
-
-          const badge = document.getElementById('badge-plano');
-          badge.textContent = u.plano_nome || '';
-          badge.style.display = 'inline-flex';
-
-          const dia   = u.dia_atual || 1;
-          const total = u.total_dias;
-          const pct   = Math.round(((dia - 1) / total) * 100);
-
-          document.getElementById('stat-dia').textContent    = dia;
-          document.getElementById('stat-pct').textContent    = pct + '%';
-          document.getElementById('plano-progresso').textContent = `dia ${dia} de ${total}`;
-          document.getElementById('plano-pct').textContent   = `${pct}% concluído`;
-          document.getElementById('barra-progresso').style.width = pct + '%';
-          document.getElementById('ultimo-envio').textContent    = formatarData(u.ultimo_envio);
-          document.getElementById('ultima-leitura').textContent  = formatarData(u.ultima_leitura);
-        } else {
-          document.getElementById('sem-plano').style.display = 'block';
-          document.getElementById('com-plano').style.display = 'none';
-          document.getElementById('stat-dia').textContent = '—';
-          document.getElementById('stat-pct').textContent = '—';
-        }
-
-        await carregarPlanos(u.plano_id);
-      } catch {}
-    }
-
-    async function carregarPlanos(planoAtual) {
-      try {
-        const r = await fetch('/api/inscricao/planos');
-        const planos = await r.json();
-        const sel = document.getElementById('cfg-plano');
-        sel.innerHTML = '<option value="">sem plano</option>' +
-          planos.map(p => `<option value="${p.id}" ${p.id == planoAtual ? 'selected' : ''}>${p.nome}</option>`).join('');
-      } catch {}
-    }
-
-    document.getElementById('form-config').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = document.getElementById('btn-salvar');
-      btn.disabled = true;
-      btn.textContent = 'salvando...';
-
-      try {
-        const r = await fetch('/api/usuario/me', {
-          method: 'PUT',
-          headers: authHeader(),
-          body: JSON.stringify({
-            nome:          document.getElementById('cfg-nome').value || null,
-            horario_envio: document.getElementById('cfg-horario').value,
-            versao_biblia: document.getElementById('cfg-versao').value,
-            plano_id:      document.getElementById('cfg-plano').value || null,
-          }),
-        });
-        if (!r.ok) { showAlert('erro ao salvar'); return; }
-        showAlert('configurações salvas!', true);
-        carregarPerfil();
-      } catch {
-        showAlert('erro de conexão');
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'salvar configurações';
+<script>
+  const TOKEN = localStorage.getItem('userToken');
+  if (!TOKEN) window.location.replace('/login.html');
+  document.getElementById('nav-nome').textContent = localStorage.getItem('userName') || localStorage.getItem('userEmail') || '';
+  function sair(){['userToken','userEmail','userName'].forEach(k=>localStorage.removeItem(k));window.location.replace('/login.html');}
+  function authHeader(){return{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN};}
+  function formatarData(iso){if(!iso)return'—';return new Date(iso).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});}
+  const alertConfig = document.getElementById('alert-config');
+  function showAlert(msg, ok=false){
+    alertConfig.textContent=msg;
+    alertConfig.style.background=ok?'var(--acid)':'var(--ink)';
+    alertConfig.style.color=ok?'var(--ink)':'var(--acid)';
+    alertConfig.style.display='block';
+    setTimeout(()=>{alertConfig.style.display='none';},4000);
+  }
+  async function carregarPerfil(){
+    try{
+      const r = await fetch('/api/usuario/me',{headers:authHeader()});
+      if(r.status===401){sair();return;}
+      const u = await r.json();
+      document.getElementById('nav-nome').textContent=u.nome||u.email||'';
+      document.getElementById('cfg-nome').value=u.nome||'';
+      document.getElementById('cfg-horario').value=u.horario_envio||'07:00';
+      document.getElementById('cfg-versao').value=u.versao_biblia||'NVI';
+      const leuHojeEl=document.getElementById('stat-status');
+      leuHojeEl.textContent=u.leu_hoje?'✅':'📖';
+      if(u.plano_id&&u.total_dias){
+        document.getElementById('sem-plano').style.display='none';
+        document.getElementById('com-plano').style.display='block';
+        const badge=document.getElementById('badge-plano');
+        badge.textContent=u.plano_nome||'';
+        badge.style.display='inline-flex';
+        const dia=u.dia_atual||1;
+        const total=u.total_dias;
+        const pct=Math.round(((dia-1)/total)*100);
+        document.getElementById('stat-dia').textContent=dia;
+        document.getElementById('stat-pct').textContent=pct+'%';
+        document.getElementById('plano-progresso').textContent=`dia ${dia} de ${total}`;
+        document.getElementById('plano-pct').textContent=`${pct}% concluído`;
+        document.getElementById('barra-progresso').style.width=pct+'%';
+        document.getElementById('ultimo-envio').textContent=formatarData(u.ultimo_envio);
+        document.getElementById('ultima-leitura').textContent=formatarData(u.ultima_leitura);
+      } else {
+        document.getElementById('sem-plano').style.display='block';
+        document.getElementById('com-plano').style.display='none';
+        document.getElementById('stat-dia').textContent='—';
+        document.getElementById('stat-pct').textContent='—';
       }
-    });
-
-    carregarPerfil();
-  </script>
+      await carregarPlanos(u.plano_id);
+    } catch{}
+  }
+  async function carregarPlanos(planoAtual){
+    try{
+      const r = await fetch('/api/inscricao/planos');
+      const planos = await r.json();
+      const sel = document.getElementById('cfg-plano');
+      sel.innerHTML='<option value="">sem plano</option>'+planos.map(p=>`<option value="${p.id}" ${p.id==planoAtual?'selected':''}>${p.nome}</option>`).join('');
+    } catch{}
+  }
+  document.getElementById('form-config').addEventListener('submit', async e=>{
+    e.preventDefault();
+    const btn=document.getElementById('btn-salvar');
+    btn.disabled=true; btn.textContent='SALVANDO...';
+    try{
+      const r = await fetch('/api/usuario/me',{method:'PUT',headers:authHeader(),body:JSON.stringify({nome:document.getElementById('cfg-nome').value||null,horario_envio:document.getElementById('cfg-horario').value,versao_biblia:document.getElementById('cfg-versao').value,plano_id:document.getElementById('cfg-plano').value||null})});
+      if(!r.ok){showAlert('erro ao salvar');return;}
+      showAlert('configurações salvas!',true);
+      carregarPerfil();
+    } catch{showAlert('erro de conexão');}
+    finally{btn.disabled=false;btn.textContent='SALVAR CONFIGURAÇÕES';}
+  });
+  carregarPerfil();
+  const cursor=document.getElementById('cursor');
+  let cx=-100,cy=-100,tx=-100,ty=-100;
+  document.addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY;});
+  function lerp(a,b,t){return a+(b-a)*t;}
+  (function loop(){cx=lerp(cx,tx,.2);cy=lerp(cy,ty,.2);cursor.style.left=cx+'px';cursor.style.top=cy+'px';requestAnimationFrame(loop);})();
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cursor.style.width='80px';cursor.style.height='80px';});
+    el.addEventListener('mouseleave',()=>{cursor.style.width='32px';cursor.style.height='32px';});
+  });
+</script>
 </body>
 </html>

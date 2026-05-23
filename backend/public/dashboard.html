@@ -4,538 +4,386 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>versozap — painel admin</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; }
-    body { font-family: 'DM Sans', sans-serif; background: #0a0a0a; color: #fff; min-height: 100vh; }
-    h1, h2, h3, .font-display { font-family: 'Space Grotesk', sans-serif; }
-
-    .btn-bounce {
-      transition: transform .3s cubic-bezier(.175,.885,.32,1.275), box-shadow .3s cubic-bezier(.175,.885,.32,1.275);
-    }
-    .btn-bounce:hover  { transform: scale(1.04) translateY(-2px); }
-    .btn-bounce:active { transform: scale(.97); }
-
-    input, select {
-      font-family: 'DM Sans', sans-serif;
-      border: 3px solid #333; border-radius: 0; outline: none; background: #1a1a1a;
-      color: #fff; width: 100%; padding: 9px 12px; font-size: 13px; font-weight: 500;
-      transition: border-color .15s ease, box-shadow .15s ease;
-    }
-    input::placeholder { color: #555; }
-    select option { background: #1a1a1a; }
-    input:focus, select:focus { border-color: #ccff00; box-shadow: 3px 3px 0px #ccff00; }
-
-    label { display:block; font-family:'Space Grotesk'; font-weight:800; font-size:.7rem; letter-spacing:.05em; text-transform:uppercase; margin-bottom:5px; color:#aaa; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#09090B;--ink:#F8F4E8;--acid:#D2E823;}
+    body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;cursor:none;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.03;pointer-events:none;z-index:9999;}
+    #cursor{position:fixed;width:32px;height:32px;border-radius:100%;background:white;mix-blend-mode:difference;pointer-events:none;z-index:99998;left:0;top:0;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
+    input,select{font-family:'Space Grotesk',sans-serif;border:2px solid #2a2a25;border-radius:8px;outline:none;background:#1a1a17;color:var(--ink);width:100%;padding:9px 12px;font-size:13px;font-weight:500;transition:border-color .15s,box-shadow .15s;}
+    input::placeholder{color:#555;}
+    select option{background:#1a1a17;}
+    input:focus,select:focus{border-color:var(--acid);box-shadow:3px 3px 0 0 var(--acid);}
+    label{display:block;font-family:'Dela Gothic One',sans-serif;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px;color:#666;}
   </style>
 </head>
 <body>
+<div id="cursor"></div>
 
-  <!-- Nav -->
-  <nav style="background:#1a1a1a;border-bottom:4px solid #ccff00;position:sticky;top:0;z-index:20;">
-    <div style="max-width:1100px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;">
-      <a href="/" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
-        <span style="background:#ccff00;border:3px solid #ccff00;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:14px;">📖</span>
-        <span style="font-family:'Space Grotesk';font-weight:900;color:#fff;font-size:.95rem;letter-spacing:-.02em;">versozap</span>
-        <span style="font-family:'Space Grotesk';font-weight:800;font-size:.7rem;color:#ccff00;background:#1a1a1a;border:2px solid #ccff00;padding:2px 8px;letter-spacing:.05em;">ADMIN</span>
-      </a>
-      <div style="display:flex;align-items:center;gap:12px;">
-        <span id="nav-email" style="font-size:12px;font-weight:600;color:#666;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
-        <button onclick="sair()"
-          style="background:transparent;border:3px solid #ff0099;color:#ff0099;padding:6px 14px;font-family:'Space Grotesk';font-weight:800;font-size:11px;letter-spacing:.02em;cursor:pointer;"
-          class="btn-bounce">
-          sair
-        </button>
-      </div>
+<!-- Nav -->
+<nav style="background:#141410;border-bottom:2px solid var(--acid);position:sticky;top:0;z-index:20;">
+  <div style="max-width:1100px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;">
+    <a href="/" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+      <span style="background:var(--acid);border:2px solid var(--acid);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:14px;">📖</span>
+      <span style="font-family:'Dela Gothic One';color:#F8F4E8;font-size:.9rem;letter-spacing:.02em;">VERSOZAP</span>
+      <span style="font-family:'Dela Gothic One';font-size:.55rem;color:var(--acid);border:2px solid var(--acid);padding:2px 8px;border-radius:4px;letter-spacing:.05em;">ADMIN</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span id="nav-email" style="font-size:12px;font-weight:600;color:#555;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+      <button onclick="sair()" style="background:transparent;border:2px solid #DC2626;color:#DC2626;padding:6px 14px;border-radius:8px;font-family:'Dela Gothic One';font-weight:800;font-size:.6rem;letter-spacing:.05em;cursor:pointer;transition:transform .1s,box-shadow .1s;box-shadow:2px 2px 0 0 #DC2626;" onmouseenter="this.style.transform='translate(2px,2px)';this.style.boxShadow='0 0 0 0'" onmouseleave="this.style.transform='';this.style.boxShadow='2px 2px 0 0 #DC2626'">SAIR</button>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <div style="max-width:1100px;margin:0 auto;padding:24px 16px;">
+<div style="max-width:1100px;margin:0 auto;padding:28px 20px;">
 
-    <!-- Tabs -->
-    <div style="display:flex;gap:4px;margin-bottom:24px;background:#1a1a1a;border:4px solid #333;padding:4px;width:fit-content;">
-      <button onclick="showTab('whatsapp')" id="tab-whatsapp"
-        style="padding:10px 20px;font-family:'Space Grotesk';font-weight:900;font-size:.85rem;letter-spacing:-.01em;cursor:pointer;border:none;transition:all .2s ease;background:#ccff00;color:#0a0a0a;box-shadow:3px 3px 0px rgba(0,0,0,.3);">
-        📱 whatsapp
-      </button>
-      <button onclick="showTab('assinantes')" id="tab-assinantes"
-        style="padding:10px 20px;font-family:'Space Grotesk';font-weight:900;font-size:.85rem;letter-spacing:-.01em;cursor:pointer;border:none;transition:all .2s ease;background:transparent;color:#666;">
-        👥 assinantes
-      </button>
-      <button onclick="showTab('stats')" id="tab-stats"
-        style="padding:10px 20px;font-family:'Space Grotesk';font-weight:900;font-size:.85rem;letter-spacing:-.01em;cursor:pointer;border:none;transition:all .2s ease;background:transparent;color:#666;">
-        📊 estatísticas
-      </button>
-    </div>
-
-    <!-- Tab: WhatsApp -->
-    <div id="section-whatsapp" style="display:flex;flex-direction:column;gap:16px;">
-      <div style="background:#1a1a1a;border:4px solid #333;box-shadow:6px 6px 0px #ccff00;">
-        <div style="background:#ccff00;padding:14px 20px;border-bottom:4px solid #0a0a0a;display:flex;align-items:center;justify-content:space-between;">
-          <h2 style="font-family:'Space Grotesk';font-weight:900;font-size:1rem;color:#0a0a0a;letter-spacing:-.02em;">conexão whatsapp</h2>
-          <div style="display:flex;gap:8px;">
-            <a href="/whatsapp.html"
-              style="background:#0a0a0a;color:#ccff00;border:3px solid #0a0a0a;padding:6px 14px;font-family:'Space Grotesk';font-weight:800;font-size:11px;text-decoration:none;box-shadow:3px 3px 0px rgba(0,0,0,.3);"
-              class="btn-bounce">
-              ver qr code →
-            </a>
-            <button onclick="reconectar()" id="btn-reconectar"
-              style="background:transparent;border:3px solid #0a0a0a;color:#0a0a0a;padding:6px 14px;font-family:'Space Grotesk';font-weight:800;font-size:11px;cursor:pointer;"
-              class="btn-bounce">
-              reconectar
-            </button>
-          </div>
-        </div>
-        <div style="padding:20px;">
-          <div id="wa-status" style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
-            <div id="wa-dot" style="width:12px;height:12px;border-radius:50%;background:#555;flex-shrink:0;"></div>
-            <span id="wa-texto" style="font-size:14px;font-weight:600;color:#aaa;">verificando...</span>
-          </div>
-          <div id="wa-qr-container" style="display:none;text-align:center;">
-            <p style="font-size:13px;color:#888;margin-bottom:12px;">escaneie com o whatsapp do número que vai enviar os versículos</p>
-            <div style="display:inline-block;background:#fff;border:4px solid #ccff00;padding:8px;box-shadow:6px 6px 0px #ccff00;">
-              <img id="wa-qr" src="" alt="QR Code" style="width:200px;height:200px;display:block;object-fit:contain;">
-            </div>
-          </div>
-          <div id="wa-conectado" style="display:none;background:#0a0a0a;border:3px solid #ccff00;padding:14px 18px;text-align:center;">
-            <p style="font-family:'Space Grotesk';font-weight:800;font-size:.9rem;color:#ccff00;">✅ whatsapp conectado e pronto para enviar!</p>
-          </div>
-          <div id="wa-erro" style="display:none;background:#1a1a1a;border:3px solid #ff0099;padding:14px 18px;">
-            <p style="font-size:13px;font-weight:600;color:#ff0099;" id="wa-erro-msg"></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Tab: Assinantes -->
-    <div id="section-assinantes" style="display:none;flex-direction:column;gap:16px;">
-
-      <!-- Add subscriber form -->
-      <div style="background:#1a1a1a;border:4px solid #333;box-shadow:6px 6px 0px #7000ff;">
-        <div style="background:#7000ff;padding:14px 20px;border-bottom:4px solid #0a0a0a;">
-          <h2 style="font-family:'Space Grotesk';font-weight:900;font-size:1rem;color:#fff;letter-spacing:-.02em;">adicionar assinante</h2>
-        </div>
-        <div style="padding:20px;">
-          <div id="alert-add" style="display:none;border:3px solid #0a0a0a;padding:10px 14px;margin-bottom:14px;font-size:13px;font-weight:600;"></div>
-          <form id="form-add" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
-            <div>
-              <label>nome</label>
-              <input id="add-nome" type="text" placeholder="nome do assinante">
-            </div>
-            <div>
-              <label>whatsapp *</label>
-              <input id="add-telefone" type="tel" required placeholder="556799999999">
-            </div>
-            <div>
-              <label>plano</label>
-              <select id="add-plano">
-                <option value="">sem plano</option>
-              </select>
-            </div>
-            <div>
-              <label>horário</label>
-              <input id="add-horario" type="time" value="07:00">
-            </div>
-            <div>
-              <label>versão da bíblia</label>
-              <select id="add-versao">
-                <option value="NVI">NVI</option>
-                <option value="ARC">ARC</option>
-                <option value="ACF">ACF</option>
-                <option value="NVT">NVT</option>
-              </select>
-            </div>
-            <div style="display:flex;align-items:flex-end;">
-              <button type="submit"
-                style="background:#ccff00;color:#0a0a0a;border:3px solid #ccff00;padding:10px;font-family:'Space Grotesk';font-weight:900;font-size:.85rem;cursor:pointer;width:100%;box-shadow:3px 3px 0px rgba(204,255,0,.3);"
-                class="btn-bounce">
-                adicionar →
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <!-- Subscriber list -->
-      <div style="background:#1a1a1a;border:4px solid #333;box-shadow:6px 6px 0px #333;">
-        <div style="background:#333;padding:14px 20px;border-bottom:4px solid #333;display:flex;align-items:center;justify-content:space-between;">
-          <h2 style="font-family:'Space Grotesk';font-weight:900;font-size:1rem;color:#fff;letter-spacing:-.02em;">assinantes</h2>
-          <button onclick="carregarUsuarios()"
-            style="background:transparent;border:2px solid #555;color:#888;padding:5px 12px;font-family:'Space Grotesk';font-weight:800;font-size:11px;cursor:pointer;"
-            class="btn-bounce">
-            ↻ atualizar
-          </button>
-        </div>
-        <div id="lista-usuarios" style="padding:12px;display:flex;flex-direction:column;gap:8px;">
-          <p style="font-size:13px;color:#666;text-align:center;padding:16px;">carregando...</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Tab: Stats -->
-    <div id="section-stats" style="display:none;">
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
-        <div style="background:#ccff00;border:4px solid #0a0a0a;box-shadow:6px 6px 0px #ccff00;padding:24px;text-align:center;transform:rotate(-.5deg);">
-          <div id="stat-ativos" style="font-family:'Space Grotesk';font-weight:900;font-size:2.8rem;color:#0a0a0a;line-height:1;">—</div>
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#0a0a0a;margin-top:6px;">ativos</div>
-        </div>
-        <div style="background:#7000ff;border:4px solid #0a0a0a;box-shadow:6px 6px 0px #7000ff;padding:24px;text-align:center;transform:rotate(.5deg);">
-          <div id="stat-inativos" style="font-family:'Space Grotesk';font-weight:900;font-size:2.8rem;color:#ccff00;line-height:1;">—</div>
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#ddd;margin-top:6px;">inativos</div>
-        </div>
-        <div style="background:#1a1a1a;border:4px solid #333;box-shadow:6px 6px 0px #333;padding:24px;text-align:center;transform:rotate(-.3deg);">
-          <div id="stat-hoje" style="font-family:'Space Grotesk';font-weight:900;font-size:2.8rem;color:#ccff00;line-height:1;">—</div>
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#888;margin-top:6px;">envios hoje</div>
-        </div>
-        <div style="background:#ff0099;border:4px solid #0a0a0a;box-shadow:6px 6px 0px #ff0099;padding:24px;text-align:center;transform:rotate(.3deg);">
-          <div id="stat-taxa" style="font-family:'Space Grotesk';font-weight:900;font-size:2.8rem;color:#fff;line-height:1;">—</div>
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#fdd;margin-top:6px;">taxa leitura</div>
-        </div>
-      </div>
-    </div>
-
+  <!-- Tabs -->
+  <div style="display:flex;gap:4px;margin-bottom:28px;background:#141410;border:2px solid #2a2a25;border-radius:10px;padding:4px;width:fit-content;">
+    <button onclick="showTab('whatsapp')" id="tab-whatsapp" style="padding:10px 20px;font-family:'Dela Gothic One';font-size:.78rem;letter-spacing:.02em;cursor:pointer;border:none;border-radius:7px;transition:all .15s;background:var(--acid);color:#09090B;box-shadow:2px 2px 0 0 rgba(0,0,0,.3);text-transform:uppercase;">📱 WHATSAPP</button>
+    <button onclick="showTab('assinantes')" id="tab-assinantes" style="padding:10px 20px;font-family:'Dela Gothic One';font-size:.78rem;letter-spacing:.02em;cursor:pointer;border:none;border-radius:7px;transition:all .15s;background:transparent;color:#555;text-transform:uppercase;">👥 ASSINANTES</button>
+    <button onclick="showTab('stats')" id="tab-stats" style="padding:10px 20px;font-family:'Dela Gothic One';font-size:.78rem;letter-spacing:.02em;cursor:pointer;border:none;border-radius:7px;transition:all .15s;background:transparent;color:#555;text-transform:uppercase;">📊 ESTATÍSTICAS</button>
   </div>
 
-  <!-- Modal editar -->
-  <div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;padding:16px;z-index:50;">
-    <div style="background:#1a1a1a;border:4px solid #ccff00;box-shadow:10px 10px 0px #ccff00;width:100%;max-width:420px;">
-      <div style="background:#ccff00;padding:14px 20px;border-bottom:4px solid #0a0a0a;display:flex;align-items:center;justify-content:space-between;">
-        <h3 style="font-family:'Space Grotesk';font-weight:900;font-size:.95rem;color:#0a0a0a;letter-spacing:-.02em;">editar assinante</h3>
-        <button onclick="fecharModal()"
-          style="background:#0a0a0a;color:#ccff00;border:none;width:28px;height:28px;font-size:16px;cursor:pointer;font-family:'Space Grotesk';font-weight:900;"
-          class="btn-bounce">✕</button>
+  <!-- Tab: WhatsApp -->
+  <div id="section-whatsapp" style="display:flex;flex-direction:column;gap:16px;">
+    <div style="background:#141410;border:2px solid #2a2a25;border-radius:14px;overflow:hidden;box-shadow:4px 4px 0 0 var(--acid);">
+      <div style="background:var(--acid);padding:14px 20px;border-bottom:2px solid #09090B;display:flex;align-items:center;justify-content:space-between;">
+        <h2 style="font-family:'Dela Gothic One';font-size:.9rem;color:#09090B;text-transform:uppercase;letter-spacing:.02em;">CONEXÃO WHATSAPP</h2>
+        <div style="display:flex;gap:8px;">
+          <a href="/whatsapp.html" style="background:#09090B;color:var(--acid);border:2px solid #09090B;padding:6px 14px;font-family:'Dela Gothic One';font-weight:800;font-size:.6rem;text-decoration:none;border-radius:6px;transition:transform .1s;letter-spacing:.02em;" onmouseenter="this.style.transform='translate(2px,2px)'" onmouseleave="this.style.transform=''">VER QR CODE →</a>
+          <button onclick="reconectar()" id="btn-reconectar" style="background:transparent;border:2px solid #09090B;color:#09090B;padding:6px 14px;font-family:'Dela Gothic One';font-size:.6rem;cursor:pointer;border-radius:6px;transition:transform .1s;letter-spacing:.02em;" onmouseenter="this.style.transform='translate(2px,2px)'" onmouseleave="this.style.transform=''">RECONECTAR</button>
+        </div>
       </div>
       <div style="padding:20px;">
-        <div id="alert-edit" style="display:none;border:3px solid #ff0099;padding:10px 14px;margin-bottom:14px;font-size:13px;font-weight:600;color:#ff0099;background:#1a1a1a;"></div>
-        <form id="form-edit" style="display:flex;flex-direction:column;gap:12px;">
-          <input type="hidden" id="edit-id">
+        <div id="wa-status" style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+          <div id="wa-dot" style="width:12px;height:12px;border-radius:50%;background:#444;flex-shrink:0;"></div>
+          <span id="wa-texto" style="font-family:'Dela Gothic One';font-size:.78rem;color:#555;text-transform:uppercase;letter-spacing:.02em;">VERIFICANDO...</span>
+        </div>
+        <div id="wa-qr-container" style="display:none;text-align:center;">
+          <p style="font-size:13px;color:#888;margin-bottom:12px;">escaneie com o whatsapp do número que vai enviar os versículos</p>
+          <div style="display:inline-block;background:#fff;border:3px solid var(--acid);border-radius:8px;padding:8px;box-shadow:5px 5px 0 0 var(--acid);">
+            <img id="wa-qr" src="" alt="QR Code" style="width:200px;height:200px;display:block;object-fit:contain;">
+          </div>
+        </div>
+        <div id="wa-conectado" style="display:none;background:#09090B;border:2px solid var(--acid);border-radius:8px;padding:14px 18px;text-align:center;box-shadow:3px 3px 0 0 var(--acid);">
+          <p style="font-family:'Dela Gothic One';font-size:.82rem;color:var(--acid);text-transform:uppercase;letter-spacing:.02em;">✅ WHATSAPP CONECTADO E PRONTO PARA ENVIAR!</p>
+        </div>
+        <div id="wa-erro" style="display:none;background:#141410;border:2px solid #DC2626;border-radius:8px;padding:14px 18px;">
+          <p style="font-family:'Dela Gothic One';font-size:.75rem;font-weight:600;color:#DC2626;text-transform:uppercase;" id="wa-erro-msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: Assinantes -->
+  <div id="section-assinantes" style="display:none;flex-direction:column;gap:16px;">
+
+    <!-- Add form -->
+    <div style="background:#141410;border:2px solid #2a2a25;border-radius:14px;overflow:hidden;box-shadow:4px 4px 0 0 var(--acid);">
+      <div style="background:var(--acid);padding:14px 20px;border-bottom:2px solid #09090B;">
+        <h2 style="font-family:'Dela Gothic One';font-size:.9rem;color:#09090B;text-transform:uppercase;letter-spacing:.02em;">ADICIONAR ASSINANTE</h2>
+      </div>
+      <div style="padding:20px;">
+        <div id="alert-add" style="display:none;border:2px solid var(--acid);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px;font-weight:600;"></div>
+        <form id="form-add" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
           <div>
-            <label>nome</label>
-            <input id="edit-nome" type="text">
+            <label>NOME</label>
+            <input id="add-nome" type="text" placeholder="nome do assinante">
           </div>
           <div>
-            <label>horário</label>
-            <input id="edit-horario" type="time">
+            <label>WHATSAPP *</label>
+            <input id="add-telefone" type="tel" required placeholder="556799999999">
           </div>
           <div>
-            <label>plano</label>
-            <select id="edit-plano">
-              <option value="">sem plano</option>
-            </select>
+            <label>PLANO</label>
+            <select id="add-plano"><option value="">sem plano</option></select>
           </div>
           <div>
-            <label>versão da bíblia</label>
-            <select id="edit-versao">
+            <label>HORÁRIO</label>
+            <input id="add-horario" type="time" value="07:00">
+          </div>
+          <div>
+            <label>VERSÃO DA BÍBLIA</label>
+            <select id="add-versao">
               <option value="NVI">NVI</option>
               <option value="ARC">ARC</option>
               <option value="ACF">ACF</option>
               <option value="NVT">NVT</option>
             </select>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;">
-            <button type="submit"
-              style="background:#ccff00;color:#0a0a0a;border:3px solid #ccff00;padding:11px;font-family:'Space Grotesk';font-weight:900;font-size:.85rem;cursor:pointer;box-shadow:4px 4px 0px rgba(204,255,0,.3);"
-              class="btn-bounce">
-              salvar
-            </button>
-            <button type="button" onclick="fecharModal()"
-              style="background:transparent;color:#888;border:3px solid #555;padding:11px;font-family:'Space Grotesk';font-weight:900;font-size:.85rem;cursor:pointer;"
-              class="btn-bounce">
-              cancelar
-            </button>
+          <div style="display:flex;align-items:flex-end;">
+            <button type="submit" style="background:var(--acid);color:#09090B;border:2px solid var(--acid);border-radius:8px;padding:10px;font-family:'Dela Gothic One';font-size:.72rem;cursor:pointer;width:100%;box-shadow:3px 3px 0 0 rgba(210,232,35,.3);transition:transform .1s,box-shadow .1s;letter-spacing:.02em;text-transform:uppercase;" onmouseenter="this.style.transform='translate(2px,2px)';this.style.boxShadow='0 0 0 0'" onmouseleave="this.style.transform='';this.style.boxShadow='3px 3px 0 0 rgba(210,232,35,.3)'">ADICIONAR →</button>
           </div>
         </form>
       </div>
     </div>
+
+    <!-- Subscriber list -->
+    <div style="background:#141410;border:2px solid #2a2a25;border-radius:14px;overflow:hidden;">
+      <div style="background:#1a1a17;padding:14px 20px;border-bottom:2px solid #2a2a25;display:flex;align-items:center;justify-content:space-between;">
+        <h2 style="font-family:'Dela Gothic One';font-size:.9rem;color:#F8F4E8;text-transform:uppercase;letter-spacing:.02em;">ASSINANTES</h2>
+        <button onclick="carregarUsuarios()" style="background:transparent;border:2px solid #2a2a25;color:#666;padding:5px 12px;border-radius:6px;font-family:'Dela Gothic One';font-size:.6rem;cursor:pointer;letter-spacing:.02em;transition:border-color .1s,color .1s;" onmouseenter="this.style.borderColor='var(--acid)';this.style.color='var(--acid)'" onmouseleave="this.style.borderColor='#2a2a25';this.style.color='#666'">↻ ATUALIZAR</button>
+      </div>
+      <div id="lista-usuarios" style="padding:12px;display:flex;flex-direction:column;gap:8px;">
+        <p style="font-size:13px;color:#555;text-align:center;padding:20px;">carregando...</p>
+      </div>
+    </div>
   </div>
 
-  <script>
-    const TOKEN = localStorage.getItem('vzToken');
-    if (!TOKEN) window.location.replace('/admin.html');
+  <!-- Tab: Stats -->
+  <div id="section-stats" style="display:none;">
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;">
+      <div style="background:var(--acid);border:2px solid var(--acid);border-radius:14px;padding:28px;text-align:center;box-shadow:4px 4px 0 0 rgba(210,232,35,.3);transform:rotate(-.5deg);">
+        <div id="stat-ativos" style="font-family:'Dela Gothic One';font-size:3rem;color:#09090B;line-height:1;">—</div>
+        <div style="font-family:'Dela Gothic One';font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:#333;margin-top:8px;">ATIVOS</div>
+      </div>
+      <div style="background:#141410;border:2px solid var(--acid);border-radius:14px;padding:28px;text-align:center;box-shadow:4px 4px 0 0 var(--acid);transform:rotate(.5deg);">
+        <div id="stat-inativos" style="font-family:'Dela Gothic One';font-size:3rem;color:var(--acid);line-height:1;">—</div>
+        <div style="font-family:'Dela Gothic One';font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:#666;margin-top:8px;">INATIVOS</div>
+      </div>
+      <div style="background:#1a1a17;border:2px solid #2a2a25;border-radius:14px;padding:28px;text-align:center;box-shadow:4px 4px 0 0 #2a2a25;transform:rotate(-.3deg);">
+        <div id="stat-hoje" style="font-family:'Dela Gothic One';font-size:3rem;color:var(--acid);line-height:1;">—</div>
+        <div style="font-family:'Dela Gothic One';font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:#666;margin-top:8px;">ENVIOS HOJE</div>
+      </div>
+      <div style="background:var(--acid);border:2px solid var(--acid);border-radius:14px;padding:28px;text-align:center;box-shadow:4px 4px 0 0 rgba(210,232,35,.3);transform:rotate(.3deg);">
+        <div id="stat-taxa" style="font-family:'Dela Gothic One';font-size:3rem;color:#09090B;line-height:1;">—</div>
+        <div style="font-family:'Dela Gothic One';font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:#333;margin-top:8px;">TAXA LEITURA</div>
+      </div>
+    </div>
+  </div>
 
-    document.getElementById('nav-email').textContent = localStorage.getItem('vzEmail') || '';
+</div>
 
-    function authHeader() {
-      return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN };
-    }
+<!-- Modal editar -->
+<div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);align-items:center;justify-content:center;padding:16px;z-index:50;">
+  <div style="background:#141410;border:2px solid var(--acid);border-radius:14px;overflow:hidden;width:100%;max-width:420px;box-shadow:8px 8px 0 0 var(--acid);">
+    <div style="background:var(--acid);padding:14px 20px;border-bottom:2px solid #09090B;display:flex;align-items:center;justify-content:space-between;">
+      <h3 style="font-family:'Dela Gothic One';font-size:.88rem;color:#09090B;text-transform:uppercase;letter-spacing:.02em;">EDITAR ASSINANTE</h3>
+      <button onclick="fecharModal()" style="background:#09090B;color:var(--acid);border:none;width:28px;height:28px;border-radius:6px;font-size:16px;cursor:pointer;font-family:'Dela Gothic One';">✕</button>
+    </div>
+    <div style="padding:20px;">
+      <div id="alert-edit" style="display:none;border:2px solid #DC2626;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px;font-weight:600;color:#DC2626;background:#141410;"></div>
+      <form id="form-edit" style="display:flex;flex-direction:column;gap:12px;">
+        <input type="hidden" id="edit-id">
+        <div>
+          <label>NOME</label>
+          <input id="edit-nome" type="text">
+        </div>
+        <div>
+          <label>HORÁRIO</label>
+          <input id="edit-horario" type="time">
+        </div>
+        <div>
+          <label>PLANO</label>
+          <select id="edit-plano"><option value="">sem plano</option></select>
+        </div>
+        <div>
+          <label>VERSÃO DA BÍBLIA</label>
+          <select id="edit-versao">
+            <option value="NVI">NVI</option>
+            <option value="ARC">ARC</option>
+            <option value="ACF">ACF</option>
+            <option value="NVT">NVT</option>
+          </select>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;">
+          <button type="submit" style="background:var(--acid);color:#09090B;border:2px solid var(--acid);border-radius:8px;padding:11px;font-family:'Dela Gothic One';font-size:.72rem;cursor:pointer;box-shadow:3px 3px 0 0 rgba(210,232,35,.3);transition:transform .1s,box-shadow .1s;text-transform:uppercase;letter-spacing:.02em;" onmouseenter="this.style.transform='translate(2px,2px)';this.style.boxShadow='0 0 0 0'" onmouseleave="this.style.transform='';this.style.boxShadow='3px 3px 0 0 rgba(210,232,35,.3)'">SALVAR</button>
+          <button type="button" onclick="fecharModal()" style="background:transparent;color:#666;border:2px solid #2a2a25;border-radius:8px;padding:11px;font-family:'Dela Gothic One';font-size:.72rem;cursor:pointer;transition:border-color .1s,color .1s;text-transform:uppercase;letter-spacing:.02em;" onmouseenter="this.style.borderColor='#555';this.style.color='#F8F4E8'" onmouseleave="this.style.borderColor='#2a2a25';this.style.color='#666'">CANCELAR</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
-    async function api(path, opts = {}) {
-      const r = await fetch(path, { ...opts, headers: { ...authHeader(), ...(opts.headers || {}) } });
-      if (r.status === 401) { sair(); return null; }
-      return r;
-    }
+<script>
+  const TOKEN = localStorage.getItem('vzToken');
+  if (!TOKEN) window.location.replace('/admin.html');
+  document.getElementById('nav-email').textContent = localStorage.getItem('vzEmail') || '';
+  function authHeader(){return{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN};}
+  async function api(path,opts={}){
+    const r = await fetch(path,{...opts,headers:{...authHeader(),...(opts.headers||{})}});
+    if(r.status===401){sair();return null;}
+    return r;
+  }
+  function sair(){localStorage.removeItem('vzToken');localStorage.removeItem('vzEmail');window.location.replace('/admin.html');}
 
-    function sair() {
-      localStorage.removeItem('vzToken');
-      localStorage.removeItem('vzEmail');
-      window.location.replace('/admin.html');
-    }
+  // ── Tabs ──────────────────────────────────────────────────────────────────
+  function showTab(tab){
+    ['whatsapp','assinantes','stats'].forEach(t=>{
+      const section=document.getElementById('section-'+t);
+      section.style.display=t===tab?(t==='stats'?'block':'flex'):'none';
+      const btn=document.getElementById('tab-'+t);
+      if(t===tab){btn.style.background='#D2E823';btn.style.color='#09090B';btn.style.boxShadow='2px 2px 0 0 rgba(0,0,0,.3)';}
+      else{btn.style.background='transparent';btn.style.color='#555';btn.style.boxShadow='none';}
+    });
+    if(tab==='assinantes'){carregarUsuarios();carregarPlanos();}
+    if(tab==='stats') carregarStats();
+  }
 
-    // ── Tabs ──────────────────────────────────────────────────────────────────
-    function showTab(tab) {
-      ['whatsapp', 'assinantes', 'stats'].forEach(t => {
-        const section = document.getElementById('section-' + t);
-        section.style.display = t === tab ? (t === 'stats' ? 'block' : 'flex') : 'none';
-        const btn = document.getElementById('tab-' + t);
-        if (t === tab) {
-          btn.style.background = '#ccff00';
-          btn.style.color = '#0a0a0a';
-          btn.style.boxShadow = '3px 3px 0px rgba(0,0,0,.3)';
-        } else {
-          btn.style.background = 'transparent';
-          btn.style.color = '#666';
-          btn.style.boxShadow = 'none';
-        }
+  // ── WhatsApp ──────────────────────────────────────────────────────────────
+  async function verificarWhatsApp(){
+    try{
+      const r = await fetch('/api/whatsapp/status');
+      const d = await r.json();
+      const dot=document.getElementById('wa-dot');
+      const texto=document.getElementById('wa-texto');
+      const qrC=document.getElementById('wa-qr-container');
+      const ok=document.getElementById('wa-conectado');
+      const erro=document.getElementById('wa-erro');
+      qrC.style.display='none'; ok.style.display='none'; erro.style.display='none';
+      const statusMap={
+        conectado:{cor:'#D2E823',label:'CONECTADO'},
+        aguardando_qr:{cor:'#D2E823',label:'AGUARDANDO QR CODE'},
+        conectando:{cor:'#F59E0B',label:'CONECTANDO...'},
+        reconectando:{cor:'#F59E0B',label:'RECONECTANDO...'},
+        desconectado:{cor:'#555',label:'DESCONECTADO'},
+      };
+      const info=statusMap[d.status]||{cor:'#555',label:d.status.toUpperCase()};
+      dot.style.background=info.cor;
+      texto.textContent=info.label;
+      texto.style.color=info.cor;
+      if(d.status==='conectado'){ok.style.display='block';}
+      else if(d.qr){document.getElementById('wa-qr').src=d.qr;qrC.style.display='block';}
+      else if(d.erro){document.getElementById('wa-erro-msg').textContent=d.erro.message||'ERRO DESCONHECIDO';erro.style.display='block';}
+    } catch{}
+  }
+  async function reconectar(){
+    const btn=document.getElementById('btn-reconectar');
+    btn.disabled=true; btn.textContent='RECONECTANDO...';
+    try{await api('/api/admin/whatsapp/reconectar',{method:'POST'});setTimeout(verificarWhatsApp,2000);}
+    finally{setTimeout(()=>{btn.disabled=false;btn.textContent='RECONECTAR';},3000);}
+  }
+  verificarWhatsApp();
+  setInterval(verificarWhatsApp,5000);
+
+  // ── Planos ────────────────────────────────────────────────────────────────
+  let planosCache=[];
+  async function carregarPlanos(){
+    if(planosCache.length) return;
+    try{
+      const r=await api('/api/admin/planos');
+      if(!r) return;
+      planosCache=await r.json();
+      ['add-plano','edit-plano'].forEach(id=>{
+        const sel=document.getElementById(id);
+        sel.innerHTML='<option value="">sem plano</option>'+planosCache.map(p=>`<option value="${p.id}">${p.nome}</option>`).join('');
       });
-      if (tab === 'assinantes') { carregarUsuarios(); carregarPlanos(); }
-      if (tab === 'stats') carregarStats();
-    }
+    } catch{}
+  }
 
-    // ── WhatsApp ──────────────────────────────────────────────────────────────
-    async function verificarWhatsApp() {
-      try {
-        const r = await fetch('/api/whatsapp/status');
-        const d = await r.json();
-
-        const dot   = document.getElementById('wa-dot');
-        const texto = document.getElementById('wa-texto');
-        const qrC   = document.getElementById('wa-qr-container');
-        const ok    = document.getElementById('wa-conectado');
-        const erro  = document.getElementById('wa-erro');
-
-        qrC.style.display  = 'none';
-        ok.style.display   = 'none';
-        erro.style.display = 'none';
-
-        const statusMap = {
-          conectado:     { cor: '#ccff00', label: 'conectado' },
-          aguardando_qr: { cor: '#ff0099', label: 'aguardando escaneamento do qr' },
-          conectando:    { cor: '#7000ff', label: 'conectando...' },
-          reconectando:  { cor: '#ff6600', label: 'reconectando...' },
-          desconectado:  { cor: '#555',    label: 'desconectado' },
-        };
-        const info = statusMap[d.status] || { cor: '#555', label: d.status };
-
-        dot.style.background = info.cor;
-        texto.textContent = info.label;
-        texto.style.color = info.cor;
-
-        if (d.status === 'conectado') {
-          ok.style.display = 'block';
-        } else if (d.qr) {
-          document.getElementById('wa-qr').src = d.qr;
-          qrC.style.display = 'block';
-        } else if (d.erro) {
-          document.getElementById('wa-erro-msg').textContent = d.erro.message || 'erro desconhecido';
-          erro.style.display = 'block';
-        }
-      } catch {}
-    }
-
-    async function reconectar() {
-      const btn = document.getElementById('btn-reconectar');
-      btn.disabled = true;
-      btn.textContent = 'reconectando...';
-      try {
-        await api('/api/admin/whatsapp/reconectar', { method: 'POST' });
-        setTimeout(verificarWhatsApp, 2000);
-      } finally {
-        setTimeout(() => { btn.disabled = false; btn.textContent = 'reconectar'; }, 3000);
-      }
-    }
-
-    verificarWhatsApp();
-    setInterval(verificarWhatsApp, 5000);
-
-    // ── Planos ────────────────────────────────────────────────────────────────
-    let planosCache = [];
-
-    async function carregarPlanos() {
-      if (planosCache.length) return;
-      try {
-        const r = await api('/api/admin/planos');
-        if (!r) return;
-        planosCache = await r.json();
-        ['add-plano', 'edit-plano'].forEach(id => {
-          const sel = document.getElementById(id);
-          const extra = planosCache.map(p =>
-            `<option value="${p.id}">${p.nome}</option>`
-          ).join('');
-          sel.innerHTML = '<option value="">sem plano</option>' + extra;
-        });
-      } catch {}
-    }
-
-    // ── Assinantes ────────────────────────────────────────────────────────────
-    async function carregarUsuarios() {
-      const el = document.getElementById('lista-usuarios');
-      try {
-        const r = await api('/api/admin/usuarios');
-        if (!r) return;
-        const lista = await r.json();
-
-        if (!lista.length) {
-          el.innerHTML = '<p style="font-size:13px;color:#555;text-align:center;padding:16px;">nenhum assinante ainda</p>';
-          return;
-        }
-
-        el.innerHTML = lista.map(u => {
-          const ativo = u.ativo === 1;
-          const progresso = u.total_dias ? `dia ${u.dia_atual}/${u.total_dias}` : '—';
-          const horario = u.horario_envio || '—';
-          const nome = u.nome || u.telefone;
-          return `
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:3px solid ${ativo ? '#333' : '#222'};background:${ativo ? '#1a1a1a' : '#111'};gap:10px;opacity:${ativo ? '1' : '.5'};">
-            <div style="flex:1;min-width:0;">
-              <div style="display:flex;align-items:center;gap:6px;">
-                <span style="font-family:'Space Grotesk';font-weight:800;font-size:.85rem;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(nome)}</span>
-                ${ativo ? '' : '<span style="font-size:10px;color:#555;font-weight:700;text-transform:uppercase;border:2px solid #333;padding:1px 6px;">inativo</span>'}
-              </div>
-              <div style="font-size:11px;color:#666;margin-top:3px;display:flex;flex-wrap:wrap;gap:8px;">
-                <span>📱 ${escHtml(u.telefone)}</span>
-                <span>🕐 ${horario}</span>
-                <span style="color:#ccff00;">${escHtml(u.plano_nome || 'sem plano')} · ${progresso}</span>
-              </div>
+  // ── Assinantes ────────────────────────────────────────────────────────────
+  async function carregarUsuarios(){
+    const el=document.getElementById('lista-usuarios');
+    try{
+      const r=await api('/api/admin/usuarios');
+      if(!r) return;
+      const lista=await r.json();
+      if(!lista.length){el.innerHTML='<p style="font-size:13px;color:#555;text-align:center;padding:20px;">nenhum assinante ainda</p>';return;}
+      el.innerHTML=lista.map(u=>{
+        const ativo=u.ativo===1;
+        const progresso=u.total_dias?`dia ${u.dia_atual}/${u.total_dias}`:'—';
+        const horario=u.horario_envio||'—';
+        const nome=u.nome||u.telefone;
+        return `<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:2px solid ${ativo?'#2a2a25':'#1a1a17'};border-radius:8px;background:${ativo?'#1a1a17':'#111'};gap:10px;opacity:${ativo?'1':'.5'};">
+          <div style="flex:1;min-width:0;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-family:'Dela Gothic One';font-size:.78rem;color:#F8F4E8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-transform:uppercase;">${escHtml(nome)}</span>
+              ${ativo?'':'<span style="font-family:monospace;font-size:.6rem;color:#555;border:2px solid #2a2a25;border-radius:4px;padding:1px 6px;letter-spacing:.05em;">INATIVO</span>'}
             </div>
-            <div style="display:flex;gap:6px;flex-shrink:0;">
-              <button onclick='abrirModal(${JSON.stringify(u)})'
-                style="background:#7000ff;color:#fff;border:2px solid #7000ff;padding:5px 10px;font-family:'Space Grotesk';font-weight:800;font-size:11px;cursor:pointer;box-shadow:2px 2px 0px rgba(112,0,255,.4);">
-                editar
-              </button>
-              ${ativo ? `
-              <button onclick="desativar(${u.id})"
-                style="background:transparent;color:#ff0099;border:2px solid #ff0099;padding:5px 10px;font-family:'Space Grotesk';font-weight:800;font-size:11px;cursor:pointer;">
-                remover
-              </button>` : ''}
+            <div style="font-size:11px;color:#555;margin-top:3px;display:flex;flex-wrap:wrap;gap:8px;">
+              <span>📱 ${escHtml(u.telefone)}</span>
+              <span>🕐 ${horario}</span>
+              <span style="color:var(--acid);">${escHtml(u.plano_nome||'sem plano')} · ${progresso}</span>
             </div>
-          </div>`;
-        }).join('');
-      } catch {
-        el.innerHTML = '<p style="font-size:13px;color:#ff0099;text-align:center;padding:16px;">erro ao carregar</p>';
-      }
-    }
+          </div>
+          <div style="display:flex;gap:6px;flex-shrink:0;">
+            <button onclick='abrirModal(${JSON.stringify(u)})' style="background:var(--acid);color:#09090B;border:2px solid var(--acid);padding:5px 10px;border-radius:6px;font-family:'Dela Gothic One';font-size:.6rem;cursor:pointer;transition:transform .1s;box-shadow:2px 2px 0 0 rgba(210,232,35,.3);letter-spacing:.02em;" onmouseenter="this.style.transform='translate(2px,2px)';this.style.boxShadow='0 0 0 0'" onmouseleave="this.style.transform='';this.style.boxShadow='2px 2px 0 0 rgba(210,232,35,.3)'">EDITAR</button>
+            ${ativo?`<button onclick="desativar(${u.id})" style="background:transparent;color:#DC2626;border:2px solid #DC2626;padding:5px 10px;border-radius:6px;font-family:'Dela Gothic One';font-size:.6rem;cursor:pointer;transition:transform .1s;letter-spacing:.02em;" onmouseenter="this.style.transform='translate(2px,2px)'" onmouseleave="this.style.transform=''">REMOVER</button>`:''}
+          </div>
+        </div>`;
+      }).join('');
+    } catch{el.innerHTML='<p style="font-family:\'Dela Gothic One\';font-size:.72rem;color:#DC2626;text-align:center;padding:20px;text-transform:uppercase;">ERRO AO CARREGAR</p>';}
+  }
 
-    function escHtml(str) {
-      return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    }
+  function escHtml(str){return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function formatarTelefone(tel){const nums=tel.replace(/\D/g,'');if(nums.startsWith('55'))return nums;if(nums.length>=10)return '55'+nums;return nums;}
 
-    function formatarTelefone(tel) {
-      const nums = tel.replace(/\D/g, '');
-      if (nums.startsWith('55')) return nums;
-      if (nums.length >= 10) return '55' + nums;
-      return nums;
-    }
-
-    const alertAdd = document.getElementById('alert-add');
-
-    function showAlertAdd(msg, ok = false) {
-      alertAdd.textContent = msg;
-      alertAdd.style.background = ok ? '#ccff00' : '#ff0099';
-      alertAdd.style.color = ok ? '#0a0a0a' : '#fff';
-      alertAdd.style.borderColor = ok ? '#ccff00' : '#ff0099';
-      alertAdd.style.display = 'block';
-    }
-
-    document.getElementById('form-add').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      alertAdd.style.display = 'none';
-      const tel = formatarTelefone(document.getElementById('add-telefone').value);
-
-      try {
-        const r = await api('/api/admin/usuarios', {
-          method: 'POST',
-          body: JSON.stringify({
-            telefone: tel,
-            nome: document.getElementById('add-nome').value || null,
-            versao_biblia: document.getElementById('add-versao').value,
-            plano_id: document.getElementById('add-plano').value || null,
-            horario_envio: document.getElementById('add-horario').value,
-          }),
-        });
-        if (!r) return;
-        const d = await r.json();
-        if (!r.ok) { showAlertAdd(d.erro || 'erro'); return; }
-
-        showAlertAdd('assinante adicionado!', true);
-        document.getElementById('form-add').reset();
-        document.getElementById('add-horario').value = '07:00';
-        carregarUsuarios();
-      } catch {
-        showAlertAdd('erro de conexão');
-      }
-    });
-
-    async function desativar(id) {
-      if (!confirm('desativar este assinante?')) return;
-      await api('/api/admin/usuarios/' + id, { method: 'DELETE' });
+  const alertAdd=document.getElementById('alert-add');
+  function showAlertAdd(msg,ok=false){
+    alertAdd.textContent=msg;
+    alertAdd.style.background=ok?'var(--acid)':'#09090B';
+    alertAdd.style.color=ok?'#09090B':'var(--acid)';
+    alertAdd.style.borderColor=ok?'var(--acid)':'#DC2626';
+    alertAdd.style.display='block';
+  }
+  document.getElementById('form-add').addEventListener('submit', async e=>{
+    e.preventDefault(); alertAdd.style.display='none';
+    const tel=formatarTelefone(document.getElementById('add-telefone').value);
+    try{
+      const r=await api('/api/admin/usuarios',{method:'POST',body:JSON.stringify({telefone:tel,nome:document.getElementById('add-nome').value||null,versao_biblia:document.getElementById('add-versao').value,plano_id:document.getElementById('add-plano').value||null,horario_envio:document.getElementById('add-horario').value})});
+      if(!r) return;
+      const d=await r.json();
+      if(!r.ok){showAlertAdd(d.erro||'erro');return;}
+      showAlertAdd('assinante adicionado!',true);
+      document.getElementById('form-add').reset();
+      document.getElementById('add-horario').value='07:00';
       carregarUsuarios();
-    }
+    } catch{showAlertAdd('erro de conexão');}
+  });
+  async function desativar(id){
+    if(!confirm('desativar este assinante?')) return;
+    await api('/api/admin/usuarios/'+id,{method:'DELETE'});
+    carregarUsuarios();
+  }
 
-    // ── Modal editar ──────────────────────────────────────────────────────────
-    async function abrirModal(u) {
-      await carregarPlanos();
-      document.getElementById('edit-id').value      = u.id;
-      document.getElementById('edit-nome').value    = u.nome || '';
-      document.getElementById('edit-horario').value = u.horario_envio || '07:00';
-      document.getElementById('edit-versao').value  = u.versao_biblia || 'NVI';
-      document.getElementById('edit-plano').value   = u.plano_id || '';
-      document.getElementById('alert-edit').style.display = 'none';
-      document.getElementById('modal').style.display = 'flex';
-    }
+  // ── Modal editar ──────────────────────────────────────────────────────────
+  async function abrirModal(u){
+    await carregarPlanos();
+    document.getElementById('edit-id').value=u.id;
+    document.getElementById('edit-nome').value=u.nome||'';
+    document.getElementById('edit-horario').value=u.horario_envio||'07:00';
+    document.getElementById('edit-versao').value=u.versao_biblia||'NVI';
+    document.getElementById('edit-plano').value=u.plano_id||'';
+    document.getElementById('alert-edit').style.display='none';
+    document.getElementById('modal').style.display='flex';
+  }
+  function fecharModal(){document.getElementById('modal').style.display='none';}
+  const alertEdit=document.getElementById('alert-edit');
+  document.getElementById('form-edit').addEventListener('submit', async e=>{
+    e.preventDefault(); alertEdit.style.display='none';
+    const id=document.getElementById('edit-id').value;
+    try{
+      const r=await api('/api/admin/usuarios/'+id,{method:'PUT',body:JSON.stringify({nome:document.getElementById('edit-nome').value||null,horario_envio:document.getElementById('edit-horario').value,versao_biblia:document.getElementById('edit-versao').value,plano_id:document.getElementById('edit-plano').value||null})});
+      if(!r) return;
+      if(!r.ok){const d=await r.json();alertEdit.textContent=d.erro||'erro';alertEdit.style.display='block';return;}
+      fecharModal(); carregarUsuarios();
+    } catch{alertEdit.textContent='erro de conexão';alertEdit.style.display='block';}
+  });
 
-    function fecharModal() {
-      document.getElementById('modal').style.display = 'none';
-    }
+  // ── Stats ─────────────────────────────────────────────────────────────────
+  async function carregarStats(){
+    try{
+      const r=await api('/api/admin/stats');
+      if(!r) return;
+      const d=await r.json();
+      document.getElementById('stat-ativos').textContent=d.totalAtivos;
+      document.getElementById('stat-inativos').textContent=d.totalInativos;
+      document.getElementById('stat-hoje').textContent=d.mensagensHoje;
+      document.getElementById('stat-taxa').textContent=d.taxaLeitura+'%';
+    } catch{}
+  }
+  fetch('/api/auth/me',{headers:{'Authorization':'Bearer '+TOKEN}}).then(r=>{if(!r.ok) sair();});
 
-    const alertEdit = document.getElementById('alert-edit');
-
-    document.getElementById('form-edit').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      alertEdit.style.display = 'none';
-      const id = document.getElementById('edit-id').value;
-
-      try {
-        const r = await api('/api/admin/usuarios/' + id, {
-          method: 'PUT',
-          body: JSON.stringify({
-            nome: document.getElementById('edit-nome').value || null,
-            horario_envio: document.getElementById('edit-horario').value,
-            versao_biblia: document.getElementById('edit-versao').value,
-            plano_id: document.getElementById('edit-plano').value || null,
-          }),
-        });
-        if (!r) return;
-        if (!r.ok) {
-          const d = await r.json();
-          alertEdit.textContent = d.erro || 'erro';
-          alertEdit.style.display = 'block';
-          return;
-        }
-        fecharModal();
-        carregarUsuarios();
-      } catch {
-        alertEdit.textContent = 'erro de conexão';
-        alertEdit.style.display = 'block';
-      }
-    });
-
-    // ── Stats ─────────────────────────────────────────────────────────────────
-    async function carregarStats() {
-      try {
-        const r = await api('/api/admin/stats');
-        if (!r) return;
-        const d = await r.json();
-        document.getElementById('stat-ativos').textContent   = d.totalAtivos;
-        document.getElementById('stat-inativos').textContent = d.totalInativos;
-        document.getElementById('stat-hoje').textContent     = d.mensagensHoje;
-        document.getElementById('stat-taxa').textContent     = d.taxaLeitura + '%';
-      } catch {}
-    }
-
-    // Verificar token ao carregar
-    fetch('/api/auth/me', { headers: { 'Authorization': 'Bearer ' + TOKEN } })
-      .then(r => { if (!r.ok) sair(); });
-  </script>
+  const cursor=document.getElementById('cursor');
+  let cx=-100,cy=-100,tx=-100,ty=-100;
+  document.addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY;});
+  function lerp(a,b,t){return a+(b-a)*t;}
+  (function loop(){cx=lerp(cx,tx,.2);cy=lerp(cy,ty,.2);cursor.style.left=cx+'px';cursor.style.top=cy+'px';requestAnimationFrame(loop);})();
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cursor.style.width='80px';cursor.style.height='80px';});
+    el.addEventListener('mouseleave',()=>{cursor.style.width='32px';cursor.style.height='32px';});
+  });
+</script>
 </body>
 </html>
