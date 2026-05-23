@@ -4,158 +4,92 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>versozap — entrar</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; }
-    body { font-family: 'DM Sans', sans-serif; background: #ccff00; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
-    h1, .font-display { font-family: 'Space Grotesk', sans-serif; }
-
-    .btn-bounce {
-      transition: transform .3s cubic-bezier(.175,.885,.32,1.275), box-shadow .3s cubic-bezier(.175,.885,.32,1.275);
-    }
-    .btn-bounce:hover  { transform: scale(1.04) translateY(-2px); }
-    .btn-bounce:active { transform: scale(.97); box-shadow: 2px 2px 0px #0a0a0a !important; }
-
-    @keyframes wobble {
-      0%  { transform: rotate(0deg); }
-      25% { transform: rotate(-4deg); }
-      75% { transform: rotate(4deg); }
-      100%{ transform: rotate(0deg); }
-    }
-    .btn-wobble:hover { animation: wobble .5s ease-in-out; }
-
-    input {
-      font-family: 'DM Sans', sans-serif;
-      border: 4px solid #0a0a0a; border-radius: 0; outline: none; background: #fff;
-      width: 100%; padding: 12px 14px; font-size: 14px; font-weight: 500;
-      transition: box-shadow .15s ease;
-    }
-    input:focus { box-shadow: 4px 4px 0px #0a0a0a; }
-
-    @keyframes float { 0%,100%{ transform:translateY(0) rotate(0deg); } 50%{ transform:translateY(-10px) rotate(2deg); } }
-    .sticker { animation: float 5s ease-in-out infinite; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#F8F4E8;--ink:#09090B;--acid:#D2E823;}
+    body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;cursor:none;display:flex;align-items:center;justify-content:center;padding:20px;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.03;pointer-events:none;z-index:9999;}
+    #cursor{position:fixed;width:32px;height:32px;border-radius:100%;background:white;mix-blend-mode:difference;pointer-events:none;z-index:99998;left:0;top:0;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
+    .btn-hard{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:var(--acid);padding:16px 32px;border-radius:12px;border:2px solid var(--ink);box-shadow:4px 4px 0 0 var(--ink);font-family:'Dela Gothic One',sans-serif;font-size:.9rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s;letter-spacing:.02em;width:100%;}
+    .btn-hard:hover{transform:translate(2px,2px);box-shadow:0 0 0 0 var(--ink);}
+    .btn-hard:active{transform:translateY(4px);}
+    input{font-family:'Space Grotesk',sans-serif;border:2px solid var(--ink);border-radius:8px;outline:none;background:#fff;color:var(--ink);width:100%;padding:12px 14px;font-size:14px;font-weight:500;transition:box-shadow .15s;}
+    input::placeholder{color:#aaa;}
+    input:focus{box-shadow:4px 4px 0 0 var(--ink);}
+    label{display:block;font-family:'Dela Gothic One',sans-serif;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;color:var(--ink);}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
   </style>
 </head>
 <body>
-  <div class="w-full max-w-sm">
+<div id="cursor"></div>
+<div style="width:100%;max-width:400px;">
+  <a href="/" style="display:inline-flex;align-items:center;gap:6px;font-family:'Dela Gothic One';font-size:.7rem;text-transform:uppercase;color:#888;text-decoration:none;margin-bottom:20px;letter-spacing:.05em;border:2px solid #ddd;border-radius:8px;padding:8px 14px;transition:border-color .1s,color .1s;" onmouseenter="this.style.borderColor='var(--ink)';this.style.color='var(--ink)'" onmouseleave="this.style.borderColor='#ddd';this.style.color='#888'">← INÍCIO</a>
 
-    <!-- Floating stickers -->
-    <div style="position:fixed;top:8%;left:5%;background:#ff0099;border:3px solid #0a0a0a;border-radius:12px;box-shadow:4px 4px 0px #0a0a0a;padding:10px;font-size:1.6rem;transform:rotate(-8deg);z-index:0;" class="sticker">🙏</div>
-    <div style="position:fixed;bottom:10%;right:6%;background:#7000ff;border:3px solid #0a0a0a;border-radius:12px;box-shadow:4px 4px 0px #0a0a0a;padding:10px;font-size:1.6rem;transform:rotate(7deg);animation-delay:1s;z-index:0;" class="sticker">📖</div>
-    <div style="position:fixed;top:15%;right:8%;background:#0a0a0a;border:3px solid #0a0a0a;border-radius:12px;box-shadow:4px 4px 0px rgba(0,0,0,.3);padding:8px 12px;font-family:'Space Grotesk';font-weight:800;font-size:11px;color:#ccff00;transform:rotate(4deg);animation-delay:2s;z-index:0;" class="sticker">grátis!</div>
-
-    <!-- Card -->
-    <div style="background:#fff;border:4px solid #0a0a0a;box-shadow:8px 8px 0px #0a0a0a;position:relative;z-index:10;">
-      <!-- Header strip -->
-      <div style="background:#0a0a0a;padding:20px 24px;display:flex;align-items:center;gap:12px;">
-        <a href="/" style="background:#ccff00;border:3px solid #ccff00;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:16px;text-decoration:none;" class="btn-bounce">📖</a>
-        <div>
-          <p style="font-family:'Space Grotesk';font-weight:900;color:#fff;font-size:1rem;letter-spacing:-.02em;">versozap</p>
-          <p style="color:#ccff00;font-size:11px;font-weight:600;">painel de leitura</p>
-        </div>
-      </div>
-
-      <div style="padding:28px 24px;">
-        <h1 style="font-family:'Space Grotesk';font-weight:900;font-size:2.2rem;line-height:1;letter-spacing:-.04em;" class="mb-1">entrar</h1>
-        <p style="color:#666;font-size:.875rem;font-weight:500;" class="mb-6">acesse seu painel de leitura bíblica</p>
-
-        <!-- Alert -->
-        <div id="alert" style="display:none;background:#ff0099;border:3px solid #0a0a0a;padding:10px 14px;margin-bottom:16px;font-size:13px;font-weight:600;color:#fff;box-shadow:3px 3px 0px #0a0a0a;"></div>
-
-        <form id="form-login" style="display:flex;flex-direction:column;gap:14px;">
-          <div>
-            <label style="display:block;font-family:'Space Grotesk';font-weight:800;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;">email</label>
-            <input id="email" type="email" autocomplete="email" required placeholder="seu@email.com">
-          </div>
-          <div>
-            <label style="display:block;font-family:'Space Grotesk';font-weight:800;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;">senha</label>
-            <input id="senha" type="password" autocomplete="current-password" required placeholder="••••••••">
-          </div>
-          <button type="submit" id="btn-login"
-            style="background:#0a0a0a;color:#ccff00;border:4px solid #0a0a0a;border-radius:0;box-shadow:6px 6px 0px rgba(0,0,0,.3);padding:14px;font-family:'Space Grotesk';font-weight:900;font-size:1rem;letter-spacing:-.01em;cursor:pointer;margin-top:4px;"
-            class="btn-bounce btn-wobble w-full">
-            entrar →
-          </button>
-        </form>
-
-        <!-- Divider -->
-        <div style="display:flex;align-items:center;gap:10px;margin:20px 0;">
-          <div style="flex:1;height:3px;background:#0a0a0a;"></div>
-          <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">ou</span>
-          <div style="flex:1;height:3px;background:#0a0a0a;"></div>
-        </div>
-
-        <!-- Social buttons -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;">
-          <button onclick="loginSocial('google')"
-            style="background:#fff;border:3px solid #0a0a0a;box-shadow:3px 3px 0px #0a0a0a;padding:10px;display:flex;align-items:center;justify-content:center;gap:6px;font-family:'DM Sans';font-weight:600;font-size:12px;cursor:pointer;"
-            class="btn-bounce">
-            <svg width="14" height="14" viewBox="0 0 24 24"><path fill="#EA4335" d="M5.27 9.76A7.08 7.08 0 0 1 19 10.5h-7v3h4a4 4 0 0 1-6.12 2.17L5.27 9.76Z"/><path fill="#4285F4" d="M5.27 9.76 1.5 7.1A11.47 11.47 0 0 0 .5 12c0 1.85.45 3.6 1.24 5.14l3.9-2.94A7 7 0 0 1 5 12c0-.77.1-1.54.27-2.24Z"/><path fill="#FBBC05" d="M12 4.93c1.86 0 3.54.64 4.86 1.69L19.82 3.6A11.47 11.47 0 0 0 12 .5a11.47 11.47 0 0 0-10.5 6.6l3.77 2.66A7.08 7.08 0 0 1 12 4.93Z"/><path fill="#34A853" d="M12 19.07c-2.43 0-4.55-1.22-5.83-3.07l-3.9 2.93A11.47 11.47 0 0 0 12 23.5c2.93 0 5.65-1.06 7.73-2.8L16 17.81A7 7 0 0 1 12 19.07Z"/></svg>
-            Google
-          </button>
-          <button onclick="loginSocial('facebook')"
-            style="background:#fff;border:3px solid #0a0a0a;box-shadow:3px 3px 0px #0a0a0a;padding:10px;display:flex;align-items:center;justify-content:center;gap:6px;font-family:'DM Sans';font-weight:600;font-size:12px;cursor:pointer;"
-            class="btn-bounce">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073C24 5.41 18.627 0 12 0S0 5.41 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.514c-1.49 0-1.955.927-1.955 1.877v2.255h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073Z"/></svg>
-            Facebook
-          </button>
-        </div>
-
-        <p style="text-align:center;font-size:13px;font-weight:500;">
-          ainda não tem conta?
-          <a href="/signup.html" style="font-family:'Space Grotesk';font-weight:800;color:#7000ff;text-decoration:none;border-bottom:2px solid #7000ff;">criar conta grátis →</a>
-        </p>
-      </div>
+  <div style="background:#fff;border:2px solid var(--ink);border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 0 var(--ink);">
+    <div style="background:var(--ink);padding:24px 28px;">
+      <a href="/" style="font-family:'Dela Gothic One';font-size:1.1rem;color:var(--acid);text-decoration:none;display:block;margin-bottom:4px;">VERSOZAP</a>
+      <p style="color:#666;font-size:.78rem;font-weight:500;">acesse seu painel pessoal</p>
     </div>
-
-    <p style="text-align:center;margin-top:16px;position:relative;z-index:10;">
-      <a href="/" style="font-size:12px;font-weight:600;color:#0a0a0a;text-decoration:none;opacity:.6;">← voltar ao início</a>
-    </p>
+    <div style="padding:28px;">
+      <h1 style="font-family:'Dela Gothic One';font-size:2.4rem;text-transform:uppercase;letter-spacing:-.02em;margin-bottom:4px;">ENTRAR</h1>
+      <p style="color:#888;font-size:.875rem;font-weight:500;margin-bottom:24px;">bem-vindo de volta</p>
+      <div id="alert" style="display:none;background:var(--ink);color:var(--acid);border:2px solid var(--ink);border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;font-weight:600;box-shadow:3px 3px 0 0 var(--ink);"></div>
+      <form id="form-login" style="display:flex;flex-direction:column;gap:14px;">
+        <div>
+          <label>E-MAIL</label>
+          <input id="email" type="email" autocomplete="email" required placeholder="seu@email.com">
+        </div>
+        <div>
+          <label>SENHA</label>
+          <input id="senha" type="password" autocomplete="current-password" required placeholder="••••••••">
+        </div>
+        <button type="submit" id="btn-login" class="btn-hard" style="margin-top:4px;font-size:.9rem;">ENTRAR →</button>
+      </form>
+      <div style="margin-top:20px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <hr style="flex:1;border:none;border-top:1px solid #e8e4d8;">
+          <span style="font-size:11px;color:#aaa;font-weight:600;font-family:monospace;">OU</span>
+          <hr style="flex:1;border:none;border-top:1px solid #e8e4d8;">
+        </div>
+        <button onclick="alert('em breve')" style="width:100%;border:2px solid var(--ink);border-radius:8px;padding:12px;background:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Space Grotesk';font-weight:600;font-size:.82rem;cursor:pointer;box-shadow:2px 2px 0 0 var(--ink);transition:transform .1s,box-shadow .1s;" onmouseenter="this.style.transform='translate(2px,2px)';this.style.boxShadow='0 0 0 0'" onmouseleave="this.style.transform='';this.style.boxShadow='2px 2px 0 0 #09090B'">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="17" height="17" alt="G">
+          Continuar com Google <span style="font-size:.7rem;color:#aaa;background:#f5f5f5;padding:2px 6px;border-radius:4px;margin-left:4px;">em breve</span>
+        </button>
+      </div>
+      <p style="text-align:center;font-size:13px;color:#888;margin-top:20px;font-weight:500;">não tem conta? <a href="/signup.html" style="font-family:'Dela Gothic One';font-size:.72rem;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--ink);letter-spacing:.02em;">CRIAR CONTA →</a></p>
+    </div>
   </div>
+</div>
 
-  <script>
-    if (localStorage.getItem('userToken')) window.location.replace('/meu-plano.html');
-
-    const alertEl = document.getElementById('alert');
-
-    function showAlert(msg) {
-      alertEl.textContent = msg;
-      alertEl.style.display = 'block';
-    }
-
-    function loginSocial(p) { showAlert('login social em breve. use email e senha por enquanto.'); }
-
-    document.getElementById('form-login').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = document.getElementById('btn-login');
-      btn.disabled = true;
-      btn.textContent = 'entrando...';
-      alertEl.style.display = 'none';
-
-      try {
-        const r = await fetch('/api/usuario/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email: document.getElementById('email').value,
-            senha: document.getElementById('senha').value,
-          }),
-        });
-        const d = await r.json();
-        if (!r.ok) { showAlert(d.erro || 'erro ao fazer login'); return; }
-
-        localStorage.setItem('userToken', d.token);
-        localStorage.setItem('userEmail', d.email);
-        localStorage.setItem('userName', d.nome || '');
-        window.location.replace('/meu-plano.html');
-      } catch {
-        showAlert('erro de conexão com o servidor');
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'entrar →';
-      }
-    });
-  </script>
+<script>
+  if (localStorage.getItem('userToken')) window.location.replace('/meu-plano.html');
+  const alertEl = document.getElementById('alert');
+  function showAlert(msg){alertEl.textContent=msg;alertEl.style.display='block';}
+  document.getElementById('form-login').addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = document.getElementById('btn-login');
+    btn.disabled=true; btn.textContent='ENTRANDO...'; alertEl.style.display='none';
+    try {
+      const r = await fetch('/api/usuario/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:document.getElementById('email').value,senha:document.getElementById('senha').value})});
+      const d = await r.json();
+      if(!r.ok){showAlert(d.erro||'erro ao fazer login');return;}
+      localStorage.setItem('userToken',d.token);
+      localStorage.setItem('userEmail',d.email);
+      if(d.nome)localStorage.setItem('userName',d.nome);
+      window.location.replace('/meu-plano.html');
+    } catch { showAlert('erro de conexão com o servidor'); }
+    finally { btn.disabled=false; btn.textContent='ENTRAR →'; }
+  });
+  const cursor=document.getElementById('cursor');
+  let cx=-100,cy=-100,tx=-100,ty=-100;
+  document.addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY;});
+  function lerp(a,b,t){return a+(b-a)*t;}
+  (function loop(){cx=lerp(cx,tx,.2);cy=lerp(cy,ty,.2);cursor.style.left=cx+'px';cursor.style.top=cy+'px';requestAnimationFrame(loop);})();
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cursor.style.width='80px';cursor.style.height='80px';});
+    el.addEventListener('mouseleave',()=>{cursor.style.width='32px';cursor.style.height='32px';});
+  });
+</script>
 </body>
 </html>
