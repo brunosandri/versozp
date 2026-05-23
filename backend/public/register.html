@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -7,33 +7,33 @@
   <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    :root{--bg:#09090B;--ink:#F8F4E8;--acid:#D2E823;}
+    :root{--bg:#0D1117;--ink:#F5F5F5;--accent:#25D366;}
     body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;cursor:none;display:flex;align-items:center;justify-content:center;padding:20px;}
     body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.03;pointer-events:none;z-index:9999;}
     #cursor{position:fixed;width:32px;height:32px;border-radius:100%;background:white;mix-blend-mode:difference;pointer-events:none;z-index:99998;left:0;top:0;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
-    .btn-acid{display:inline-flex;align-items:center;justify-content:center;background:var(--acid);color:#09090B;padding:16px 32px;border-radius:12px;border:2px solid var(--acid);box-shadow:4px 4px 0 0 var(--acid);font-family:'Dela Gothic One',sans-serif;font-size:.9rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s;letter-spacing:.02em;width:100%;}
-    .btn-acid:hover{transform:translate(2px,2px);box-shadow:0 0 0 0 var(--acid);}
+    .btn-acid{display:inline-flex;align-items:center;justify-content:center;background:var(--accent);color:#0D1117;padding:16px 32px;border-radius:12px;border:2px solid var(--accent);box-shadow:4px 4px 0 0 var(--accent);font-family:'Dela Gothic One',sans-serif;font-size:.9rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s;letter-spacing:.02em;width:100%;}
+    .btn-acid:hover{transform:translate(2px,2px);box-shadow:0 0 0 0 var(--accent);}
     .btn-acid:active{transform:translateY(4px);}
-    input{font-family:'Space Grotesk',sans-serif;border:2px solid #2a2a25;border-radius:8px;outline:none;background:#141410;color:var(--ink);width:100%;padding:12px 14px;font-size:14px;font-weight:500;transition:border-color .15s,box-shadow .15s;}
+    input{font-family:'Space Grotesk',sans-serif;border:2px solid #30363D;border-radius:8px;outline:none;background:#161B22;color:var(--ink);width:100%;padding:12px 14px;font-size:14px;font-weight:500;transition:border-color .15s,box-shadow .15s;}
     input::placeholder{color:#555;}
-    input:focus{border-color:var(--acid);box-shadow:3px 3px 0 0 var(--acid);}
+    input:focus{border-color:var(--accent);box-shadow:3px 3px 0 0 var(--accent);}
     label{display:block;font-family:'Dela Gothic One',sans-serif;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;color:#888;}
   </style>
 </head>
 <body>
 <div id="cursor"></div>
 <div style="width:100%;max-width:400px;">
-  <a href="/" style="display:inline-flex;align-items:center;gap:6px;font-family:'Dela Gothic One';font-size:.7rem;text-transform:uppercase;color:#555;text-decoration:none;margin-bottom:20px;letter-spacing:.05em;border:2px solid #2a2a25;border-radius:8px;padding:8px 14px;transition:border-color .1s,color .1s;" onmouseenter="this.style.borderColor='var(--acid)';this.style.color='var(--acid)'" onmouseleave="this.style.borderColor='#2a2a25';this.style.color='#555'">← INÍCIO</a>
+  <a href="/" style="display:inline-flex;align-items:center;gap:6px;font-family:'Dela Gothic One';font-size:.7rem;text-transform:uppercase;color:#555;text-decoration:none;margin-bottom:20px;letter-spacing:.05em;border:2px solid #30363D;border-radius:8px;padding:8px 14px;transition:border-color .1s,color .1s;" onmouseenter="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseleave="this.style.borderColor='#30363D';this.style.color='#555'">← INÍCIO</a>
 
-  <div style="background:#141410;border:2px solid var(--acid);border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 0 var(--acid);">
-    <div style="background:var(--acid);padding:24px 28px;border-bottom:2px solid var(--acid);">
-      <a href="/" style="font-family:'Dela Gothic One';font-size:1.1rem;color:#09090B;text-decoration:none;display:block;margin-bottom:4px;">VERSOZAP</a>
+  <div style="background:#161B22;border:2px solid var(--accent);border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 0 var(--accent);">
+    <div style="background:var(--accent);padding:24px 28px;border-bottom:2px solid var(--accent);">
+      <a href="/" style="font-family:'Dela Gothic One';font-size:1.1rem;color:#0D1117;text-decoration:none;display:block;margin-bottom:4px;">VERSOZAP</a>
       <p style="color:#444;font-size:.78rem;font-weight:500;">configuração inicial do admin</p>
     </div>
     <div style="padding:28px;">
       <h1 style="font-family:'Dela Gothic One';font-size:2.4rem;text-transform:uppercase;letter-spacing:-.02em;margin-bottom:4px;color:var(--ink);">CRIAR CONTA</h1>
       <p style="color:#666;font-size:.875rem;font-weight:500;margin-bottom:24px;">somente para o primeiro acesso administrativo</p>
-      <div id="alert" style="display:none;background:#09090B;color:var(--acid);border:2px solid var(--acid);border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;font-weight:600;box-shadow:3px 3px 0 0 var(--acid);"></div>
+      <div id="alert" style="display:none;background:#0D1117;color:var(--accent);border:2px solid var(--accent);border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;font-weight:600;box-shadow:3px 3px 0 0 var(--accent);"></div>
       <form id="form-register" style="display:flex;flex-direction:column;gap:14px;">
         <div>
           <label>E-MAIL</label>
@@ -49,7 +49,7 @@
         </div>
         <button type="submit" id="btn" class="btn-acid" style="margin-top:4px;font-size:.9rem;">CRIAR CONTA ADMIN →</button>
       </form>
-      <p style="text-align:center;font-size:13px;color:#555;margin-top:20px;font-weight:500;">já tem conta? <a href="/admin.html" style="font-family:'Dela Gothic One';font-size:.7rem;color:var(--acid);text-decoration:none;border-bottom:2px solid var(--acid);letter-spacing:.02em;">FAZER LOGIN →</a></p>
+      <p style="text-align:center;font-size:13px;color:#555;margin-top:20px;font-weight:500;">já tem conta? <a href="/admin.html" style="font-family:'Dela Gothic One';font-size:.7rem;color:var(--accent);text-decoration:none;border-bottom:2px solid var(--accent);letter-spacing:.02em;">FAZER LOGIN →</a></p>
     </div>
   </div>
 </div>
@@ -59,9 +59,9 @@
   const alertEl = document.getElementById('alert');
   function showAlert(msg, ok=false){
     alertEl.textContent=msg;
-    alertEl.style.background=ok?'var(--acid)':'#09090B';
-    alertEl.style.color=ok?'#09090B':'var(--acid)';
-    alertEl.style.borderColor=ok?'var(--acid)':'var(--acid)';
+    alertEl.style.background=ok?'var(--accent)':'#0D1117';
+    alertEl.style.color=ok?'#0D1117':'var(--accent)';
+    alertEl.style.borderColor=ok?'var(--accent)':'var(--accent)';
     alertEl.style.display='block';
   }
   document.getElementById('form-register').addEventListener('submit', async e => {

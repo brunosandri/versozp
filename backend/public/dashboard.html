@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -7,14 +7,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    :root{--bg:#09090B;--ink:#F8F4E8;--acid:#D2E823;}
+    :root{--bg:#0D1117;--ink:#F5F5F5;--accent:#25D366;}
     body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;cursor:none;}
     body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.03;pointer-events:none;z-index:9999;}
     #cursor{position:fixed;width:32px;height:32px;border-radius:100%;background:white;mix-blend-mode:difference;pointer-events:none;z-index:99998;left:0;top:0;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
-    input,select{font-family:'Space Grotesk',sans-serif;border:2px solid #2a2a25;border-radius:8px;outline:none;background:#1a1a17;color:var(--ink);width:100%;padding:9px 12px;font-size:13px;font-weight:500;transition:border-color .15s,box-shadow .15s;}
+    input,select{font-family:'Space Grotesk',sans-serif;border:2px solid #30363D;border-radius:8px;outline:none;background:#1C2128;color:var(--ink);width:100%;padding:9px 12px;font-size:13px;font-weight:500;transition:border-color .15s,box-shadow .15s;}
     input::placeholder{color:#555;}
-    select option{background:#1a1a17;}
-    input:focus,select:focus{border-color:var(--acid);box-shadow:3px 3px 0 0 var(--acid);}
+    select option{background:#1C2128;}
+    input:focus,select:focus{border-color:var(--accent);box-shadow:3px 3px 0 0 var(--accent);}
     label{display:block;font-family:'Dela Gothic One',sans-serif;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px;color:#666;}
   </style>
 </head>
@@ -22,12 +22,12 @@
 <div id="cursor"></div>
 
 <!-- Nav -->
-<nav style="background:#141410;border-bottom:2px solid var(--acid);position:sticky;top:0;z-index:20;">
+<nav style="background:#161B22;border-bottom:2px solid var(--accent);position:sticky;top:0;z-index:20;">
   <div style="max-width:1100px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;">
     <a href="/" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
-      <span style="background:var(--acid);border:2px solid var(--acid);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:14px;">📖</span>
-      <span style="font-family:'Dela Gothic One';color:#F8F4E8;font-size:.9rem;letter-spacing:.02em;">VERSOZAP</span>
-      <span style="font-family:'Dela Gothic One';font-size:.55rem;color:var(--acid);border:2px solid var(--acid);padding:2px 8px;border-radius:4px;letter-spacing:.05em;">ADMIN</span>
+      <span style="background:var(--accent);border:2px solid var(--accent);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:14px;">📖</span>
+      <span style="font-family:'Dela Gothic One';color:#F5F5F5;font-size:.9rem;letter-spacing:.02em;">VERSOZAP</span>
+      <span style="font-family:'Dela Gothic One';font-size:.55rem;color:var(--accent);border:2px solid var(--accent);padding:2px 8px;border-radius:4px;letter-spacing:.05em;">ADMIN</span>
     </a>
     <div style="display:flex;align-items:center;gap:12px;">
       <span id="nav-email" style="font-size:12px;font-weight:600;color:#555;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
@@ -39,20 +39,20 @@
 <div style="max-width:1100px;margin:0 auto;padding:28px 20px;">
 
   <!-- Tabs -->
-  <div style="display:flex;gap:4px;margin-bottom:28px;background:#141410;border:2px solid #2a2a25;border-radius:10px;padding:4px;width:fit-content;">
-    <button onclick="showTab('whatsapp')" id="tab-whatsapp" style="padding:10px 20px;font-family:'Dela Gothic One';font-size:.78rem;letter-spacing:.02em;cursor:pointer;border:none;border-radius:7px;transition:all .15s;background:var(--acid);color:#09090B;box-shadow:2px 2px 0 0 rgba(0,0,0,.3);text-transform:uppercase;">📱 WHATSAPP</button>
+  <div style="display:flex;gap:4px;margin-bottom:28px;background:#161B22;border:2px solid #30363D;border-radius:10px;padding:4px;width:fit-content;">
+    <button onclick="showTab('whatsapp')" id="tab-whatsapp" style="padding:10px 20px;font-family:'Dela Gothic One';font-size:.78rem;letter-spacing:.02em;cursor:pointer;border:none;border-radius:7px;transition:all .15s;background:var(--accent);color:#0D1117;box-shadow:2px 2px 0 0 rgba(0,0,0,.3);text-transform:uppercase;">📱 WHATSAPP</button>
     <button onclick="showTab('assinantes')" id="tab-assinantes" style="padding:10px 20px;font-family:'Dela Gothic One';font-size:.78rem;letter-spacing:.02em;cursor:pointer;border:none;border-radius:7px;transition:all .15s;background:transparent;color:#555;text-transform:uppercase;">👥 ASSINANTES</button>
     <button onclick="showTab('stats')" id="tab-stats" style="padding:10px 20px;font-family:'Dela Gothic One';font-size:.78rem;letter-spacing:.02em;cursor:pointer;border:none;border-radius:7px;transition:all .15s;background:transparent;color:#555;text-transform:uppercase;">📊 ESTATÍSTICAS</button>
   </div>
 
   <!-- Tab: WhatsApp -->
   <div id="section-whatsapp" style="display:flex;flex-direction:column;gap:16px;">
-    <div style="background:#141410;border:2px solid #2a2a25;border-radius:14px;overflow:hidden;box-shadow:4px 4px 0 0 var(--acid);">
-      <div style="background:var(--acid);padding:14px 20px;border-bottom:2px solid #09090B;display:flex;align-items:center;justify-content:space-between;">
-        <h2 style="font-family:'Dela Gothic One';font-size:.9rem;color:#09090B;text-transform:uppercase;letter-spacing:.02em;">CONEXÃO WHATSAPP</h2>
+    <div style="background:#161B22;border:2px solid #30363D;border-radius:14px;overflow:hidden;box-shadow:4px 4px 0 0 var(--accent);">
+      <div style="background:var(--accent);padding:14px 20px;border-bottom:2px solid #0D1117;display:flex;align-items:center;justify-content:space-between;">
+        <h2 style="font-family:'Dela Gothic One';font-size:.9rem;color:#0D1117;text-transform:uppercase;letter-spacing:.02em;">CONEXÃO WHATSAPP</h2>
         <div style="display:flex;gap:8px;">
-          <a href="/whatsapp.html" style="background:#09090B;color:var(--acid);border:2px solid #09090B;padding:6px 14px;font-family:'Dela Gothic One';font-weight:800;font-size:.6rem;text-decoration:none;border-radius:6px;transition:transform .1s;letter-spacing:.02em;" onmouseenter="this.style.transform='translate(2px,2px)'" onmouseleave="this.style.transform=''">VER QR CODE →</a>
-          <button onclick="reconectar()" id="btn-reconectar" style="background:transparent;border:2px solid #09090B;color:#09090B;padding:6px 14px;font-family:'Dela Gothic One';font-size:.6rem;cursor:pointer;border-radius:6px;transition:transform .1s;letter-spacing:.02em;" onmouseenter="this.style.transform='translate(2px,2px)'" onmouseleave="this.style.transform=''">RECONECTAR</button>
+          <a href="/whatsapp.html" style="background:#0D1117;color:var(--accent);border:2px solid #0D1117;padding:6px 14px;font-family:'Dela Gothic One';font-weight:800;font-size:.6rem;text-decoration:none;border-radius:6px;transition:transform .1s;letter-spacing:.02em;" onmouseenter="this.style.transform='translate(2px,2px)'" onmouseleave="this.style.transform=''">VER QR CODE →</a>
+          <button onclick="reconectar()" id="btn-reconectar" style="background:transparent;border:2px solid #0D1117;color:#0D1117;padding:6px 14px;font-family:'Dela Gothic One';font-size:.6rem;cursor:pointer;border-radius:6px;transition:transform .1s;letter-spacing:.02em;" onmouseenter="this.style.transform='translate(2px,2px)'" onmouseleave="this.style.transform=''">RECONECTAR</button>
         </div>
       </div>
       <div style="padding:20px;">
@@ -62,14 +62,14 @@
         </div>
         <div id="wa-qr-container" style="display:none;text-align:center;">
           <p style="font-size:13px;color:#888;margin-bottom:12px;">escaneie com o whatsapp do número que vai enviar os versículos</p>
-          <div style="display:inline-block;background:#fff;border:3px solid var(--acid);border-radius:8px;padding:8px;box-shadow:5px 5px 0 0 var(--acid);">
+          <div style="display:inline-block;background:#fff;border:3px solid var(--accent);border-radius:8px;padding:8px;box-shadow:5px 5px 0 0 var(--accent);">
             <img id="wa-qr" src="" alt="QR Code" style="width:200px;height:200px;display:block;object-fit:contain;">
           </div>
         </div>
-        <div id="wa-conectado" style="display:none;background:#09090B;border:2px solid var(--acid);border-radius:8px;padding:14px 18px;text-align:center;box-shadow:3px 3px 0 0 var(--acid);">
-          <p style="font-family:'Dela Gothic One';font-size:.82rem;color:var(--acid);text-transform:uppercase;letter-spacing:.02em;">✅ WHATSAPP CONECTADO E PRONTO PARA ENVIAR!</p>
+        <div id="wa-conectado" style="display:none;background:#0D1117;border:2px solid var(--accent);border-radius:8px;padding:14px 18px;text-align:center;box-shadow:3px 3px 0 0 var(--accent);">
+          <p style="font-family:'Dela Gothic One';font-size:.82rem;color:var(--accent);text-transform:uppercase;letter-spacing:.02em;">✅ WHATSAPP CONECTADO E PRONTO PARA ENVIAR!</p>
         </div>
-        <div id="wa-erro" style="display:none;background:#141410;border:2px solid #DC2626;border-radius:8px;padding:14px 18px;">
+        <div id="wa-erro" style="display:none;background:#161B22;border:2px solid #DC2626;border-radius:8px;padding:14px 18px;">
           <p style="font-family:'Dela Gothic One';font-size:.75rem;font-weight:600;color:#DC2626;text-transform:uppercase;" id="wa-erro-msg"></p>
         </div>
       </div>
@@ -80,12 +80,12 @@
   <div id="section-assinantes" style="display:none;flex-direction:column;gap:16px;">
 
     <!-- Add form -->
-    <div style="background:#141410;border:2px solid #2a2a25;border-radius:14px;overflow:hidden;box-shadow:4px 4px 0 0 var(--acid);">
-      <div style="background:var(--acid);padding:14px 20px;border-bottom:2px solid #09090B;">
-        <h2 style="font-family:'Dela Gothic One';font-size:.9rem;color:#09090B;text-transform:uppercase;letter-spacing:.02em;">ADICIONAR ASSINANTE</h2>
+    <div style="background:#161B22;border:2px solid #30363D;border-radius:14px;overflow:hidden;box-shadow:4px 4px 0 0 var(--accent);">
+      <div style="background:var(--accent);padding:14px 20px;border-bottom:2px solid #0D1117;">
+        <h2 style="font-family:'Dela Gothic One';font-size:.9rem;color:#0D1117;text-transform:uppercase;letter-spacing:.02em;">ADICIONAR ASSINANTE</h2>
       </div>
       <div style="padding:20px;">
-        <div id="alert-add" style="display:none;border:2px solid var(--acid);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px;font-weight:600;"></div>
+        <div id="alert-add" style="display:none;border:2px solid var(--accent);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px;font-weight:600;"></div>
         <form id="form-add" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
           <div>
             <label>NOME</label>
@@ -113,17 +113,17 @@
             </select>
           </div>
           <div style="display:flex;align-items:flex-end;">
-            <button type="submit" style="background:var(--acid);color:#09090B;border:2px solid var(--acid);border-radius:8px;padding:10px;font-family:'Dela Gothic One';font-size:.72rem;cursor:pointer;width:100%;box-shadow:3px 3px 0 0 rgba(210,232,35,.3);transition:transform .1s,box-shadow .1s;letter-spacing:.02em;text-transform:uppercase;" onmouseenter="this.style.transform='translate(2px,2px)';this.style.boxShadow='0 0 0 0'" onmouseleave="this.style.transform='';this.style.boxShadow='3px 3px 0 0 rgba(210,232,35,.3)'">ADICIONAR →</button>
+            <button type="submit" style="background:var(--accent);color:#0D1117;border:2px solid var(--accent);border-radius:8px;padding:10px;font-family:'Dela Gothic One';font-size:.72rem;cursor:pointer;width:100%;box-shadow:3px 3px 0 0 rgba(37,211,102,.3);transition:transform .1s,box-shadow .1s;letter-spacing:.02em;text-transform:uppercase;" onmouseenter="this.style.transform='translate(2px,2px)';this.style.boxShadow='0 0 0 0'" onmouseleave="this.style.transform='';this.style.boxShadow='3px 3px 0 0 rgba(37,211,102,.3)'">ADICIONAR →</button>
           </div>
         </form>
       </div>
     </div>
 
     <!-- Subscriber list -->
-    <div style="background:#141410;border:2px solid #2a2a25;border-radius:14px;overflow:hidden;">
-      <div style="background:#1a1a17;padding:14px 20px;border-bottom:2px solid #2a2a25;display:flex;align-items:center;justify-content:space-between;">
-        <h2 style="font-family:'Dela Gothic One';font-size:.9rem;color:#F8F4E8;text-transform:uppercase;letter-spacing:.02em;">ASSINANTES</h2>
-        <button onclick="carregarUsuarios()" style="background:transparent;border:2px solid #2a2a25;color:#666;padding:5px 12px;border-radius:6px;font-family:'Dela Gothic One';font-size:.6rem;cursor:pointer;letter-spacing:.02em;transition:border-color .1s,color .1s;" onmouseenter="this.style.borderColor='var(--acid)';this.style.color='var(--acid)'" onmouseleave="this.style.borderColor='#2a2a25';this.style.color='#666'">↻ ATUALIZAR</button>
+    <div style="background:#161B22;border:2px solid #30363D;border-radius:14px;overflow:hidden;">
+      <div style="background:#1C2128;padding:14px 20px;border-bottom:2px solid #30363D;display:flex;align-items:center;justify-content:space-between;">
+        <h2 style="font-family:'Dela Gothic One';font-size:.9rem;color:#F5F5F5;text-transform:uppercase;letter-spacing:.02em;">ASSINANTES</h2>
+        <button onclick="carregarUsuarios()" style="background:transparent;border:2px solid #30363D;color:#666;padding:5px 12px;border-radius:6px;font-family:'Dela Gothic One';font-size:.6rem;cursor:pointer;letter-spacing:.02em;transition:border-color .1s,color .1s;" onmouseenter="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseleave="this.style.borderColor='#30363D';this.style.color='#666'">↻ ATUALIZAR</button>
       </div>
       <div id="lista-usuarios" style="padding:12px;display:flex;flex-direction:column;gap:8px;">
         <p style="font-size:13px;color:#555;text-align:center;padding:20px;">carregando...</p>
@@ -134,20 +134,20 @@
   <!-- Tab: Stats -->
   <div id="section-stats" style="display:none;">
     <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;">
-      <div style="background:var(--acid);border:2px solid var(--acid);border-radius:14px;padding:28px;text-align:center;box-shadow:4px 4px 0 0 rgba(210,232,35,.3);transform:rotate(-.5deg);">
-        <div id="stat-ativos" style="font-family:'Dela Gothic One';font-size:3rem;color:#09090B;line-height:1;">—</div>
+      <div style="background:var(--accent);border:2px solid var(--accent);border-radius:14px;padding:28px;text-align:center;box-shadow:4px 4px 0 0 rgba(37,211,102,.3);transform:rotate(-.5deg);">
+        <div id="stat-ativos" style="font-family:'Dela Gothic One';font-size:3rem;color:#0D1117;line-height:1;">—</div>
         <div style="font-family:'Dela Gothic One';font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:#333;margin-top:8px;">ATIVOS</div>
       </div>
-      <div style="background:#141410;border:2px solid var(--acid);border-radius:14px;padding:28px;text-align:center;box-shadow:4px 4px 0 0 var(--acid);transform:rotate(.5deg);">
-        <div id="stat-inativos" style="font-family:'Dela Gothic One';font-size:3rem;color:var(--acid);line-height:1;">—</div>
+      <div style="background:#161B22;border:2px solid var(--accent);border-radius:14px;padding:28px;text-align:center;box-shadow:4px 4px 0 0 var(--accent);transform:rotate(.5deg);">
+        <div id="stat-inativos" style="font-family:'Dela Gothic One';font-size:3rem;color:var(--accent);line-height:1;">—</div>
         <div style="font-family:'Dela Gothic One';font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:#666;margin-top:8px;">INATIVOS</div>
       </div>
-      <div style="background:#1a1a17;border:2px solid #2a2a25;border-radius:14px;padding:28px;text-align:center;box-shadow:4px 4px 0 0 #2a2a25;transform:rotate(-.3deg);">
-        <div id="stat-hoje" style="font-family:'Dela Gothic One';font-size:3rem;color:var(--acid);line-height:1;">—</div>
+      <div style="background:#1C2128;border:2px solid #30363D;border-radius:14px;padding:28px;text-align:center;box-shadow:4px 4px 0 0 #30363D;transform:rotate(-.3deg);">
+        <div id="stat-hoje" style="font-family:'Dela Gothic One';font-size:3rem;color:var(--accent);line-height:1;">—</div>
         <div style="font-family:'Dela Gothic One';font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:#666;margin-top:8px;">ENVIOS HOJE</div>
       </div>
-      <div style="background:var(--acid);border:2px solid var(--acid);border-radius:14px;padding:28px;text-align:center;box-shadow:4px 4px 0 0 rgba(210,232,35,.3);transform:rotate(.3deg);">
-        <div id="stat-taxa" style="font-family:'Dela Gothic One';font-size:3rem;color:#09090B;line-height:1;">—</div>
+      <div style="background:var(--accent);border:2px solid var(--accent);border-radius:14px;padding:28px;text-align:center;box-shadow:4px 4px 0 0 rgba(37,211,102,.3);transform:rotate(.3deg);">
+        <div id="stat-taxa" style="font-family:'Dela Gothic One';font-size:3rem;color:#0D1117;line-height:1;">—</div>
         <div style="font-family:'Dela Gothic One';font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:#333;margin-top:8px;">TAXA LEITURA</div>
       </div>
     </div>
@@ -157,13 +157,13 @@
 
 <!-- Modal editar -->
 <div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);align-items:center;justify-content:center;padding:16px;z-index:50;">
-  <div style="background:#141410;border:2px solid var(--acid);border-radius:14px;overflow:hidden;width:100%;max-width:420px;box-shadow:8px 8px 0 0 var(--acid);">
-    <div style="background:var(--acid);padding:14px 20px;border-bottom:2px solid #09090B;display:flex;align-items:center;justify-content:space-between;">
-      <h3 style="font-family:'Dela Gothic One';font-size:.88rem;color:#09090B;text-transform:uppercase;letter-spacing:.02em;">EDITAR ASSINANTE</h3>
-      <button onclick="fecharModal()" style="background:#09090B;color:var(--acid);border:none;width:28px;height:28px;border-radius:6px;font-size:16px;cursor:pointer;font-family:'Dela Gothic One';">✕</button>
+  <div style="background:#161B22;border:2px solid var(--accent);border-radius:14px;overflow:hidden;width:100%;max-width:420px;box-shadow:8px 8px 0 0 var(--accent);">
+    <div style="background:var(--accent);padding:14px 20px;border-bottom:2px solid #0D1117;display:flex;align-items:center;justify-content:space-between;">
+      <h3 style="font-family:'Dela Gothic One';font-size:.88rem;color:#0D1117;text-transform:uppercase;letter-spacing:.02em;">EDITAR ASSINANTE</h3>
+      <button onclick="fecharModal()" style="background:#0D1117;color:var(--accent);border:none;width:28px;height:28px;border-radius:6px;font-size:16px;cursor:pointer;font-family:'Dela Gothic One';">✕</button>
     </div>
     <div style="padding:20px;">
-      <div id="alert-edit" style="display:none;border:2px solid #DC2626;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px;font-weight:600;color:#DC2626;background:#141410;"></div>
+      <div id="alert-edit" style="display:none;border:2px solid #DC2626;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px;font-weight:600;color:#DC2626;background:#161B22;"></div>
       <form id="form-edit" style="display:flex;flex-direction:column;gap:12px;">
         <input type="hidden" id="edit-id">
         <div>
@@ -188,8 +188,8 @@
           </select>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;">
-          <button type="submit" style="background:var(--acid);color:#09090B;border:2px solid var(--acid);border-radius:8px;padding:11px;font-family:'Dela Gothic One';font-size:.72rem;cursor:pointer;box-shadow:3px 3px 0 0 rgba(210,232,35,.3);transition:transform .1s,box-shadow .1s;text-transform:uppercase;letter-spacing:.02em;" onmouseenter="this.style.transform='translate(2px,2px)';this.style.boxShadow='0 0 0 0'" onmouseleave="this.style.transform='';this.style.boxShadow='3px 3px 0 0 rgba(210,232,35,.3)'">SALVAR</button>
-          <button type="button" onclick="fecharModal()" style="background:transparent;color:#666;border:2px solid #2a2a25;border-radius:8px;padding:11px;font-family:'Dela Gothic One';font-size:.72rem;cursor:pointer;transition:border-color .1s,color .1s;text-transform:uppercase;letter-spacing:.02em;" onmouseenter="this.style.borderColor='#555';this.style.color='#F8F4E8'" onmouseleave="this.style.borderColor='#2a2a25';this.style.color='#666'">CANCELAR</button>
+          <button type="submit" style="background:var(--accent);color:#0D1117;border:2px solid var(--accent);border-radius:8px;padding:11px;font-family:'Dela Gothic One';font-size:.72rem;cursor:pointer;box-shadow:3px 3px 0 0 rgba(37,211,102,.3);transition:transform .1s,box-shadow .1s;text-transform:uppercase;letter-spacing:.02em;" onmouseenter="this.style.transform='translate(2px,2px)';this.style.boxShadow='0 0 0 0'" onmouseleave="this.style.transform='';this.style.boxShadow='3px 3px 0 0 rgba(37,211,102,.3)'">SALVAR</button>
+          <button type="button" onclick="fecharModal()" style="background:transparent;color:#666;border:2px solid #30363D;border-radius:8px;padding:11px;font-family:'Dela Gothic One';font-size:.72rem;cursor:pointer;transition:border-color .1s,color .1s;text-transform:uppercase;letter-spacing:.02em;" onmouseenter="this.style.borderColor='#555';this.style.color='#F5F5F5'" onmouseleave="this.style.borderColor='#30363D';this.style.color='#666'">CANCELAR</button>
         </div>
       </form>
     </div>
@@ -214,7 +214,7 @@
       const section=document.getElementById('section-'+t);
       section.style.display=t===tab?(t==='stats'?'block':'flex'):'none';
       const btn=document.getElementById('tab-'+t);
-      if(t===tab){btn.style.background='#D2E823';btn.style.color='#09090B';btn.style.boxShadow='2px 2px 0 0 rgba(0,0,0,.3)';}
+      if(t===tab){btn.style.background='#25D366';btn.style.color='#0D1117';btn.style.boxShadow='2px 2px 0 0 rgba(0,0,0,.3)';}
       else{btn.style.background='transparent';btn.style.color='#555';btn.style.boxShadow='none';}
     });
     if(tab==='assinantes'){carregarUsuarios();carregarPlanos();}
@@ -233,8 +233,8 @@
       const erro=document.getElementById('wa-erro');
       qrC.style.display='none'; ok.style.display='none'; erro.style.display='none';
       const statusMap={
-        conectado:{cor:'#D2E823',label:'CONECTADO'},
-        aguardando_qr:{cor:'#D2E823',label:'AGUARDANDO QR CODE'},
+        conectado:{cor:'#25D366',label:'CONECTADO'},
+        aguardando_qr:{cor:'#25D366',label:'AGUARDANDO QR CODE'},
         conectando:{cor:'#F59E0B',label:'CONECTANDO...'},
         reconectando:{cor:'#F59E0B',label:'RECONECTANDO...'},
         desconectado:{cor:'#555',label:'DESCONECTADO'},
@@ -285,20 +285,20 @@
         const progresso=u.total_dias?`dia ${u.dia_atual}/${u.total_dias}`:'—';
         const horario=u.horario_envio||'—';
         const nome=u.nome||u.telefone;
-        return `<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:2px solid ${ativo?'#2a2a25':'#1a1a17'};border-radius:8px;background:${ativo?'#1a1a17':'#111'};gap:10px;opacity:${ativo?'1':'.5'};">
+        return `<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:2px solid ${ativo?'#30363D':'#1C2128'};border-radius:8px;background:${ativo?'#1C2128':'#111'};gap:10px;opacity:${ativo?'1':'.5'};">
           <div style="flex:1;min-width:0;">
             <div style="display:flex;align-items:center;gap:6px;">
-              <span style="font-family:'Dela Gothic One';font-size:.78rem;color:#F8F4E8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-transform:uppercase;">${escHtml(nome)}</span>
-              ${ativo?'':'<span style="font-family:monospace;font-size:.6rem;color:#555;border:2px solid #2a2a25;border-radius:4px;padding:1px 6px;letter-spacing:.05em;">INATIVO</span>'}
+              <span style="font-family:'Dela Gothic One';font-size:.78rem;color:#F5F5F5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-transform:uppercase;">${escHtml(nome)}</span>
+              ${ativo?'':'<span style="font-family:monospace;font-size:.6rem;color:#555;border:2px solid #30363D;border-radius:4px;padding:1px 6px;letter-spacing:.05em;">INATIVO</span>'}
             </div>
             <div style="font-size:11px;color:#555;margin-top:3px;display:flex;flex-wrap:wrap;gap:8px;">
               <span>📱 ${escHtml(u.telefone)}</span>
               <span>🕐 ${horario}</span>
-              <span style="color:var(--acid);">${escHtml(u.plano_nome||'sem plano')} · ${progresso}</span>
+              <span style="color:var(--accent);">${escHtml(u.plano_nome||'sem plano')} · ${progresso}</span>
             </div>
           </div>
           <div style="display:flex;gap:6px;flex-shrink:0;">
-            <button onclick='abrirModal(${JSON.stringify(u)})' style="background:var(--acid);color:#09090B;border:2px solid var(--acid);padding:5px 10px;border-radius:6px;font-family:'Dela Gothic One';font-size:.6rem;cursor:pointer;transition:transform .1s;box-shadow:2px 2px 0 0 rgba(210,232,35,.3);letter-spacing:.02em;" onmouseenter="this.style.transform='translate(2px,2px)';this.style.boxShadow='0 0 0 0'" onmouseleave="this.style.transform='';this.style.boxShadow='2px 2px 0 0 rgba(210,232,35,.3)'">EDITAR</button>
+            <button onclick='abrirModal(${JSON.stringify(u)})' style="background:var(--accent);color:#0D1117;border:2px solid var(--accent);padding:5px 10px;border-radius:6px;font-family:'Dela Gothic One';font-size:.6rem;cursor:pointer;transition:transform .1s;box-shadow:2px 2px 0 0 rgba(37,211,102,.3);letter-spacing:.02em;" onmouseenter="this.style.transform='translate(2px,2px)';this.style.boxShadow='0 0 0 0'" onmouseleave="this.style.transform='';this.style.boxShadow='2px 2px 0 0 rgba(37,211,102,.3)'">EDITAR</button>
             ${ativo?`<button onclick="desativar(${u.id})" style="background:transparent;color:#DC2626;border:2px solid #DC2626;padding:5px 10px;border-radius:6px;font-family:'Dela Gothic One';font-size:.6rem;cursor:pointer;transition:transform .1s;letter-spacing:.02em;" onmouseenter="this.style.transform='translate(2px,2px)'" onmouseleave="this.style.transform=''">REMOVER</button>`:''}
           </div>
         </div>`;
@@ -312,9 +312,9 @@
   const alertAdd=document.getElementById('alert-add');
   function showAlertAdd(msg,ok=false){
     alertAdd.textContent=msg;
-    alertAdd.style.background=ok?'var(--acid)':'#09090B';
-    alertAdd.style.color=ok?'#09090B':'var(--acid)';
-    alertAdd.style.borderColor=ok?'var(--acid)':'#DC2626';
+    alertAdd.style.background=ok?'var(--accent)':'#0D1117';
+    alertAdd.style.color=ok?'#0D1117':'var(--accent)';
+    alertAdd.style.borderColor=ok?'var(--accent)':'#DC2626';
     alertAdd.style.display='block';
   }
   document.getElementById('form-add').addEventListener('submit', async e=>{

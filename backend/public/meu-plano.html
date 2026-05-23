@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -7,11 +7,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    :root{--bg:#F8F4E8;--ink:#09090B;--acid:#D2E823;}
+    :root{--bg:#F5F5F5;--ink:#0D1117;--accent:#25D366;}
     body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;cursor:none;}
     body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.03;pointer-events:none;z-index:9999;}
     #cursor{position:fixed;width:32px;height:32px;border-radius:100%;background:white;mix-blend-mode:difference;pointer-events:none;z-index:99998;left:0;top:0;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
-    .btn-hard{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:var(--acid);padding:14px 28px;border-radius:10px;border:2px solid var(--ink);box-shadow:4px 4px 0 0 var(--ink);font-family:'Dela Gothic One',sans-serif;font-size:.82rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s;letter-spacing:.02em;width:100%;}
+    .btn-hard{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:var(--accent);padding:14px 28px;border-radius:10px;border:2px solid var(--ink);box-shadow:4px 4px 0 0 var(--ink);font-family:'Dela Gothic One',sans-serif;font-size:.82rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s;letter-spacing:.02em;width:100%;}
     .btn-hard:hover{transform:translate(2px,2px);box-shadow:0 0 0 0 var(--ink);}
     .btn-hard:active{transform:translateY(4px);}
     .btn-ghost{display:inline-flex;align-items:center;justify-content:center;background:transparent;color:var(--ink);padding:7px 14px;border-radius:8px;border:2px solid var(--ink);font-family:'Dela Gothic One',sans-serif;font-size:.65rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s;letter-spacing:.02em;box-shadow:2px 2px 0 0 var(--ink);}
@@ -31,12 +31,12 @@
 <nav style="background:var(--ink);position:sticky;top:0;z-index:20;border-bottom:2px solid var(--ink);">
   <div style="max-width:680px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;">
     <a href="/" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
-      <span style="background:var(--acid);border:2px solid var(--acid);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:14px;">📖</span>
-      <span style="font-family:'Dela Gothic One';color:#F8F4E8;font-size:.95rem;letter-spacing:.02em;">VERSOZAP</span>
+      <span style="background:var(--accent);border:2px solid var(--accent);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:14px;">📖</span>
+      <span style="font-family:'Dela Gothic One';color:#F5F5F5;font-size:.95rem;letter-spacing:.02em;">VERSOZAP</span>
     </a>
     <div style="display:flex;align-items:center;gap:12px;">
       <span id="nav-nome" style="font-size:12px;font-weight:600;color:#555;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
-      <button onclick="sair()" class="btn-ghost" style="color:#F8F4E8;border-color:#2a2a25;box-shadow:none;">SAIR</button>
+      <button onclick="sair()" class="btn-ghost" style="color:#F5F5F5;border-color:#30363D;box-shadow:none;">SAIR</button>
     </div>
   </div>
 </nav>
@@ -45,12 +45,12 @@
 
   <!-- Stats row -->
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
-    <div style="background:var(--acid);border:2px solid var(--ink);border-radius:12px;padding:18px;text-align:center;box-shadow:4px 4px 0 0 var(--ink);transform:rotate(-.5deg);">
+    <div style="background:var(--accent);border:2px solid var(--ink);border-radius:12px;padding:18px;text-align:center;box-shadow:4px 4px 0 0 var(--ink);transform:rotate(-.5deg);">
       <p id="stat-dia" style="font-family:'Dela Gothic One';font-size:2rem;line-height:1;letter-spacing:-.02em;">—</p>
       <p style="font-family:'Dela Gothic One';font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;margin-top:5px;color:#333;">DIA ATUAL</p>
     </div>
-    <div style="background:var(--ink);border:2px solid var(--ink);border-radius:12px;padding:18px;text-align:center;box-shadow:4px 4px 0 0 var(--acid);transform:rotate(.5deg);">
-      <p id="stat-pct" style="font-family:'Dela Gothic One';font-size:2rem;line-height:1;letter-spacing:-.02em;color:var(--acid);">—</p>
+    <div style="background:var(--ink);border:2px solid var(--ink);border-radius:12px;padding:18px;text-align:center;box-shadow:4px 4px 0 0 var(--accent);transform:rotate(.5deg);">
+      <p id="stat-pct" style="font-family:'Dela Gothic One';font-size:2rem;line-height:1;letter-spacing:-.02em;color:var(--accent);">—</p>
       <p style="font-family:'Dela Gothic One';font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:#666;margin-top:5px;">CONCLUÍDO</p>
     </div>
     <div style="background:var(--bg);border:2px solid var(--ink);border-radius:12px;padding:18px;text-align:center;box-shadow:4px 4px 0 0 var(--ink);transform:rotate(-.3deg);">
@@ -62,8 +62,8 @@
   <!-- Progresso -->
   <div style="background:#fff;border:2px solid var(--ink);border-radius:14px;overflow:hidden;box-shadow:4px 4px 0 0 var(--ink);">
     <div style="background:var(--ink);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;">
-      <p style="font-family:'Dela Gothic One';font-size:.9rem;color:#F8F4E8;text-transform:uppercase;letter-spacing:.02em;">MEU PROGRESSO</p>
-      <span id="badge-plano" style="display:none;background:var(--acid);border:2px solid var(--acid);padding:3px 10px;border-radius:999px;font-family:'Dela Gothic One';font-size:.6rem;color:var(--ink);letter-spacing:.05em;"></span>
+      <p style="font-family:'Dela Gothic One';font-size:.9rem;color:#F5F5F5;text-transform:uppercase;letter-spacing:.02em;">MEU PROGRESSO</p>
+      <span id="badge-plano" style="display:none;background:var(--accent);border:2px solid var(--accent);padding:3px 10px;border-radius:999px;font-family:'Dela Gothic One';font-size:.6rem;color:var(--ink);letter-spacing:.05em;"></span>
     </div>
     <div style="padding:20px;">
       <div id="sem-plano" style="display:none;text-align:center;padding:28px 0;">
@@ -76,8 +76,8 @@
           <p id="plano-progresso" style="font-family:'Dela Gothic One';font-size:2rem;line-height:1;letter-spacing:-.03em;"></p>
           <p id="plano-pct" style="font-family:'Dela Gothic One';font-size:.85rem;color:#888;margin-bottom:3px;"></p>
         </div>
-        <div style="background:#f0ece0;border:2px solid var(--ink);border-radius:6px;height:14px;margin-bottom:18px;overflow:hidden;">
-          <div id="barra-progresso" style="background:var(--acid);height:100%;transition:width .7s cubic-bezier(.175,.885,.32,1.275);width:0%;border-right:2px solid var(--ink);"></div>
+        <div style="background:#e5e7eb;border:2px solid var(--ink);border-radius:6px;height:14px;margin-bottom:18px;overflow:hidden;">
+          <div id="barra-progresso" style="background:var(--accent);height:100%;transition:width .7s cubic-bezier(.175,.885,.32,1.275);width:0%;border-right:2px solid var(--ink);"></div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
           <div style="background:var(--bg);border:2px solid var(--ink);border-radius:8px;padding:12px;">
@@ -95,7 +95,7 @@
 
   <!-- Configurações -->
   <div style="background:#fff;border:2px solid var(--ink);border-radius:14px;overflow:hidden;box-shadow:4px 4px 0 0 var(--ink);">
-    <div style="background:var(--acid);padding:14px 20px;border-bottom:2px solid var(--ink);">
+    <div style="background:var(--accent);padding:14px 20px;border-bottom:2px solid var(--ink);">
       <p style="font-family:'Dela Gothic One';font-size:.9rem;color:var(--ink);text-transform:uppercase;letter-spacing:.02em;">CONFIGURAÇÕES</p>
     </div>
     <div style="padding:20px;">
@@ -141,8 +141,8 @@
   const alertConfig = document.getElementById('alert-config');
   function showAlert(msg, ok=false){
     alertConfig.textContent=msg;
-    alertConfig.style.background=ok?'var(--acid)':'var(--ink)';
-    alertConfig.style.color=ok?'var(--ink)':'var(--acid)';
+    alertConfig.style.background=ok?'var(--accent)':'var(--ink)';
+    alertConfig.style.color=ok?'var(--ink)':'var(--accent)';
     alertConfig.style.display='block';
     setTimeout(()=>{alertConfig.style.display='none';},4000);
   }

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -7,15 +7,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    :root{--bg:#09090B;--ink:#F8F4E8;--acid:#D2E823;}
+    :root{--bg:#0D1117;--ink:#F5F5F5;--accent:#25D366;}
     body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;cursor:none;display:flex;flex-direction:column;}
     body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.03;pointer-events:none;z-index:9999;}
     #cursor{position:fixed;width:32px;height:32px;border-radius:100%;background:white;mix-blend-mode:difference;pointer-events:none;z-index:99998;left:0;top:0;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
-    .btn-acid{display:inline-flex;align-items:center;justify-content:center;background:var(--acid);color:#09090B;padding:8px 18px;border-radius:8px;border:2px solid var(--acid);box-shadow:3px 3px 0 0 var(--acid);font-family:'Dela Gothic One',sans-serif;font-size:.72rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s;letter-spacing:.02em;}
-    .btn-acid:hover{transform:translate(2px,2px);box-shadow:0 0 0 0 var(--acid);}
+    .btn-acid{display:inline-flex;align-items:center;justify-content:center;background:var(--accent);color:#0D1117;padding:8px 18px;border-radius:8px;border:2px solid var(--accent);box-shadow:3px 3px 0 0 var(--accent);font-family:'Dela Gothic One',sans-serif;font-size:.72rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s;letter-spacing:.02em;}
+    .btn-acid:hover{transform:translate(2px,2px);box-shadow:0 0 0 0 var(--accent);}
     .btn-acid:active{transform:translateY(3px);}
-    .btn-ghost{display:inline-flex;align-items:center;justify-content:center;background:transparent;color:#888;padding:8px 18px;border-radius:8px;border:2px solid #2a2a25;font-family:'Dela Gothic One',sans-serif;font-size:.72rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s,border-color .1s;letter-spacing:.02em;box-shadow:2px 2px 0 0 #2a2a25;}
-    .btn-ghost:hover{transform:translate(2px,2px);box-shadow:0 0 0 0;border-color:#555;color:#F8F4E8;}
+    .btn-ghost{display:inline-flex;align-items:center;justify-content:center;background:transparent;color:#888;padding:8px 18px;border-radius:8px;border:2px solid #30363D;font-family:'Dela Gothic One',sans-serif;font-size:.72rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s,border-color .1s;letter-spacing:.02em;box-shadow:2px 2px 0 0 #30363D;}
+    .btn-ghost:hover{transform:translate(2px,2px);box-shadow:0 0 0 0;border-color:#555;color:#F5F5F5;}
     .btn-ghost:active{transform:translateY(2px);}
     @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)}}
     .pulse{animation:pulse 1.5s ease-in-out infinite;}
@@ -25,10 +25,10 @@
 <div id="cursor"></div>
 
 <!-- Nav -->
-<nav style="background:#141410;border-bottom:2px solid var(--acid);">
+<nav style="background:#161B22;border-bottom:2px solid var(--accent);">
   <div style="max-width:500px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;">
     <a href="/dashboard.html" class="btn-ghost" style="font-size:.7rem;">← PAINEL</a>
-    <p style="font-family:'Dela Gothic One';font-size:.9rem;color:var(--acid);letter-spacing:.02em;">📱 CONECTAR WHATSAPP</p>
+    <p style="font-family:'Dela Gothic One';font-size:.9rem;color:var(--accent);letter-spacing:.02em;">📱 CONECTAR WHATSAPP</p>
     <div style="width:90px;"></div>
   </div>
 </nav>
@@ -37,12 +37,12 @@
   <div style="width:100%;max-width:440px;display:flex;flex-direction:column;gap:14px;">
 
     <!-- Status card -->
-    <div style="background:#141410;border:2px solid #2a2a25;border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:14px;box-shadow:4px 4px 0 0 var(--acid);">
+    <div style="background:#161B22;border:2px solid #30363D;border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:14px;box-shadow:4px 4px 0 0 var(--accent);">
       <div style="position:relative;flex-shrink:0;">
         <div id="dot" class="pulse" style="width:14px;height:14px;border-radius:50%;background:#444;position:relative;z-index:1;"></div>
       </div>
       <div style="flex:1;min-width:0;">
-        <p id="status-texto" style="font-family:'Dela Gothic One';font-size:.88rem;color:#F8F4E8;text-transform:uppercase;letter-spacing:.02em;">VERIFICANDO...</p>
+        <p id="status-texto" style="font-family:'Dela Gothic One';font-size:.88rem;color:#F5F5F5;text-transform:uppercase;letter-spacing:.02em;">VERIFICANDO...</p>
         <p id="status-detalhe" style="display:none;font-size:11px;color:#666;font-weight:600;margin-top:2px;"></p>
       </div>
       <div style="display:flex;gap:8px;flex-shrink:0;">
@@ -52,25 +52,25 @@
     </div>
 
     <!-- QR Code card -->
-    <div id="card-qr" style="display:none;background:#141410;border:2px solid var(--acid);border-radius:14px;padding:28px;text-align:center;box-shadow:6px 6px 0 0 var(--acid);">
-      <p style="font-family:'Dela Gothic One';font-size:.78rem;color:var(--acid);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em;">COMO CONECTAR</p>
-      <p style="font-size:12px;color:#666;margin-bottom:24px;">WhatsApp → <strong style="color:#F8F4E8;">dispositivos conectados</strong> → <strong style="color:#F8F4E8;">conectar dispositivo</strong></p>
-      <div style="display:inline-block;background:#fff;border:3px solid var(--acid);border-radius:8px;padding:10px;box-shadow:5px 5px 0 0 var(--acid);">
+    <div id="card-qr" style="display:none;background:#161B22;border:2px solid var(--accent);border-radius:14px;padding:28px;text-align:center;box-shadow:6px 6px 0 0 var(--accent);">
+      <p style="font-family:'Dela Gothic One';font-size:.78rem;color:var(--accent);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em;">COMO CONECTAR</p>
+      <p style="font-size:12px;color:#666;margin-bottom:24px;">WhatsApp → <strong style="color:#F5F5F5;">dispositivos conectados</strong> → <strong style="color:#F5F5F5;">conectar dispositivo</strong></p>
+      <div style="display:inline-block;background:#fff;border:3px solid var(--accent);border-radius:8px;padding:10px;box-shadow:5px 5px 0 0 var(--accent);">
         <img id="qr-img" src="" alt="QR Code" style="width:200px;height:200px;display:block;object-fit:contain;">
       </div>
       <p style="font-size:11px;color:#555;font-weight:600;margin-top:16px;">o código expira a cada ~20 segundos</p>
     </div>
 
     <!-- Connected card -->
-    <div id="card-ok" style="display:none;background:#141410;border:2px solid var(--acid);border-radius:14px;padding:32px;text-align:center;box-shadow:6px 6px 0 0 var(--acid);">
-      <div style="width:64px;height:64px;background:var(--acid);border:2px solid var(--acid);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 20px;box-shadow:4px 4px 0 0 rgba(210,232,35,.3);">✅</div>
-      <h2 style="font-family:'Dela Gothic One';font-size:1.2rem;color:var(--acid);text-transform:uppercase;letter-spacing:-.01em;margin-bottom:8px;">WHATSAPP CONECTADO!</h2>
+    <div id="card-ok" style="display:none;background:#161B22;border:2px solid var(--accent);border-radius:14px;padding:32px;text-align:center;box-shadow:6px 6px 0 0 var(--accent);">
+      <div style="width:64px;height:64px;background:var(--accent);border:2px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 20px;box-shadow:4px 4px 0 0 rgba(37,211,102,.3);">✅</div>
+      <h2 style="font-family:'Dela Gothic One';font-size:1.2rem;color:var(--accent);text-transform:uppercase;letter-spacing:-.01em;margin-bottom:8px;">WHATSAPP CONECTADO!</h2>
       <p style="font-size:.875rem;color:#888;margin-bottom:24px;">o bot está pronto para enviar os versículos.</p>
       <a href="/dashboard.html" class="btn-acid" style="padding:12px 28px;font-size:.82rem;">IR PARA O PAINEL →</a>
     </div>
 
     <!-- Error card -->
-    <div id="card-erro" style="display:none;background:#141410;border:2px solid #DC2626;border-radius:14px;padding:18px;box-shadow:4px 4px 0 0 #DC2626;">
+    <div id="card-erro" style="display:none;background:#161B22;border:2px solid #DC2626;border-radius:14px;padding:18px;box-shadow:4px 4px 0 0 #DC2626;">
       <p id="erro-msg" style="font-size:13px;font-weight:600;color:#DC2626;text-align:center;font-family:'Dela Gothic One';text-transform:uppercase;font-size:.8rem;"></p>
     </div>
 
@@ -81,8 +81,8 @@
   const TOKEN = localStorage.getItem('vzToken');
   if (!TOKEN) window.location.replace('/admin.html');
   const statusMap = {
-    conectado:     { cor: '#D2E823', label: 'CONECTADO' },
-    aguardando_qr: { cor: '#D2E823', label: 'AGUARDANDO QR CODE' },
+    conectado:     { cor: '#25D366', label: 'CONECTADO' },
+    aguardando_qr: { cor: '#25D366', label: 'AGUARDANDO QR CODE' },
     conectando:    { cor: '#F59E0B', label: 'CONECTANDO...' },
     reconectando:  { cor: '#F59E0B', label: 'RECONECTANDO...' },
     desconectado:  { cor: '#555',    label: 'DESCONECTADO' },

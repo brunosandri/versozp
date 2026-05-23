@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -7,11 +7,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    :root{--bg:#F8F4E8;--ink:#09090B;--acid:#D2E823;}
+    :root{--bg:#F5F5F5;--ink:#0D1117;--accent:#25D366;}
     body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;cursor:none;display:flex;align-items:center;justify-content:center;padding:20px;}
     body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.03;pointer-events:none;z-index:9999;}
     #cursor{position:fixed;width:32px;height:32px;border-radius:100%;background:white;mix-blend-mode:difference;pointer-events:none;z-index:99998;left:0;top:0;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
-    .btn-hard{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:var(--acid);padding:16px 32px;border-radius:12px;border:2px solid var(--ink);box-shadow:4px 4px 0 0 var(--ink);font-family:'Dela Gothic One',sans-serif;font-size:.9rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s;letter-spacing:.02em;width:100%;}
+    .btn-hard{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:var(--accent);padding:16px 32px;border-radius:12px;border:2px solid var(--ink);box-shadow:4px 4px 0 0 var(--ink);font-family:'Dela Gothic One',sans-serif;font-size:.9rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s;letter-spacing:.02em;width:100%;}
     .btn-hard:hover{transform:translate(2px,2px);box-shadow:0 0 0 0 var(--ink);}
     .btn-hard:active{transform:translateY(4px);}
     .btn-ghost{display:inline-flex;align-items:center;justify-content:center;background:transparent;color:var(--ink);padding:10px 20px;border-radius:8px;border:2px solid var(--ink);font-family:'Dela Gothic One',sans-serif;font-size:.78rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s;letter-spacing:.02em;box-shadow:2px 2px 0 0 var(--ink);}
@@ -34,19 +34,19 @@
   <div id="card-form" style="background:#fff;border:2px solid var(--ink);border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 0 var(--ink);">
     <div style="background:var(--ink);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;">
       <div style="display:flex;align-items:center;gap:10px;">
-        <a href="/" style="background:var(--acid);border:2px solid var(--acid);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:15px;text-decoration:none;transition:transform .1s;" onmouseenter="this.style.transform='scale(1.1)'" onmouseleave="this.style.transform=''">📖</a>
+        <a href="/" style="background:var(--accent);border:2px solid var(--accent);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:15px;text-decoration:none;transition:transform .1s;" onmouseenter="this.style.transform='scale(1.1)'" onmouseleave="this.style.transform=''">📖</a>
         <div>
-          <p style="font-family:'Dela Gothic One';font-size:.95rem;color:var(--acid);letter-spacing:.02em;">VERSOZAP</p>
+          <p style="font-family:'Dela Gothic One';font-size:.95rem;color:var(--accent);letter-spacing:.02em;">VERSOZAP</p>
           <p style="font-size:11px;font-weight:500;color:#666;">receba a bíblia todo dia</p>
         </div>
       </div>
-      <div class="float-badge" style="background:var(--acid);border:2px solid var(--acid);border-radius:999px;padding:6px 12px;font-family:'Dela Gothic One';font-size:.6rem;color:var(--ink);letter-spacing:.05em;">GRÁTIS 🙏</div>
+      <div class="float-badge" style="background:var(--accent);border:2px solid var(--accent);border-radius:999px;padding:6px 12px;font-family:'Dela Gothic One';font-size:.6rem;color:var(--ink);letter-spacing:.05em;">GRÁTIS 🙏</div>
     </div>
     <div style="padding:28px;">
       <h1 style="font-family:'Dela Gothic One';font-size:2.2rem;text-transform:uppercase;letter-spacing:-.02em;margin-bottom:4px;">INSCRIÇÃO</h1>
       <p style="font-size:.875rem;color:#888;font-weight:500;margin-bottom:24px;">rápido e gratuito</p>
 
-      <div id="alert" style="display:none;background:var(--ink);color:var(--acid);border:2px solid var(--ink);border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:13px;font-weight:600;box-shadow:3px 3px 0 0 var(--ink);"></div>
+      <div id="alert" style="display:none;background:var(--ink);color:var(--accent);border:2px solid var(--ink);border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:13px;font-weight:600;box-shadow:3px 3px 0 0 var(--ink);"></div>
 
       <form id="form-cadastro" style="display:flex;flex-direction:column;gap:14px;">
         <div>
@@ -54,7 +54,7 @@
           <input id="nome" type="text" placeholder="como prefere ser chamado?">
         </div>
         <div>
-          <label>WHATSAPP <span style="color:#D2E823;background:#09090B;border-radius:4px;padding:1px 4px;font-size:.55rem;">*</span></label>
+          <label>WHATSAPP <span style="color:#25D366;background:#0D1117;border-radius:4px;padding:1px 4px;font-size:.55rem;">*</span></label>
           <input id="telefone" type="tel" required placeholder="(67) 99999-9999">
           <p style="font-size:11px;color:#aaa;font-weight:500;margin-top:4px;">somente brasil. inclua o ddd.</p>
         </div>
@@ -83,8 +83,8 @@
   </div>
 
   <!-- Success card -->
-  <div id="card-sucesso" style="display:none;background:#fff;border:2px solid var(--ink);border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 0 var(--acid);padding:48px 28px;text-align:center;">
-    <div style="width:64px;height:64px;background:var(--acid);border:2px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 20px;box-shadow:4px 4px 0 0 var(--ink);">✅</div>
+  <div id="card-sucesso" style="display:none;background:#fff;border:2px solid var(--ink);border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 0 var(--accent);padding:48px 28px;text-align:center;">
+    <div style="width:64px;height:64px;background:var(--accent);border:2px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 20px;box-shadow:4px 4px 0 0 var(--ink);">✅</div>
     <h2 style="font-family:'Dela Gothic One';font-size:2rem;text-transform:uppercase;letter-spacing:-.02em;margin-bottom:10px;">INSCRIÇÃO FEITA!</h2>
     <p style="font-size:.875rem;color:#666;font-weight:500;margin-bottom:28px;" id="msg-sucesso"></p>
     <button onclick="location.reload()" class="btn-ghost" style="font-size:.78rem;">INSCREVER OUTRO NÚMERO</button>

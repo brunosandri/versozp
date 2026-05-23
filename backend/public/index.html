@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    :root{--bg:#F8F4E8;--ink:#09090B;--acid:#D2E823;}
+    :root{--bg:#F5F5F5;--ink:#0D1117;--accent:#25D366;}
     body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;cursor:none;overflow-x:hidden;}
     body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.03;pointer-events:none;z-index:9999;}
     #cursor{position:fixed;width:32px;height:32px;border-radius:100%;background:white;mix-blend-mode:difference;pointer-events:none;z-index:99998;left:0;top:0;transform:translate(-50%,-50%);transition:width .2s ease,height .2s ease;}
@@ -20,10 +20,10 @@
     .float-slow{animation:float 5s ease-in-out infinite;}
     .float-badge{animation:floatBadge 4s ease-in-out infinite 1s;}
     .marquee-track{display:flex;animation:marquee 20s linear infinite;width:max-content;}
-    .btn-hard{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:var(--acid);padding:16px 32px;border-radius:12px;border:2px solid var(--ink);box-shadow:4px 4px 0 0 var(--ink);font-family:'Dela Gothic One',sans-serif;font-size:.9rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s;letter-spacing:.02em;}
+    .btn-hard{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:var(--accent);padding:16px 32px;border-radius:12px;border:2px solid var(--ink);box-shadow:4px 4px 0 0 var(--ink);font-family:'Dela Gothic One',sans-serif;font-size:.9rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s;letter-spacing:.02em;}
     .btn-hard:hover{transform:translate(2px,2px);box-shadow:0 0 0 0 var(--ink);}
     .btn-hard:active{transform:translateY(4px);}
-    .btn-acid{display:inline-flex;align-items:center;justify-content:center;background:var(--acid);color:var(--ink);padding:16px 32px;border-radius:12px;border:2px solid var(--ink);box-shadow:4px 4px 0 0 var(--ink);font-family:'Dela Gothic One',sans-serif;font-size:.9rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s;letter-spacing:.02em;}
+    .btn-acid{display:inline-flex;align-items:center;justify-content:center;background:var(--accent);color:var(--ink);padding:16px 32px;border-radius:12px;border:2px solid var(--ink);box-shadow:4px 4px 0 0 var(--ink);font-family:'Dela Gothic One',sans-serif;font-size:.9rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s;letter-spacing:.02em;}
     .btn-acid:hover{transform:translate(2px,2px);box-shadow:0 0 0 0 var(--ink);}
     .btn-acid:active{transform:translateY(4px);}
     .card-lift{transition:transform .2s,box-shadow .2s;}
@@ -47,7 +47,7 @@
 
 <!-- Nav -->
 <nav style="position:sticky;top:16px;z-index:100;margin:16px;">
-  <div style="background:rgba(248,244,232,.9);backdrop-filter:blur(24px);border:2px solid var(--ink);border-radius:12px;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;box-shadow:2px 2px 0 0 var(--ink);">
+  <div style="background:rgba(245,245,245,.92);backdrop-filter:blur(24px);border:2px solid var(--ink);border-radius:12px;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;box-shadow:2px 2px 0 0 var(--ink);">
     <a href="/" style="font-family:'Dela Gothic One';font-size:1.1rem;color:var(--ink);text-decoration:none;letter-spacing:.02em;">VERSOZAP</a>
     <div class="nav-links" style="display:flex;align-items:center;gap:10px;">
       <a href="#como-funciona" class="btn-hard" style="padding:8px 16px;font-size:.72rem;box-shadow:2px 2px 0 0 var(--ink);">COMO FUNCIONA</a>
@@ -60,7 +60,7 @@
 <section style="padding:60px 20px 40px;max-width:1200px;margin:0 auto;">
   <div class="hero-grid" style="display:grid;grid-template-columns:7fr 5fr;gap:40px;align-items:center;">
     <div>
-      <div class="float" style="display:inline-flex;align-items:center;gap:8px;background:var(--acid);border:2px solid var(--ink);border-radius:999px;padding:8px 16px;margin-bottom:28px;font-size:.78rem;font-weight:700;box-shadow:2px 2px 0 0 var(--ink);">📖 100% GRATUITO &nbsp;·&nbsp; BÍBLIA DIÁRIA</div>
+      <div class="float" style="display:inline-flex;align-items:center;gap:8px;background:var(--accent);border:2px solid var(--ink);border-radius:999px;padding:8px 16px;margin-bottom:28px;font-size:.78rem;font-weight:700;box-shadow:2px 2px 0 0 var(--ink);">📖 100% GRATUITO &nbsp;·&nbsp; BÍBLIA DIÁRIA</div>
       <h1 class="hero-h1 glitch" style="font-family:'Dela Gothic One';font-size:7rem;line-height:.88;letter-spacing:-.03em;text-transform:uppercase;margin-bottom:24px;">LEIA A BÍBLIA TODO DIA.</h1>
       <p style="font-size:1.1rem;color:#555;font-weight:500;max-width:460px;margin-bottom:36px;line-height:1.55;">versículos diários entregues direto no seu whatsapp. planos personalizados, múltiplas versões da bíblia.</p>
       <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;">
@@ -69,23 +69,23 @@
       </div>
     </div>
     <div class="hide-sm" style="position:relative;">
-      <div class="float-slow" style="background:var(--ink);border:2px solid var(--ink);border-radius:24px;padding:28px;box-shadow:8px 8px 0 0 var(--acid);">
-        <div style="background:rgba(210,232,35,.1);border-radius:12px;padding:20px;margin-bottom:16px;">
-          <p style="font-family:'Dela Gothic One';font-size:1.8rem;color:var(--acid);margin-bottom:8px;">📖</p>
-          <p style="font-family:'Dela Gothic One';color:var(--acid);font-size:.95rem;text-transform:uppercase;line-height:1.2;margin-bottom:10px;">VERSÍCULO DO DIA</p>
+      <div class="float-slow" style="background:var(--ink);border:2px solid var(--ink);border-radius:24px;padding:28px;box-shadow:8px 8px 0 0 var(--accent);">
+        <div style="background:rgba(37,211,102,.1);border-radius:12px;padding:20px;margin-bottom:16px;">
+          <p style="font-family:'Dela Gothic One';font-size:1.8rem;color:var(--accent);margin-bottom:8px;">📖</p>
+          <p style="font-family:'Dela Gothic One';color:var(--accent);font-size:.95rem;text-transform:uppercase;line-height:1.2;margin-bottom:10px;">VERSÍCULO DO DIA</p>
           <p style="color:#aaa;font-size:.8rem;line-height:1.55;">"Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito..."</p>
-          <p style="color:var(--acid);font-size:.72rem;margin-top:6px;font-weight:600;">João 3:16 — NVI</p>
+          <p style="color:var(--accent);font-size:.72rem;margin-top:6px;font-weight:600;">João 3:16 — NVI</p>
         </div>
         <div style="display:flex;align-items:center;gap:10px;background:rgba(248,244,232,.05);border-radius:8px;padding:12px;">
           <span style="font-size:1.3rem;">📱</span>
           <div>
-            <p style="color:#F8F4E8;font-weight:700;font-size:.8rem;">WhatsApp</p>
+            <p style="color:#F5F5F5;font-weight:700;font-size:.8rem;">WhatsApp</p>
             <p style="color:#666;font-size:.7rem;">todos os dias às 7h</p>
           </div>
-          <span style="margin-left:auto;background:var(--acid);color:var(--ink);font-size:.6rem;font-weight:700;padding:4px 8px;border-radius:999px;font-family:'Dela Gothic One';">ATIVO</span>
+          <span style="margin-left:auto;background:var(--accent);color:var(--ink);font-size:.6rem;font-weight:700;padding:4px 8px;border-radius:999px;font-family:'Dela Gothic One';">ATIVO</span>
         </div>
       </div>
-      <div class="float-badge" style="position:absolute;top:-16px;right:-16px;background:var(--acid);border:2px solid var(--ink);border-radius:999px;padding:10px 16px;font-family:'Dela Gothic One';font-size:.72rem;box-shadow:3px 3px 0 0 var(--ink);">GRÁTIS 🙏</div>
+      <div class="float-badge" style="position:absolute;top:-16px;right:-16px;background:var(--accent);border:2px solid var(--ink);border-radius:999px;padding:10px 16px;font-family:'Dela Gothic One';font-size:.72rem;box-shadow:3px 3px 0 0 var(--ink);">GRÁTIS 🙏</div>
     </div>
   </div>
 </section>
@@ -93,7 +93,7 @@
 <!-- Marquee -->
 <div style="overflow:hidden;background:var(--ink);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);padding:14px 0;transform:rotate(-1deg);margin:24px -40px;">
   <div class="marquee-track">
-    <span style="display:flex;gap:28px;white-space:nowrap;font-family:'Dela Gothic One';font-size:.82rem;color:var(--acid);padding-right:28px;">BÍBLIA DIÁRIA &nbsp;·&nbsp; NVI &nbsp;·&nbsp; ARC &nbsp;·&nbsp; ACF &nbsp;·&nbsp; NVT &nbsp;·&nbsp; 100% GRÁTIS &nbsp;·&nbsp; WHATSAPP &nbsp;·&nbsp; PLANOS DE LEITURA &nbsp;·&nbsp; VERSÍCULOS &nbsp;·&nbsp; TODO DIA &nbsp;·&nbsp; BÍBLIA DIÁRIA &nbsp;·&nbsp; NVI &nbsp;·&nbsp; ARC &nbsp;·&nbsp; ACF &nbsp;·&nbsp; NVT &nbsp;·&nbsp; 100% GRÁTIS &nbsp;·&nbsp; WHATSAPP &nbsp;·&nbsp; PLANOS DE LEITURA &nbsp;·&nbsp; VERSÍCULOS &nbsp;·&nbsp; TODO DIA &nbsp;·&nbsp;</span>
+    <span style="display:flex;gap:28px;white-space:nowrap;font-family:'Dela Gothic One';font-size:.82rem;color:var(--accent);padding-right:28px;">BÍBLIA DIÁRIA &nbsp;·&nbsp; NVI &nbsp;·&nbsp; ARC &nbsp;·&nbsp; ACF &nbsp;·&nbsp; NVT &nbsp;·&nbsp; 100% GRÁTIS &nbsp;·&nbsp; WHATSAPP &nbsp;·&nbsp; PLANOS DE LEITURA &nbsp;·&nbsp; VERSÍCULOS &nbsp;·&nbsp; TODO DIA &nbsp;·&nbsp; BÍBLIA DIÁRIA &nbsp;·&nbsp; NVI &nbsp;·&nbsp; ARC &nbsp;·&nbsp; ACF &nbsp;·&nbsp; NVT &nbsp;·&nbsp; 100% GRÁTIS &nbsp;·&nbsp; WHATSAPP &nbsp;·&nbsp; PLANOS DE LEITURA &nbsp;·&nbsp; VERSÍCULOS &nbsp;·&nbsp; TODO DIA &nbsp;·&nbsp;</span>
   </div>
 </div>
 
@@ -101,13 +101,13 @@
 <section id="como-funciona" style="padding:64px 20px;max-width:1200px;margin:0 auto;">
   <h2 class="glitch" style="font-family:'Dela Gothic One';font-size:3rem;text-transform:uppercase;letter-spacing:-.03em;margin-bottom:40px;display:inline-block;">COMO FUNCIONA</h2>
   <div class="bento-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
-    <div class="bento-wide card-lift" style="grid-column:span 2;background:var(--ink);border:2px solid var(--ink);border-radius:20px;padding:36px;box-shadow:6px 6px 0 0 var(--acid);position:relative;overflow:hidden;min-height:260px;">
-      <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(210,232,35,.07) 1px,transparent 1px);background-size:20px 20px;"></div>
+    <div class="bento-wide card-lift" style="grid-column:span 2;background:var(--ink);border:2px solid var(--ink);border-radius:20px;padding:36px;box-shadow:6px 6px 0 0 var(--accent);position:relative;overflow:hidden;min-height:260px;">
+      <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(37,211,102,.07) 1px,transparent 1px);background-size:20px 20px;"></div>
       <p style="font-size:2.6rem;margin-bottom:16px;position:relative;">📱</p>
-      <h3 style="font-family:'Dela Gothic One';font-size:1.4rem;color:var(--acid);text-transform:uppercase;line-height:1.1;margin-bottom:12px;position:relative;">RECEBA NO WHATSAPP</h3>
+      <h3 style="font-family:'Dela Gothic One';font-size:1.4rem;color:var(--accent);text-transform:uppercase;line-height:1.1;margin-bottom:12px;position:relative;">RECEBA NO WHATSAPP</h3>
       <p style="color:#aaa;font-size:.875rem;line-height:1.6;max-width:360px;position:relative;">todo dia no horário que você escolher, o versículo chega direto no seu whatsapp. sem baixar nenhum app.</p>
     </div>
-    <div class="card-lift" style="background:var(--acid);border:2px solid var(--ink);border-radius:20px;padding:28px;box-shadow:6px 6px 0 0 var(--ink);min-height:260px;display:flex;flex-direction:column;justify-content:space-between;">
+    <div class="card-lift" style="background:var(--accent);border:2px solid var(--ink);border-radius:20px;padding:28px;box-shadow:6px 6px 0 0 var(--ink);min-height:260px;display:flex;flex-direction:column;justify-content:space-between;">
       <p style="font-size:2.4rem;">⏰</p>
       <div>
         <h3 style="font-family:'Dela Gothic One';font-size:1.05rem;text-transform:uppercase;margin-bottom:8px;">HORÁRIO CERTO</h3>
@@ -124,7 +124,7 @@
       <h3 style="font-family:'Dela Gothic One';font-size:1rem;text-transform:uppercase;margin-bottom:8px;">4 VERSÕES</h3>
       <p style="font-size:.82rem;color:#666;line-height:1.5;">NVI, ARC, ACF ou NVT. a versão que você prefere.</p>
     </div>
-    <div class="card-lift" style="background:var(--acid);border:2px solid var(--ink);border-radius:20px;padding:28px;box-shadow:4px 4px 0 0 var(--ink);min-height:180px;display:flex;align-items:center;justify-content:center;text-align:center;">
+    <div class="card-lift" style="background:var(--accent);border:2px solid var(--ink);border-radius:20px;padding:28px;box-shadow:4px 4px 0 0 var(--ink);min-height:180px;display:flex;align-items:center;justify-content:center;text-align:center;">
       <div>
         <p style="font-family:'Dela Gothic One';font-size:3.5rem;line-height:1;letter-spacing:-.03em;">100%</p>
         <p style="font-family:'Dela Gothic One';font-size:.9rem;text-transform:uppercase;margin-top:4px;">GRATUITO</p>
@@ -136,21 +136,21 @@
 <!-- 3 Passos -->
 <section style="background:var(--ink);padding:64px 20px;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);">
   <div style="max-width:1200px;margin:0 auto;">
-    <h2 class="glitch" style="font-family:'Dela Gothic One';font-size:3rem;color:var(--acid);text-transform:uppercase;letter-spacing:-.03em;margin-bottom:40px;display:inline-block;">3 PASSOS</h2>
+    <h2 class="glitch" style="font-family:'Dela Gothic One';font-size:3rem;color:var(--accent);text-transform:uppercase;letter-spacing:-.03em;margin-bottom:40px;display:inline-block;">3 PASSOS</h2>
     <div class="steps-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
-      <div style="border:2px solid var(--acid);border-radius:16px;padding:28px;box-shadow:4px 4px 0 0 var(--acid);">
-        <p style="font-family:'Dela Gothic One';font-size:3rem;color:var(--acid);line-height:1;margin-bottom:16px;">01</p>
-        <h3 style="font-family:'Dela Gothic One';font-size:.95rem;color:#F8F4E8;text-transform:uppercase;margin-bottom:8px;">CADASTRE-SE</h3>
+      <div style="border:2px solid var(--accent);border-radius:16px;padding:28px;box-shadow:4px 4px 0 0 var(--accent);">
+        <p style="font-family:'Dela Gothic One';font-size:3rem;color:var(--accent);line-height:1;margin-bottom:16px;">01</p>
+        <h3 style="font-family:'Dela Gothic One';font-size:.95rem;color:#F5F5F5;text-transform:uppercase;margin-bottom:8px;">CADASTRE-SE</h3>
         <p style="color:#888;font-size:.82rem;line-height:1.5;">informe seu número de whatsapp e escolha seu plano de leitura.</p>
       </div>
-      <div style="border:2px solid #2a2a25;border-radius:16px;padding:28px;">
+      <div style="border:2px solid #30363D;border-radius:16px;padding:28px;">
         <p style="font-family:'Dela Gothic One';font-size:3rem;color:#333;line-height:1;margin-bottom:16px;">02</p>
-        <h3 style="font-family:'Dela Gothic One';font-size:.95rem;color:#F8F4E8;text-transform:uppercase;margin-bottom:8px;">CONFIGURE</h3>
+        <h3 style="font-family:'Dela Gothic One';font-size:.95rem;color:#F5F5F5;text-transform:uppercase;margin-bottom:8px;">CONFIGURE</h3>
         <p style="color:#888;font-size:.82rem;line-height:1.5;">escolha o horário e a versão da bíblia que prefere receber.</p>
       </div>
-      <div style="border:2px solid #2a2a25;border-radius:16px;padding:28px;">
+      <div style="border:2px solid #30363D;border-radius:16px;padding:28px;">
         <p style="font-family:'Dela Gothic One';font-size:3rem;color:#333;line-height:1;margin-bottom:16px;">03</p>
-        <h3 style="font-family:'Dela Gothic One';font-size:.95rem;color:#F8F4E8;text-transform:uppercase;margin-bottom:8px;">RECEBA</h3>
+        <h3 style="font-family:'Dela Gothic One';font-size:.95rem;color:#F5F5F5;text-transform:uppercase;margin-bottom:8px;">RECEBA</h3>
         <p style="color:#888;font-size:.82rem;line-height:1.5;">todo dia no horário certo, o versículo chega no seu whatsapp.</p>
       </div>
     </div>
@@ -181,7 +181,7 @@
 </section>
 
 <!-- Giant CTA -->
-<section style="background:var(--acid);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);padding:80px 20px;text-align:center;position:relative;overflow:hidden;">
+<section style="background:var(--accent);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);padding:80px 20px;text-align:center;position:relative;overflow:hidden;">
   <p style="font-family:'Dela Gothic One';font-size:min(14vw,160px);line-height:1;text-transform:uppercase;letter-spacing:-.04em;opacity:.07;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;">BÍBLIA</p>
   <div style="position:relative;z-index:1;">
     <h2 style="font-family:'Dela Gothic One';font-size:min(5vw,3.5rem);text-transform:uppercase;letter-spacing:-.03em;margin-bottom:16px;line-height:1;">COMECE HOJE MESMO</h2>
@@ -195,15 +195,15 @@
   <div style="max-width:1200px;margin:0 auto;">
     <div class="footer-grid" style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:32px;margin-bottom:48px;">
       <div>
-        <p style="font-family:'Dela Gothic One';font-size:1.4rem;color:var(--acid);margin-bottom:12px;">VERSOZAP</p>
+        <p style="font-family:'Dela Gothic One';font-size:1.4rem;color:var(--accent);margin-bottom:12px;">VERSOZAP</p>
         <p style="color:#888;font-size:.875rem;line-height:1.6;max-width:280px;">a bíblia entregue no seu whatsapp todo dia. simples, gratuito e sem complicação.</p>
       </div>
       <div>
         <p style="font-family:'Dela Gothic One';font-size:.65rem;color:#555;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;">Acesso</p>
         <div style="display:flex;flex-direction:column;gap:10px;">
-          <a href="/cadastro.html" style="color:#aaa;text-decoration:none;font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;" onmouseenter="this.style.color='#D2E823'" onmouseleave="this.style.color='#aaa'">Inscrição</a>
-          <a href="/login.html" style="color:#aaa;text-decoration:none;font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;" onmouseenter="this.style.color='#D2E823'" onmouseleave="this.style.color='#aaa'">Meu Painel</a>
-          <a href="/admin.html" style="color:#aaa;text-decoration:none;font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;" onmouseenter="this.style.color='#D2E823'" onmouseleave="this.style.color='#aaa'">Admin</a>
+          <a href="/cadastro.html" style="color:#aaa;text-decoration:none;font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;" onmouseenter="this.style.color='#25D366'" onmouseleave="this.style.color='#aaa'">Inscrição</a>
+          <a href="/login.html" style="color:#aaa;text-decoration:none;font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;" onmouseenter="this.style.color='#25D366'" onmouseleave="this.style.color='#aaa'">Meu Painel</a>
+          <a href="/admin.html" style="color:#aaa;text-decoration:none;font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;" onmouseenter="this.style.color='#25D366'" onmouseleave="this.style.color='#aaa'">Admin</a>
         </div>
       </div>
       <div>
@@ -214,7 +214,7 @@
         </div>
       </div>
     </div>
-    <div style="border-top:1px solid #1a1a17;padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+    <div style="border-top:1px solid #1C2128;padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
       <p style="font-family:'Dela Gothic One';font-size:.7rem;color:#444;letter-spacing:.05em;">© 2025 VERSOZAP</p>
       <p style="font-size:.75rem;color:#555;font-weight:600;">para cancelar, responda <strong style="color:#aaa;">SAIR</strong> a qualquer mensagem.</p>
     </div>

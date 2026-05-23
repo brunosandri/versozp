@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -7,11 +7,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    :root{--bg:#F8F4E8;--ink:#09090B;--acid:#D2E823;}
+    :root{--bg:#F5F5F5;--ink:#0D1117;--accent:#25D366;}
     body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;cursor:none;display:flex;align-items:center;justify-content:center;padding:20px;}
     body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.03;pointer-events:none;z-index:9999;}
     #cursor{position:fixed;width:32px;height:32px;border-radius:100%;background:white;mix-blend-mode:difference;pointer-events:none;z-index:99998;left:0;top:0;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
-    .btn-hard{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:var(--acid);padding:16px 32px;border-radius:12px;border:2px solid var(--ink);box-shadow:4px 4px 0 0 var(--ink);font-family:'Dela Gothic One',sans-serif;font-size:.9rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s;letter-spacing:.02em;width:100%;}
+    .btn-hard{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:var(--accent);padding:16px 32px;border-radius:12px;border:2px solid var(--ink);box-shadow:4px 4px 0 0 var(--ink);font-family:'Dela Gothic One',sans-serif;font-size:.9rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s;letter-spacing:.02em;width:100%;}
     .btn-hard:hover{transform:translate(2px,2px);box-shadow:0 0 0 0 var(--ink);}
     .btn-hard:active{transform:translateY(4px);}
     input{font-family:'Space Grotesk',sans-serif;border:2px solid var(--ink);border-radius:8px;outline:none;background:#fff;color:var(--ink);width:100%;padding:12px 14px;font-size:14px;font-weight:500;transition:box-shadow .15s;}
@@ -28,13 +28,13 @@
 
   <div style="background:#fff;border:2px solid var(--ink);border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 0 var(--ink);">
     <div style="background:var(--ink);padding:24px 28px;">
-      <a href="/" style="font-family:'Dela Gothic One';font-size:1.1rem;color:var(--acid);text-decoration:none;display:block;margin-bottom:4px;">VERSOZAP</a>
+      <a href="/" style="font-family:'Dela Gothic One';font-size:1.1rem;color:var(--accent);text-decoration:none;display:block;margin-bottom:4px;">VERSOZAP</a>
       <p style="color:#666;font-size:.78rem;font-weight:500;">acesse seu painel pessoal</p>
     </div>
     <div style="padding:28px;">
       <h1 style="font-family:'Dela Gothic One';font-size:2.4rem;text-transform:uppercase;letter-spacing:-.02em;margin-bottom:4px;">ENTRAR</h1>
       <p style="color:#888;font-size:.875rem;font-weight:500;margin-bottom:24px;">bem-vindo de volta</p>
-      <div id="alert" style="display:none;background:var(--ink);color:var(--acid);border:2px solid var(--ink);border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;font-weight:600;box-shadow:3px 3px 0 0 var(--ink);"></div>
+      <div id="alert" style="display:none;background:var(--ink);color:var(--accent);border:2px solid var(--ink);border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;font-weight:600;box-shadow:3px 3px 0 0 var(--ink);"></div>
       <form id="form-login" style="display:flex;flex-direction:column;gap:14px;">
         <div>
           <label>E-MAIL</label>
@@ -52,7 +52,7 @@
           <span style="font-size:11px;color:#aaa;font-weight:600;font-family:monospace;">OU</span>
           <hr style="flex:1;border:none;border-top:1px solid #e8e4d8;">
         </div>
-        <button onclick="alert('em breve')" style="width:100%;border:2px solid var(--ink);border-radius:8px;padding:12px;background:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Space Grotesk';font-weight:600;font-size:.82rem;cursor:pointer;box-shadow:2px 2px 0 0 var(--ink);transition:transform .1s,box-shadow .1s;" onmouseenter="this.style.transform='translate(2px,2px)';this.style.boxShadow='0 0 0 0'" onmouseleave="this.style.transform='';this.style.boxShadow='2px 2px 0 0 #09090B'">
+        <button onclick="alert('em breve')" style="width:100%;border:2px solid var(--ink);border-radius:8px;padding:12px;background:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Space Grotesk';font-weight:600;font-size:.82rem;cursor:pointer;box-shadow:2px 2px 0 0 var(--ink);transition:transform .1s,box-shadow .1s;" onmouseenter="this.style.transform='translate(2px,2px)';this.style.boxShadow='0 0 0 0'" onmouseleave="this.style.transform='';this.style.boxShadow='2px 2px 0 0 #0D1117'">
           <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="17" height="17" alt="G">
           Continuar com Google <span style="font-size:.7rem;color:#aaa;background:#f5f5f5;padding:2px 6px;border-radius:4px;margin-left:4px;">em breve</span>
         </button>
