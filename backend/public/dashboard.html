@@ -3,164 +3,194 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VersoZap — Painel</title>
+  <title>versozap — painel admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 min-h-screen">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background: #0a0a0a; color: #fff; min-height: 100vh; }
+    h1, h2, h3, .font-display { font-family: 'Space Grotesk', sans-serif; }
 
-  <!-- Navbar -->
-  <nav class="bg-white border-b border-gray-100 sticky top-0 z-20">
-    <div class="max-w-5xl mx-auto px-4 py-3.5 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-2 font-extrabold text-gray-900">
-        <span class="text-xl">📖</span> VersoZap
+    .btn-bounce {
+      transition: transform .3s cubic-bezier(.175,.885,.32,1.275), box-shadow .3s cubic-bezier(.175,.885,.32,1.275);
+    }
+    .btn-bounce:hover  { transform: scale(1.04) translateY(-2px); }
+    .btn-bounce:active { transform: scale(.97); }
+
+    input, select {
+      font-family: 'DM Sans', sans-serif;
+      border: 3px solid #333; border-radius: 0; outline: none; background: #1a1a1a;
+      color: #fff; width: 100%; padding: 9px 12px; font-size: 13px; font-weight: 500;
+      transition: border-color .15s ease, box-shadow .15s ease;
+    }
+    input::placeholder { color: #555; }
+    select option { background: #1a1a1a; }
+    input:focus, select:focus { border-color: #ccff00; box-shadow: 3px 3px 0px #ccff00; }
+
+    label { display:block; font-family:'Space Grotesk'; font-weight:800; font-size:.7rem; letter-spacing:.05em; text-transform:uppercase; margin-bottom:5px; color:#aaa; }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav style="background:#1a1a1a;border-bottom:4px solid #ccff00;position:sticky;top:0;z-index:20;">
+    <div style="max-width:1100px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;">
+      <a href="/" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+        <span style="background:#ccff00;border:3px solid #ccff00;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:14px;">📖</span>
+        <span style="font-family:'Space Grotesk';font-weight:900;color:#fff;font-size:.95rem;letter-spacing:-.02em;">versozap</span>
+        <span style="font-family:'Space Grotesk';font-weight:800;font-size:.7rem;color:#ccff00;background:#1a1a1a;border:2px solid #ccff00;padding:2px 8px;letter-spacing:.05em;">ADMIN</span>
       </a>
-      <div class="flex items-center gap-3">
-        <span id="nav-email" class="text-xs text-gray-500 hidden sm:block max-w-[160px] truncate"></span>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span id="nav-email" style="font-size:12px;font-weight:600;color:#666;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
         <button onclick="sair()"
-          class="text-xs font-semibold text-red-500 hover:text-red-700 border border-red-100 hover:border-red-200 px-3 py-1.5 rounded-lg transition-colors">
-          Sair
+          style="background:transparent;border:3px solid #ff0099;color:#ff0099;padding:6px 14px;font-family:'Space Grotesk';font-weight:800;font-size:11px;letter-spacing:.02em;cursor:pointer;"
+          class="btn-bounce">
+          sair
         </button>
       </div>
     </div>
   </nav>
 
-  <div class="max-w-5xl mx-auto px-4 py-6 space-y-6">
+  <div style="max-width:1100px;margin:0 auto;padding:24px 16px;">
 
     <!-- Tabs -->
-    <div class="flex gap-1 bg-gray-100 p-1 rounded-xl w-fit">
+    <div style="display:flex;gap:4px;margin-bottom:24px;background:#1a1a1a;border:4px solid #333;padding:4px;width:fit-content;">
       <button onclick="showTab('whatsapp')" id="tab-whatsapp"
-        class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold transition-colors bg-white shadow text-gray-800">
-        📱 WhatsApp
+        style="padding:10px 20px;font-family:'Space Grotesk';font-weight:900;font-size:.85rem;letter-spacing:-.01em;cursor:pointer;border:none;transition:all .2s ease;background:#ccff00;color:#0a0a0a;box-shadow:3px 3px 0px rgba(0,0,0,.3);">
+        📱 whatsapp
       </button>
       <button onclick="showTab('assinantes')" id="tab-assinantes"
-        class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold transition-colors text-gray-500 hover:text-gray-800">
-        👥 Assinantes
+        style="padding:10px 20px;font-family:'Space Grotesk';font-weight:900;font-size:.85rem;letter-spacing:-.01em;cursor:pointer;border:none;transition:all .2s ease;background:transparent;color:#666;">
+        👥 assinantes
       </button>
       <button onclick="showTab('stats')" id="tab-stats"
-        class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold transition-colors text-gray-500 hover:text-gray-800">
-        📊 Estatísticas
+        style="padding:10px 20px;font-family:'Space Grotesk';font-weight:900;font-size:.85rem;letter-spacing:-.01em;cursor:pointer;border:none;transition:all .2s ease;background:transparent;color:#666;">
+        📊 estatísticas
       </button>
     </div>
 
     <!-- Tab: WhatsApp -->
-    <div id="section-whatsapp" class="space-y-4">
-      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="font-semibold text-gray-800">Conexão WhatsApp</h2>
-          <div class="flex gap-2">
+    <div id="section-whatsapp" style="display:flex;flex-direction:column;gap:16px;">
+      <div style="background:#1a1a1a;border:4px solid #333;box-shadow:6px 6px 0px #ccff00;">
+        <div style="background:#ccff00;padding:14px 20px;border-bottom:4px solid #0a0a0a;display:flex;align-items:center;justify-content:space-between;">
+          <h2 style="font-family:'Space Grotesk';font-weight:900;font-size:1rem;color:#0a0a0a;letter-spacing:-.02em;">conexão whatsapp</h2>
+          <div style="display:flex;gap:8px;">
             <a href="/whatsapp.html"
-              class="text-xs bg-emerald-50 hover:bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-lg transition-colors">
-              Ver QR Code
+              style="background:#0a0a0a;color:#ccff00;border:3px solid #0a0a0a;padding:6px 14px;font-family:'Space Grotesk';font-weight:800;font-size:11px;text-decoration:none;box-shadow:3px 3px 0px rgba(0,0,0,.3);"
+              class="btn-bounce">
+              ver qr code →
             </a>
             <button onclick="reconectar()" id="btn-reconectar"
-              class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg transition-colors">
-              Reconectar
+              style="background:transparent;border:3px solid #0a0a0a;color:#0a0a0a;padding:6px 14px;font-family:'Space Grotesk';font-weight:800;font-size:11px;cursor:pointer;"
+              class="btn-bounce">
+              reconectar
             </button>
           </div>
         </div>
-
-        <div id="wa-status" class="flex items-center gap-2 mb-4">
-          <div id="wa-dot" class="w-3 h-3 rounded-full bg-gray-300"></div>
-          <span id="wa-texto" class="text-sm text-gray-600">Verificando...</span>
-        </div>
-
-        <div id="wa-qr-container" class="hidden text-center">
-          <p class="text-sm text-gray-500 mb-3">Escaneie com o WhatsApp do número que vai enviar os versículos</p>
-          <img id="wa-qr" src="" alt="QR Code"
-            class="w-64 h-64 mx-auto rounded-xl border border-gray-200 object-contain">
-        </div>
-
-        <div id="wa-conectado" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center">
-          <div class="text-2xl mb-1">✅</div>
-          <p class="text-sm font-medium text-emerald-700">WhatsApp conectado e pronto para enviar!</p>
-        </div>
-
-        <div id="wa-erro" class="hidden bg-red-50 border border-red-200 rounded-xl p-4">
-          <p class="text-sm text-red-700" id="wa-erro-msg"></p>
+        <div style="padding:20px;">
+          <div id="wa-status" style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+            <div id="wa-dot" style="width:12px;height:12px;border-radius:50%;background:#555;flex-shrink:0;"></div>
+            <span id="wa-texto" style="font-size:14px;font-weight:600;color:#aaa;">verificando...</span>
+          </div>
+          <div id="wa-qr-container" style="display:none;text-align:center;">
+            <p style="font-size:13px;color:#888;margin-bottom:12px;">escaneie com o whatsapp do número que vai enviar os versículos</p>
+            <div style="display:inline-block;background:#fff;border:4px solid #ccff00;padding:8px;box-shadow:6px 6px 0px #ccff00;">
+              <img id="wa-qr" src="" alt="QR Code" style="width:200px;height:200px;display:block;object-fit:contain;">
+            </div>
+          </div>
+          <div id="wa-conectado" style="display:none;background:#0a0a0a;border:3px solid #ccff00;padding:14px 18px;text-align:center;">
+            <p style="font-family:'Space Grotesk';font-weight:800;font-size:.9rem;color:#ccff00;">✅ whatsapp conectado e pronto para enviar!</p>
+          </div>
+          <div id="wa-erro" style="display:none;background:#1a1a1a;border:3px solid #ff0099;padding:14px 18px;">
+            <p style="font-size:13px;font-weight:600;color:#ff0099;" id="wa-erro-msg"></p>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Tab: Assinantes -->
-    <div id="section-assinantes" class="hidden space-y-4">
+    <div id="section-assinantes" style="display:none;flex-direction:column;gap:16px;">
 
-      <!-- Adicionar assinante -->
-      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-        <h2 class="font-semibold text-gray-800 mb-4">Adicionar assinante</h2>
-        <div id="alert-add" class="hidden mb-3 p-3 rounded-lg text-sm"></div>
-
-        <form id="form-add" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs font-medium text-gray-600 mb-1">Nome</label>
-            <input id="add-nome" type="text" placeholder="Nome do assinante"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-          </div>
-          <div>
-            <label class="block text-xs font-medium text-gray-600 mb-1">WhatsApp *</label>
-            <input id="add-telefone" type="tel" required placeholder="556799999999"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-          </div>
-          <div>
-            <label class="block text-xs font-medium text-gray-600 mb-1">Plano</label>
-            <select id="add-plano"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
-              <option value="">Sem plano</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs font-medium text-gray-600 mb-1">Horário</label>
-            <input id="add-horario" type="time" value="07:00"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-          </div>
-          <div>
-            <label class="block text-xs font-medium text-gray-600 mb-1">Versão da Bíblia</label>
-            <select id="add-versao"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
-              <option value="NVI">NVI</option>
-              <option value="ARC">ARC</option>
-              <option value="ACF">ACF</option>
-              <option value="NVT">NVT</option>
-            </select>
-          </div>
-          <div class="flex items-end">
-            <button type="submit"
-              class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-4 rounded-lg text-sm transition-colors">
-              Adicionar
-            </button>
-          </div>
-        </form>
+      <!-- Add subscriber form -->
+      <div style="background:#1a1a1a;border:4px solid #333;box-shadow:6px 6px 0px #7000ff;">
+        <div style="background:#7000ff;padding:14px 20px;border-bottom:4px solid #0a0a0a;">
+          <h2 style="font-family:'Space Grotesk';font-weight:900;font-size:1rem;color:#fff;letter-spacing:-.02em;">adicionar assinante</h2>
+        </div>
+        <div style="padding:20px;">
+          <div id="alert-add" style="display:none;border:3px solid #0a0a0a;padding:10px 14px;margin-bottom:14px;font-size:13px;font-weight:600;"></div>
+          <form id="form-add" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+            <div>
+              <label>nome</label>
+              <input id="add-nome" type="text" placeholder="nome do assinante">
+            </div>
+            <div>
+              <label>whatsapp *</label>
+              <input id="add-telefone" type="tel" required placeholder="556799999999">
+            </div>
+            <div>
+              <label>plano</label>
+              <select id="add-plano">
+                <option value="">sem plano</option>
+              </select>
+            </div>
+            <div>
+              <label>horário</label>
+              <input id="add-horario" type="time" value="07:00">
+            </div>
+            <div>
+              <label>versão da bíblia</label>
+              <select id="add-versao">
+                <option value="NVI">NVI</option>
+                <option value="ARC">ARC</option>
+                <option value="ACF">ACF</option>
+                <option value="NVT">NVT</option>
+              </select>
+            </div>
+            <div style="display:flex;align-items:flex-end;">
+              <button type="submit"
+                style="background:#ccff00;color:#0a0a0a;border:3px solid #ccff00;padding:10px;font-family:'Space Grotesk';font-weight:900;font-size:.85rem;cursor:pointer;width:100%;box-shadow:3px 3px 0px rgba(204,255,0,.3);"
+                class="btn-bounce">
+                adicionar →
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
 
-      <!-- Lista de assinantes -->
-      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="font-semibold text-gray-800">Assinantes</h2>
-          <button onclick="carregarUsuarios()" class="text-xs text-gray-500 hover:text-gray-700">↻ Atualizar</button>
+      <!-- Subscriber list -->
+      <div style="background:#1a1a1a;border:4px solid #333;box-shadow:6px 6px 0px #333;">
+        <div style="background:#333;padding:14px 20px;border-bottom:4px solid #333;display:flex;align-items:center;justify-content:space-between;">
+          <h2 style="font-family:'Space Grotesk';font-weight:900;font-size:1rem;color:#fff;letter-spacing:-.02em;">assinantes</h2>
+          <button onclick="carregarUsuarios()"
+            style="background:transparent;border:2px solid #555;color:#888;padding:5px 12px;font-family:'Space Grotesk';font-weight:800;font-size:11px;cursor:pointer;"
+            class="btn-bounce">
+            ↻ atualizar
+          </button>
         </div>
-        <div id="lista-usuarios" class="space-y-2">
-          <p class="text-sm text-gray-400 text-center py-4">Carregando...</p>
+        <div id="lista-usuarios" style="padding:12px;display:flex;flex-direction:column;gap:8px;">
+          <p style="font-size:13px;color:#666;text-align:center;padding:16px;">carregando...</p>
         </div>
       </div>
     </div>
 
-    <!-- Tab: Estatísticas -->
-    <div id="section-stats" class="hidden">
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 text-center">
-          <div id="stat-ativos" class="text-3xl font-bold text-emerald-600">—</div>
-          <div class="text-xs text-gray-500 mt-1">Ativos</div>
+    <!-- Tab: Stats -->
+    <div id="section-stats" style="display:none;">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+        <div style="background:#ccff00;border:4px solid #0a0a0a;box-shadow:6px 6px 0px #ccff00;padding:24px;text-align:center;transform:rotate(-.5deg);">
+          <div id="stat-ativos" style="font-family:'Space Grotesk';font-weight:900;font-size:2.8rem;color:#0a0a0a;line-height:1;">—</div>
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#0a0a0a;margin-top:6px;">ativos</div>
         </div>
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 text-center">
-          <div id="stat-inativos" class="text-3xl font-bold text-gray-400">—</div>
-          <div class="text-xs text-gray-500 mt-1">Inativos</div>
+        <div style="background:#7000ff;border:4px solid #0a0a0a;box-shadow:6px 6px 0px #7000ff;padding:24px;text-align:center;transform:rotate(.5deg);">
+          <div id="stat-inativos" style="font-family:'Space Grotesk';font-weight:900;font-size:2.8rem;color:#ccff00;line-height:1;">—</div>
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#ddd;margin-top:6px;">inativos</div>
         </div>
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 text-center">
-          <div id="stat-hoje" class="text-3xl font-bold text-blue-600">—</div>
-          <div class="text-xs text-gray-500 mt-1">Envios hoje</div>
+        <div style="background:#1a1a1a;border:4px solid #333;box-shadow:6px 6px 0px #333;padding:24px;text-align:center;transform:rotate(-.3deg);">
+          <div id="stat-hoje" style="font-family:'Space Grotesk';font-weight:900;font-size:2.8rem;color:#ccff00;line-height:1;">—</div>
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#888;margin-top:6px;">envios hoje</div>
         </div>
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 text-center">
-          <div id="stat-taxa" class="text-3xl font-bold text-purple-600">—</div>
-          <div class="text-xs text-gray-500 mt-1">Taxa leitura</div>
+        <div style="background:#ff0099;border:4px solid #0a0a0a;box-shadow:6px 6px 0px #ff0099;padding:24px;text-align:center;transform:rotate(.3deg);">
+          <div id="stat-taxa" style="font-family:'Space Grotesk';font-weight:900;font-size:2.8rem;color:#fff;line-height:1;">—</div>
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#fdd;margin-top:6px;">taxa leitura</div>
         </div>
       </div>
     </div>
@@ -168,53 +198,55 @@
   </div>
 
   <!-- Modal editar -->
-  <div id="modal" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="font-semibold text-gray-800">Editar assinante</h3>
-        <button onclick="fecharModal()" class="text-gray-400 hover:text-gray-600 text-xl leading-none">&times;</button>
+  <div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;padding:16px;z-index:50;">
+    <div style="background:#1a1a1a;border:4px solid #ccff00;box-shadow:10px 10px 0px #ccff00;width:100%;max-width:420px;">
+      <div style="background:#ccff00;padding:14px 20px;border-bottom:4px solid #0a0a0a;display:flex;align-items:center;justify-content:space-between;">
+        <h3 style="font-family:'Space Grotesk';font-weight:900;font-size:.95rem;color:#0a0a0a;letter-spacing:-.02em;">editar assinante</h3>
+        <button onclick="fecharModal()"
+          style="background:#0a0a0a;color:#ccff00;border:none;width:28px;height:28px;font-size:16px;cursor:pointer;font-family:'Space Grotesk';font-weight:900;"
+          class="btn-bounce">✕</button>
       </div>
-      <div id="alert-edit" class="hidden mb-3 p-3 rounded-lg text-sm"></div>
-      <form id="form-edit" class="space-y-3">
-        <input type="hidden" id="edit-id">
-        <div>
-          <label class="block text-xs font-medium text-gray-600 mb-1">Nome</label>
-          <input id="edit-nome" type="text"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-        </div>
-        <div>
-          <label class="block text-xs font-medium text-gray-600 mb-1">Horário</label>
-          <input id="edit-horario" type="time"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-        </div>
-        <div>
-          <label class="block text-xs font-medium text-gray-600 mb-1">Plano</label>
-          <select id="edit-plano"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
-            <option value="">Sem plano</option>
-          </select>
-        </div>
-        <div>
-          <label class="block text-xs font-medium text-gray-600 mb-1">Versão</label>
-          <select id="edit-versao"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
-            <option value="NVI">NVI</option>
-            <option value="ARC">ARC</option>
-            <option value="ACF">ACF</option>
-            <option value="NVT">NVT</option>
-          </select>
-        </div>
-        <div class="flex gap-2 pt-1">
-          <button type="submit"
-            class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg text-sm transition-colors">
-            Salvar
-          </button>
-          <button type="button" onclick="fecharModal()"
-            class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 rounded-lg text-sm transition-colors">
-            Cancelar
-          </button>
-        </div>
-      </form>
+      <div style="padding:20px;">
+        <div id="alert-edit" style="display:none;border:3px solid #ff0099;padding:10px 14px;margin-bottom:14px;font-size:13px;font-weight:600;color:#ff0099;background:#1a1a1a;"></div>
+        <form id="form-edit" style="display:flex;flex-direction:column;gap:12px;">
+          <input type="hidden" id="edit-id">
+          <div>
+            <label>nome</label>
+            <input id="edit-nome" type="text">
+          </div>
+          <div>
+            <label>horário</label>
+            <input id="edit-horario" type="time">
+          </div>
+          <div>
+            <label>plano</label>
+            <select id="edit-plano">
+              <option value="">sem plano</option>
+            </select>
+          </div>
+          <div>
+            <label>versão da bíblia</label>
+            <select id="edit-versao">
+              <option value="NVI">NVI</option>
+              <option value="ARC">ARC</option>
+              <option value="ACF">ACF</option>
+              <option value="NVT">NVT</option>
+            </select>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;">
+            <button type="submit"
+              style="background:#ccff00;color:#0a0a0a;border:3px solid #ccff00;padding:11px;font-family:'Space Grotesk';font-weight:900;font-size:.85rem;cursor:pointer;box-shadow:4px 4px 0px rgba(204,255,0,.3);"
+              class="btn-bounce">
+              salvar
+            </button>
+            <button type="button" onclick="fecharModal()"
+              style="background:transparent;color:#888;border:3px solid #555;padding:11px;font-family:'Space Grotesk';font-weight:900;font-size:.85rem;cursor:pointer;"
+              class="btn-bounce">
+              cancelar
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 
@@ -243,14 +275,17 @@
     // ── Tabs ──────────────────────────────────────────────────────────────────
     function showTab(tab) {
       ['whatsapp', 'assinantes', 'stats'].forEach(t => {
-        document.getElementById('section-' + t).classList.toggle('hidden', t !== tab);
+        const section = document.getElementById('section-' + t);
+        section.style.display = t === tab ? (t === 'stats' ? 'block' : 'flex') : 'none';
         const btn = document.getElementById('tab-' + t);
         if (t === tab) {
-          btn.classList.add('bg-white', 'shadow', 'text-gray-800');
-          btn.classList.remove('text-gray-600', 'hover:text-gray-800');
+          btn.style.background = '#ccff00';
+          btn.style.color = '#0a0a0a';
+          btn.style.boxShadow = '3px 3px 0px rgba(0,0,0,.3)';
         } else {
-          btn.classList.remove('bg-white', 'shadow', 'text-gray-800');
-          btn.classList.add('text-gray-600', 'hover:text-gray-800');
+          btn.style.background = 'transparent';
+          btn.style.color = '#666';
+          btn.style.boxShadow = 'none';
         }
       });
       if (tab === 'assinantes') { carregarUsuarios(); carregarPlanos(); }
@@ -269,30 +304,31 @@
         const ok    = document.getElementById('wa-conectado');
         const erro  = document.getElementById('wa-erro');
 
-        qrC.classList.add('hidden');
-        ok.classList.add('hidden');
-        erro.classList.add('hidden');
+        qrC.style.display  = 'none';
+        ok.style.display   = 'none';
+        erro.style.display = 'none';
 
         const statusMap = {
-          conectado:     { cor: 'bg-emerald-500', label: 'Conectado' },
-          aguardando_qr: { cor: 'bg-yellow-400', label: 'Aguardando escaneamento do QR' },
-          conectando:    { cor: 'bg-blue-400',  label: 'Conectando...' },
-          reconectando:  { cor: 'bg-orange-400', label: 'Reconectando...' },
-          desconectado:  { cor: 'bg-red-500',   label: 'Desconectado' },
+          conectado:     { cor: '#ccff00', label: 'conectado' },
+          aguardando_qr: { cor: '#ff0099', label: 'aguardando escaneamento do qr' },
+          conectando:    { cor: '#7000ff', label: 'conectando...' },
+          reconectando:  { cor: '#ff6600', label: 'reconectando...' },
+          desconectado:  { cor: '#555',    label: 'desconectado' },
         };
-        const info = statusMap[d.status] || { cor: 'bg-gray-400', label: d.status };
+        const info = statusMap[d.status] || { cor: '#555', label: d.status };
 
-        dot.className = 'w-3 h-3 rounded-full ' + info.cor;
+        dot.style.background = info.cor;
         texto.textContent = info.label;
+        texto.style.color = info.cor;
 
         if (d.status === 'conectado') {
-          ok.classList.remove('hidden');
+          ok.style.display = 'block';
         } else if (d.qr) {
           document.getElementById('wa-qr').src = d.qr;
-          qrC.classList.remove('hidden');
+          qrC.style.display = 'block';
         } else if (d.erro) {
-          document.getElementById('wa-erro-msg').textContent = d.erro.message || 'Erro desconhecido';
-          erro.classList.remove('hidden');
+          document.getElementById('wa-erro-msg').textContent = d.erro.message || 'erro desconhecido';
+          erro.style.display = 'block';
         }
       } catch {}
     }
@@ -300,12 +336,12 @@
     async function reconectar() {
       const btn = document.getElementById('btn-reconectar');
       btn.disabled = true;
-      btn.textContent = 'Reconectando...';
+      btn.textContent = 'reconectando...';
       try {
         await api('/api/admin/whatsapp/reconectar', { method: 'POST' });
         setTimeout(verificarWhatsApp, 2000);
       } finally {
-        setTimeout(() => { btn.disabled = false; btn.textContent = 'Reconectar'; }, 3000);
+        setTimeout(() => { btn.disabled = false; btn.textContent = 'reconectar'; }, 3000);
       }
     }
 
@@ -326,7 +362,7 @@
           const extra = planosCache.map(p =>
             `<option value="${p.id}">${p.nome}</option>`
           ).join('');
-          sel.innerHTML = '<option value="">Sem plano</option>' + extra;
+          sel.innerHTML = '<option value="">sem plano</option>' + extra;
         });
       } catch {}
     }
@@ -340,43 +376,43 @@
         const lista = await r.json();
 
         if (!lista.length) {
-          el.innerHTML = '<p class="text-sm text-gray-400 text-center py-4">Nenhum assinante ainda</p>';
+          el.innerHTML = '<p style="font-size:13px;color:#555;text-align:center;padding:16px;">nenhum assinante ainda</p>';
           return;
         }
 
         el.innerHTML = lista.map(u => {
           const ativo = u.ativo === 1;
-          const progresso = u.total_dias ? `Dia ${u.dia_atual}/${u.total_dias}` : '—';
+          const progresso = u.total_dias ? `dia ${u.dia_atual}/${u.total_dias}` : '—';
           const horario = u.horario_envio || '—';
           const nome = u.nome || u.telefone;
           return `
-          <div class="flex items-center justify-between p-3 rounded-xl border ${ativo ? 'border-gray-100 bg-gray-50' : 'border-gray-100 bg-gray-100 opacity-60'} gap-2">
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-2">
-                <span class="text-sm font-medium text-gray-800 truncate">${escHtml(nome)}</span>
-                ${ativo ? '' : '<span class="text-xs text-gray-400 bg-gray-200 px-1.5 py-0.5 rounded">inativo</span>'}
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:3px solid ${ativo ? '#333' : '#222'};background:${ativo ? '#1a1a1a' : '#111'};gap:10px;opacity:${ativo ? '1' : '.5'};">
+            <div style="flex:1;min-width:0;">
+              <div style="display:flex;align-items:center;gap:6px;">
+                <span style="font-family:'Space Grotesk';font-weight:800;font-size:.85rem;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(nome)}</span>
+                ${ativo ? '' : '<span style="font-size:10px;color:#555;font-weight:700;text-transform:uppercase;border:2px solid #333;padding:1px 6px;">inativo</span>'}
               </div>
-              <div class="text-xs text-gray-500 mt-0.5 flex flex-wrap gap-2">
+              <div style="font-size:11px;color:#666;margin-top:3px;display:flex;flex-wrap:wrap;gap:8px;">
                 <span>📱 ${escHtml(u.telefone)}</span>
                 <span>🕐 ${horario}</span>
-                <span>${escHtml(u.plano_nome || 'Sem plano')} · ${progresso}</span>
+                <span style="color:#ccff00;">${escHtml(u.plano_nome || 'sem plano')} · ${progresso}</span>
               </div>
             </div>
-            <div class="flex gap-1 shrink-0">
+            <div style="display:flex;gap:6px;flex-shrink:0;">
               <button onclick='abrirModal(${JSON.stringify(u)})'
-                class="text-xs bg-blue-50 hover:bg-blue-100 text-blue-700 px-2 py-1 rounded-lg transition-colors">
-                Editar
+                style="background:#7000ff;color:#fff;border:2px solid #7000ff;padding:5px 10px;font-family:'Space Grotesk';font-weight:800;font-size:11px;cursor:pointer;box-shadow:2px 2px 0px rgba(112,0,255,.4);">
+                editar
               </button>
               ${ativo ? `
               <button onclick="desativar(${u.id})"
-                class="text-xs bg-red-50 hover:bg-red-100 text-red-700 px-2 py-1 rounded-lg transition-colors">
-                Remover
+                style="background:transparent;color:#ff0099;border:2px solid #ff0099;padding:5px 10px;font-family:'Space Grotesk';font-weight:800;font-size:11px;cursor:pointer;">
+                remover
               </button>` : ''}
             </div>
           </div>`;
         }).join('');
       } catch {
-        el.innerHTML = '<p class="text-sm text-red-400 text-center py-4">Erro ao carregar</p>';
+        el.innerHTML = '<p style="font-size:13px;color:#ff0099;text-align:center;padding:16px;">erro ao carregar</p>';
       }
     }
 
@@ -395,14 +431,15 @@
 
     function showAlertAdd(msg, ok = false) {
       alertAdd.textContent = msg;
-      alertAdd.className = 'mb-3 p-3 rounded-lg text-sm ' +
-        (ok ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-red-50 text-red-700 border border-red-200');
-      alertAdd.classList.remove('hidden');
+      alertAdd.style.background = ok ? '#ccff00' : '#ff0099';
+      alertAdd.style.color = ok ? '#0a0a0a' : '#fff';
+      alertAdd.style.borderColor = ok ? '#ccff00' : '#ff0099';
+      alertAdd.style.display = 'block';
     }
 
     document.getElementById('form-add').addEventListener('submit', async (e) => {
       e.preventDefault();
-      alertAdd.classList.add('hidden');
+      alertAdd.style.display = 'none';
       const tel = formatarTelefone(document.getElementById('add-telefone').value);
 
       try {
@@ -418,19 +455,19 @@
         });
         if (!r) return;
         const d = await r.json();
-        if (!r.ok) { showAlertAdd(d.erro || 'Erro'); return; }
+        if (!r.ok) { showAlertAdd(d.erro || 'erro'); return; }
 
-        showAlertAdd('Assinante adicionado!', true);
+        showAlertAdd('assinante adicionado!', true);
         document.getElementById('form-add').reset();
         document.getElementById('add-horario').value = '07:00';
         carregarUsuarios();
       } catch {
-        showAlertAdd('Erro de conexão');
+        showAlertAdd('erro de conexão');
       }
     });
 
     async function desativar(id) {
-      if (!confirm('Desativar este assinante?')) return;
+      if (!confirm('desativar este assinante?')) return;
       await api('/api/admin/usuarios/' + id, { method: 'DELETE' });
       carregarUsuarios();
     }
@@ -438,24 +475,24 @@
     // ── Modal editar ──────────────────────────────────────────────────────────
     async function abrirModal(u) {
       await carregarPlanos();
-      document.getElementById('edit-id').value    = u.id;
-      document.getElementById('edit-nome').value  = u.nome || '';
+      document.getElementById('edit-id').value      = u.id;
+      document.getElementById('edit-nome').value    = u.nome || '';
       document.getElementById('edit-horario').value = u.horario_envio || '07:00';
       document.getElementById('edit-versao').value  = u.versao_biblia || 'NVI';
       document.getElementById('edit-plano').value   = u.plano_id || '';
-      document.getElementById('alert-edit').classList.add('hidden');
-      document.getElementById('modal').classList.remove('hidden');
+      document.getElementById('alert-edit').style.display = 'none';
+      document.getElementById('modal').style.display = 'flex';
     }
 
     function fecharModal() {
-      document.getElementById('modal').classList.add('hidden');
+      document.getElementById('modal').style.display = 'none';
     }
 
     const alertEdit = document.getElementById('alert-edit');
 
     document.getElementById('form-edit').addEventListener('submit', async (e) => {
       e.preventDefault();
-      alertEdit.classList.add('hidden');
+      alertEdit.style.display = 'none';
       const id = document.getElementById('edit-id').value;
 
       try {
@@ -471,17 +508,15 @@
         if (!r) return;
         if (!r.ok) {
           const d = await r.json();
-          alertEdit.textContent = d.erro || 'Erro';
-          alertEdit.className = 'mb-3 p-3 rounded-lg text-sm bg-red-50 text-red-700 border border-red-200';
-          alertEdit.classList.remove('hidden');
+          alertEdit.textContent = d.erro || 'erro';
+          alertEdit.style.display = 'block';
           return;
         }
         fecharModal();
         carregarUsuarios();
       } catch {
-        alertEdit.textContent = 'Erro de conexão';
-        alertEdit.className = 'mb-3 p-3 rounded-lg text-sm bg-red-50 text-red-700 border border-red-200';
-        alertEdit.classList.remove('hidden');
+        alertEdit.textContent = 'erro de conexão';
+        alertEdit.style.display = 'block';
       }
     });
 
@@ -491,10 +526,10 @@
         const r = await api('/api/admin/stats');
         if (!r) return;
         const d = await r.json();
-        document.getElementById('stat-ativos').textContent  = d.totalAtivos;
+        document.getElementById('stat-ativos').textContent   = d.totalAtivos;
         document.getElementById('stat-inativos').textContent = d.totalInativos;
-        document.getElementById('stat-hoje').textContent   = d.mensagensHoje;
-        document.getElementById('stat-taxa').textContent   = d.taxaLeitura + '%';
+        document.getElementById('stat-hoje').textContent     = d.mensagensHoje;
+        document.getElementById('stat-taxa').textContent     = d.taxaLeitura + '%';
       } catch {}
     }
 

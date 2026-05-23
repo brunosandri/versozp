@@ -3,115 +3,150 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VersoZap — Criar conta</title>
+  <title>versozap — criar conta</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background: #7000ff; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem; }
+    h1, .font-display { font-family: 'Space Grotesk', sans-serif; }
+
+    .btn-bounce {
+      transition: transform .3s cubic-bezier(.175,.885,.32,1.275), box-shadow .3s cubic-bezier(.175,.885,.32,1.275);
+    }
+    .btn-bounce:hover  { transform: scale(1.04) translateY(-2px); }
+    .btn-bounce:active { transform: scale(.97); box-shadow: 2px 2px 0px #0a0a0a !important; }
+
+    @keyframes wobble {
+      0%  { transform: rotate(0deg); }
+      25% { transform: rotate(-4deg); }
+      75% { transform: rotate(4deg); }
+      100%{ transform: rotate(0deg); }
+    }
+    .btn-wobble:hover { animation: wobble .5s ease-in-out; }
+
+    input, select {
+      font-family: 'DM Sans', sans-serif;
+      border: 4px solid #0a0a0a; border-radius: 0; outline: none; background: #fff;
+      width: 100%; padding: 11px 14px; font-size: 14px; font-weight: 500;
+      transition: box-shadow .15s ease;
+    }
+    input:focus, select:focus { box-shadow: 4px 4px 0px #0a0a0a; }
+
+    @keyframes float { 0%,100%{ transform:translateY(0) rotate(0deg); } 50%{ transform:translateY(-10px) rotate(2deg); } }
+    .sticker { animation: float 5s ease-in-out infinite; }
+
+    label { display:block; font-family:'Space Grotesk'; font-weight:800; font-size:.75rem; letter-spacing:.05em; text-transform:uppercase; margin-bottom:5px; }
+  </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-emerald-50 flex items-center justify-center p-4">
-  <div class="w-full max-w-md py-8">
+<body>
+  <div class="w-full max-w-md">
 
-    <!-- Logo -->
-    <div class="text-center mb-8">
-      <a href="/" class="inline-flex flex-col items-center gap-1 group">
-        <span class="text-5xl">📖</span>
-        <span class="font-extrabold text-xl text-gray-900 group-hover:text-emerald-600 transition-colors">VersoZap</span>
-      </a>
-      <p class="text-gray-500 text-sm mt-2">Crie sua conta e comece a ler a Bíblia hoje</p>
-    </div>
+    <!-- Floating stickers -->
+    <div style="position:fixed;top:6%;right:4%;background:#ccff00;border:3px solid #0a0a0a;border-radius:12px;box-shadow:4px 4px 0px #0a0a0a;padding:10px;font-size:1.6rem;transform:rotate(8deg);z-index:0;" class="sticker">🙏</div>
+    <div style="position:fixed;bottom:8%;left:4%;background:#ff0099;border:3px solid #0a0a0a;border-radius:12px;box-shadow:4px 4px 0px #0a0a0a;padding:10px;font-size:1.6rem;transform:rotate(-7deg);animation-delay:1.5s;z-index:0;" class="sticker">✝️</div>
 
-    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-      <div id="alert" class="hidden mb-4 p-3 rounded-xl text-sm"></div>
-
-      <form id="form-signup" class="space-y-4">
+    <!-- Card -->
+    <div style="background:#fff;border:4px solid #0a0a0a;box-shadow:10px 10px 0px #0a0a0a;position:relative;z-index:10;">
+      <!-- Header strip -->
+      <div style="background:#ccff00;padding:18px 24px;border-bottom:4px solid #0a0a0a;display:flex;align-items:center;gap:12px;">
+        <a href="/" style="background:#0a0a0a;border:3px solid #0a0a0a;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:16px;text-decoration:none;" class="btn-bounce">📖</a>
         <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-1.5">Nome</label>
-          <input id="nome" type="text"
-            class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow"
-            placeholder="Como prefere ser chamado?">
+          <p style="font-family:'Space Grotesk';font-weight:900;font-size:1rem;color:#0a0a0a;letter-spacing:-.02em;">versozap</p>
+          <p style="color:#0a0a0a;font-size:11px;font-weight:700;opacity:.7;">crie sua conta grátis</p>
         </div>
-        <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-1.5">Email <span class="text-red-400">*</span></label>
-          <input id="email" type="email" required
-            class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow"
-            placeholder="seu@email.com">
-        </div>
-        <div class="grid grid-cols-2 gap-3">
+      </div>
+
+      <div style="padding:24px;">
+        <h1 style="font-family:'Space Grotesk';font-weight:900;font-size:2rem;line-height:1;letter-spacing:-.04em;" class="mb-1">criar conta</h1>
+        <p style="color:#666;font-size:.875rem;font-weight:500;" class="mb-5">comece a ler a bíblia todo dia pelo whatsapp</p>
+
+        <div id="alert" style="display:none;background:#ff0099;border:3px solid #0a0a0a;padding:10px 14px;margin-bottom:16px;font-size:13px;font-weight:600;color:#fff;box-shadow:3px 3px 0px #0a0a0a;"></div>
+
+        <form id="form-signup" style="display:flex;flex-direction:column;gap:12px;">
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Senha <span class="text-red-400">*</span></label>
-            <input id="senha" type="password" required minlength="6"
-              class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow"
-              placeholder="Mín. 6 caracteres">
+            <label>nome</label>
+            <input id="nome" type="text" placeholder="como prefere ser chamado?">
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Confirmar <span class="text-red-400">*</span></label>
-            <input id="confirmar" type="password" required
-              class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow"
-              placeholder="Repita a senha">
+            <label>email <span style="color:#ff0099;">*</span></label>
+            <input id="email" type="email" required placeholder="seu@email.com">
           </div>
-        </div>
-        <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-1.5">WhatsApp <span class="text-red-400">*</span></label>
-          <input id="telefone" type="tel" required
-            class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow"
-            placeholder="(67) 99999-9999">
-          <p class="text-xs text-gray-400 mt-1">Somente Brasil. Inclua o DDD.</p>
-        </div>
-        <div class="grid grid-cols-2 gap-3">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div>
+              <label>senha <span style="color:#ff0099;">*</span></label>
+              <input id="senha" type="password" required minlength="6" placeholder="mín. 6 chars">
+            </div>
+            <div>
+              <label>confirmar <span style="color:#ff0099;">*</span></label>
+              <input id="confirmar" type="password" required placeholder="repita">
+            </div>
+          </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Plano de leitura</label>
-            <select id="plano_id"
-              class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white transition-shadow">
-              <option value="">Carregando...</option>
+            <label>whatsapp <span style="color:#ff0099;">*</span></label>
+            <input id="telefone" type="tel" required placeholder="(67) 99999-9999">
+            <p style="font-size:11px;color:#888;font-weight:500;margin-top:4px;">somente brasil. inclua o ddd.</p>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div>
+              <label>plano de leitura</label>
+              <select id="plano_id">
+                <option value="">carregando...</option>
+              </select>
+            </div>
+            <div>
+              <label>horário</label>
+              <input id="horario_envio" type="time" value="07:00">
+            </div>
+          </div>
+          <div>
+            <label>versão da bíblia</label>
+            <select id="versao_biblia">
+              <option value="NVI">NVI — Nova Versão Internacional</option>
+              <option value="ARC">ARC — Almeida Revista e Corrigida</option>
+              <option value="ACF">ACF — Almeida Corrigida Fiel</option>
+              <option value="NVT">NVT — Nova Versão Transformadora</option>
             </select>
           </div>
-          <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Horário</label>
-            <input id="horario_envio" type="time" value="07:00"
-              class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow">
-          </div>
-        </div>
-        <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-1.5">Versão da Bíblia</label>
-          <select id="versao_biblia"
-            class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white transition-shadow">
-            <option value="NVI">NVI — Nova Versão Internacional</option>
-            <option value="ARC">ARC — Almeida Revista e Corrigida</option>
-            <option value="ACF">ACF — Almeida Corrigida Fiel</option>
-            <option value="NVT">NVT — Nova Versão Transformadora</option>
-          </select>
+
+          <button type="submit" id="btn"
+            style="background:#ccff00;color:#0a0a0a;border:4px solid #0a0a0a;border-radius:0;box-shadow:6px 6px 0px #0a0a0a;padding:14px;font-family:'Space Grotesk';font-weight:900;font-size:1rem;letter-spacing:-.01em;cursor:pointer;margin-top:4px;"
+            class="btn-bounce btn-wobble w-full">
+            criar minha conta 🙏
+          </button>
+        </form>
+
+        <!-- Divider -->
+        <div style="display:flex;align-items:center;gap:10px;margin:18px 0;">
+          <div style="flex:1;height:3px;background:#0a0a0a;"></div>
+          <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">ou</span>
+          <div style="flex:1;height:3px;background:#0a0a0a;"></div>
         </div>
 
-        <button type="submit" id="btn"
-          class="w-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold py-3 px-4 rounded-xl text-sm transition-colors shadow-sm mt-2">
-          Criar minha conta 🙏
-        </button>
-      </form>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
+          <button onclick="cadastroSocial('google')"
+            style="background:#fff;border:3px solid #0a0a0a;box-shadow:3px 3px 0px #0a0a0a;padding:10px;display:flex;align-items:center;justify-content:center;gap:6px;font-family:'DM Sans';font-weight:600;font-size:12px;cursor:pointer;"
+            class="btn-bounce">
+            <svg width="14" height="14" viewBox="0 0 24 24"><path fill="#EA4335" d="M5.27 9.76A7.08 7.08 0 0 1 19 10.5h-7v3h4a4 4 0 0 1-6.12 2.17L5.27 9.76Z"/><path fill="#4285F4" d="M5.27 9.76 1.5 7.1A11.47 11.47 0 0 0 .5 12c0 1.85.45 3.6 1.24 5.14l3.9-2.94A7 7 0 0 1 5 12c0-.77.1-1.54.27-2.24Z"/><path fill="#FBBC05" d="M12 4.93c1.86 0 3.54.64 4.86 1.69L19.82 3.6A11.47 11.47 0 0 0 12 .5a11.47 11.47 0 0 0-10.5 6.6l3.77 2.66A7.08 7.08 0 0 1 12 4.93Z"/><path fill="#34A853" d="M12 19.07c-2.43 0-4.55-1.22-5.83-3.07l-3.9 2.93A11.47 11.47 0 0 0 12 23.5c2.93 0 5.65-1.06 7.73-2.8L16 17.81A7 7 0 0 1 12 19.07Z"/></svg>
+            Google
+          </button>
+          <button onclick="cadastroSocial('facebook')"
+            style="background:#fff;border:3px solid #0a0a0a;box-shadow:3px 3px 0px #0a0a0a;padding:10px;display:flex;align-items:center;justify-content:center;gap:6px;font-family:'DM Sans';font-weight:600;font-size:12px;cursor:pointer;"
+            class="btn-bounce">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073C24 5.41 18.627 0 12 0S0 5.41 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.514c-1.49 0-1.955.927-1.955 1.877v2.255h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073Z"/></svg>
+            Facebook
+          </button>
+        </div>
 
-      <div class="relative my-5">
-        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-100"></div></div>
-        <div class="relative flex justify-center"><span class="bg-white px-3 text-xs text-gray-400">ou cadastre-se com</span></div>
+        <p style="text-align:center;font-size:13px;font-weight:500;">
+          já tem conta?
+          <a href="/login.html" style="font-family:'Space Grotesk';font-weight:800;color:#7000ff;text-decoration:none;border-bottom:2px solid #7000ff;">entrar →</a>
+        </p>
       </div>
-
-      <div class="grid grid-cols-2 gap-3">
-        <button onclick="cadastroSocial('google')"
-          class="flex items-center justify-center gap-2 border border-gray-200 hover:bg-gray-50 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 transition-colors">
-          <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#EA4335" d="M5.27 9.76A7.08 7.08 0 0 1 19 10.5h-7v3h4a4 4 0 0 1-6.12 2.17L5.27 9.76Z"/><path fill="#4285F4" d="M5.27 9.76 1.5 7.1A11.47 11.47 0 0 0 .5 12c0 1.85.45 3.6 1.24 5.14l3.9-2.94A7 7 0 0 1 5 12c0-.77.1-1.54.27-2.24Z"/><path fill="#FBBC05" d="M12 4.93c1.86 0 3.54.64 4.86 1.69L19.82 3.6A11.47 11.47 0 0 0 12 .5a11.47 11.47 0 0 0-10.5 6.6l3.77 2.66A7.08 7.08 0 0 1 12 4.93Z"/><path fill="#34A853" d="M12 19.07c-2.43 0-4.55-1.22-5.83-3.07l-3.9 2.93A11.47 11.47 0 0 0 12 23.5c2.93 0 5.65-1.06 7.73-2.8L16 17.81A7 7 0 0 1 12 19.07Z"/></svg>
-          Google
-        </button>
-        <button onclick="cadastroSocial('facebook')"
-          class="flex items-center justify-center gap-2 border border-gray-200 hover:bg-gray-50 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 transition-colors">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073C24 5.41 18.627 0 12 0S0 5.41 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.514c-1.49 0-1.955.927-1.955 1.877v2.255h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073Z"/></svg>
-          Facebook
-        </button>
-      </div>
-
-      <p class="text-center text-sm text-gray-500 mt-5">
-        Já tem conta?
-        <a href="/login.html" class="text-emerald-600 hover:text-emerald-700 font-semibold">Entrar</a>
-      </p>
     </div>
 
-    <p class="text-center mt-5">
-      <a href="/" class="text-xs text-gray-400 hover:text-gray-600 transition-colors">← Voltar ao início</a>
+    <p style="text-align:center;margin-top:16px;position:relative;z-index:10;">
+      <a href="/" style="font-size:12px;font-weight:600;color:#fff;text-decoration:none;opacity:.7;">← voltar ao início</a>
     </p>
   </div>
 
@@ -123,37 +158,32 @@
         const r = await fetch('/api/inscricao/planos');
         const planos = await r.json();
         const sel = document.getElementById('plano_id');
-        sel.innerHTML = '<option value="">Sem plano definido</option>' +
+        sel.innerHTML = '<option value="">sem plano definido</option>' +
           planos.map(p => `<option value="${p.id}">${p.nome}</option>`).join('');
       } catch {
-        document.getElementById('plano_id').innerHTML = '<option value="">Erro ao carregar</option>';
+        document.getElementById('plano_id').innerHTML = '<option value="">erro ao carregar</option>';
       }
     }
 
     const alertEl = document.getElementById('alert');
 
-    function showAlert(msg, ok = false) {
+    function showAlert(msg) {
       alertEl.textContent = msg;
-      alertEl.className = 'mb-4 p-3 rounded-xl text-sm ' +
-        (ok ? 'bg-emerald-50 text-emerald-700 border border-emerald-100'
-            : 'bg-red-50 text-red-700 border border-red-100');
-      alertEl.classList.remove('hidden');
+      alertEl.style.display = 'block';
     }
 
-    function cadastroSocial(provider) {
-      showAlert('Cadastro social em breve. Use email e senha por enquanto.');
-    }
+    function cadastroSocial(p) { showAlert('cadastro social em breve. use email e senha por enquanto.'); }
 
     document.getElementById('form-signup').addEventListener('submit', async (e) => {
       e.preventDefault();
       const senha    = document.getElementById('senha').value;
       const confirmar = document.getElementById('confirmar').value;
-      if (senha !== confirmar) { showAlert('As senhas não coincidem'); return; }
+      if (senha !== confirmar) { showAlert('as senhas não coincidem'); return; }
 
       const btn = document.getElementById('btn');
       btn.disabled = true;
-      btn.textContent = 'Criando conta...';
-      alertEl.classList.add('hidden');
+      btn.textContent = 'criando conta...';
+      alertEl.style.display = 'none';
 
       try {
         const r = await fetch('/api/usuario/register', {
@@ -170,17 +200,17 @@
           }),
         });
         const d = await r.json();
-        if (!r.ok) { showAlert(d.erro || 'Erro ao criar conta'); return; }
+        if (!r.ok) { showAlert(d.erro || 'erro ao criar conta'); return; }
 
         localStorage.setItem('userToken', d.token);
         localStorage.setItem('userEmail', d.email);
         localStorage.setItem('userName', d.nome || '');
         window.location.replace('/meu-plano.html');
       } catch {
-        showAlert('Erro de conexão. Tente novamente.');
+        showAlert('erro de conexão. tente novamente.');
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Criar minha conta 🙏';
+        btn.textContent = 'criar minha conta 🙏';
       }
     });
 

@@ -3,49 +3,84 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VersoZap — Admin</title>
+  <title>versozap — admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background: #0a0a0a; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
+    h1, .font-display { font-family: 'Space Grotesk', sans-serif; }
+
+    .btn-bounce {
+      transition: transform .3s cubic-bezier(.175,.885,.32,1.275), box-shadow .3s cubic-bezier(.175,.885,.32,1.275);
+    }
+    .btn-bounce:hover  { transform: scale(1.04) translateY(-2px); }
+    .btn-bounce:active { transform: scale(.97); box-shadow: 2px 2px 0px #0a0a0a !important; }
+
+    @keyframes wobble {
+      0%  { transform: rotate(0deg); }
+      25% { transform: rotate(-4deg); }
+      75% { transform: rotate(4deg); }
+      100%{ transform: rotate(0deg); }
+    }
+    .btn-wobble:hover { animation: wobble .5s ease-in-out; }
+
+    input {
+      font-family: 'DM Sans', sans-serif;
+      border: 4px solid #ccff00; border-radius: 0; outline: none; background: #1a1a1a;
+      color: #fff;
+      width: 100%; padding: 12px 14px; font-size: 14px; font-weight: 500;
+      transition: box-shadow .15s ease;
+    }
+    input::placeholder { color: #555; }
+    input:focus { box-shadow: 4px 4px 0px #ccff00; }
+  </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center p-4">
-  <div class="w-full max-w-sm">
-    <div class="text-center mb-8">
-      <a href="/" class="inline-flex flex-col items-center gap-1">
-        <span class="text-5xl">📖</span>
-        <span class="font-extrabold text-xl text-gray-900">VersoZap</span>
-      </a>
-      <p class="text-gray-500 text-sm mt-2">Painel Administrativo</p>
+<body>
+  <div style="width:100%;max-width:380px;">
+
+    <!-- Card -->
+    <div style="background:#1a1a1a;border:4px solid #ccff00;box-shadow:8px 8px 0px #ccff00;">
+      <!-- Header -->
+      <div style="background:#ccff00;padding:20px 24px;display:flex;align-items:center;gap:12px;">
+        <a href="/" style="background:#0a0a0a;border:3px solid #0a0a0a;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:16px;text-decoration:none;" class="btn-bounce">📖</a>
+        <div>
+          <p style="font-family:'Space Grotesk';font-weight:900;font-size:1rem;color:#0a0a0a;letter-spacing:-.02em;">versozap</p>
+          <p style="font-size:11px;font-weight:700;color:#0a0a0a;opacity:.6;">painel administrativo</p>
+        </div>
+      </div>
+
+      <div style="padding:28px 24px;">
+        <h1 style="font-family:'Space Grotesk';font-weight:900;font-size:2rem;line-height:1;letter-spacing:-.04em;color:#fff;" class="mb-1">admin</h1>
+        <p style="color:#aaa;font-size:.875rem;font-weight:500;" class="mb-6">acesso restrito ao painel de controle</p>
+
+        <div id="alert" style="display:none;background:#ff0099;border:3px solid #ff0099;padding:10px 14px;margin-bottom:16px;font-size:13px;font-weight:600;color:#fff;box-shadow:3px 3px 0px rgba(255,0,153,.4);"></div>
+
+        <form id="form-login" style="display:flex;flex-direction:column;gap:14px;">
+          <div>
+            <label style="display:block;font-family:'Space Grotesk';font-weight:800;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;color:#aaa;">email</label>
+            <input id="email" type="email" autocomplete="email" required placeholder="admin@exemplo.com">
+          </div>
+          <div>
+            <label style="display:block;font-family:'Space Grotesk';font-weight:800;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;color:#aaa;">senha</label>
+            <input id="senha" type="password" autocomplete="current-password" required placeholder="••••••••">
+          </div>
+          <button type="submit" id="btn-login"
+            style="background:#ccff00;color:#0a0a0a;border:4px solid #ccff00;border-radius:0;box-shadow:6px 6px 0px rgba(204,255,0,.3);padding:14px;font-family:'Space Grotesk';font-weight:900;font-size:1rem;letter-spacing:-.01em;cursor:pointer;margin-top:4px;"
+            class="btn-bounce btn-wobble w-full">
+            entrar →
+          </button>
+        </form>
+
+        <p style="text-align:center;font-size:13px;font-weight:500;color:#888;margin-top:20px;">
+          primeiro acesso?
+          <a href="/register.html" style="font-family:'Space Grotesk';font-weight:800;color:#ccff00;text-decoration:none;border-bottom:2px solid #ccff00;">criar conta admin →</a>
+        </p>
+      </div>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-      <div id="alert" class="hidden mb-4 p-3 rounded-xl text-sm"></div>
-
-      <form id="form-login" class="space-y-4">
-        <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-1.5">Email</label>
-          <input id="email" type="email" autocomplete="email" required
-            class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow"
-            placeholder="admin@exemplo.com">
-        </div>
-        <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-1.5">Senha</label>
-          <input id="senha" type="password" autocomplete="current-password" required
-            class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow"
-            placeholder="••••••••">
-        </div>
-        <button type="submit" id="btn-login"
-          class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-4 rounded-xl text-sm transition-colors shadow-sm">
-          Entrar
-        </button>
-      </form>
-
-      <p class="text-center text-sm text-gray-500 mt-5">
-        Primeiro acesso?
-        <a href="/register.html" class="text-emerald-600 hover:text-emerald-700 font-semibold">Criar conta admin</a>
-      </p>
-    </div>
-
-    <p class="text-center mt-5">
-      <a href="/" class="text-xs text-gray-400 hover:text-gray-600 transition-colors">← Voltar ao início</a>
+    <p style="text-align:center;margin-top:16px;">
+      <a href="/" style="font-size:12px;font-weight:600;color:#555;text-decoration:none;">← voltar ao início</a>
     </p>
   </div>
 
@@ -56,15 +91,15 @@
 
     function showAlert(msg) {
       alertEl.textContent = msg;
-      alertEl.className = 'mb-4 p-3 rounded-xl text-sm bg-red-50 text-red-700 border border-red-100';
-      alertEl.classList.remove('hidden');
+      alertEl.style.display = 'block';
     }
 
     document.getElementById('form-login').addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = document.getElementById('btn-login');
       btn.disabled = true;
-      btn.textContent = 'Entrando...';
+      btn.textContent = 'entrando...';
+      alertEl.style.display = 'none';
 
       try {
         const r = await fetch('/api/auth/login', {
@@ -76,16 +111,16 @@
           }),
         });
         const d = await r.json();
-        if (!r.ok) { showAlert(d.erro || 'Erro ao fazer login'); return; }
+        if (!r.ok) { showAlert(d.erro || 'erro ao fazer login'); return; }
 
         localStorage.setItem('vzToken', d.token);
         localStorage.setItem('vzEmail', d.email);
         window.location.replace('/dashboard.html');
       } catch {
-        showAlert('Erro de conexão com o servidor');
+        showAlert('erro de conexão com o servidor');
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Entrar';
+        btn.textContent = 'entrar →';
       }
     });
   </script>

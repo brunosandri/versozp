@@ -3,123 +3,157 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VersoZap — Meu Painel</title>
+  <title>versozap — meu painel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 min-h-screen antialiased">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background: #f5f5f5; color: #0a0a0a; min-height: 100vh; }
+    h1, h2, h3, .font-display { font-family: 'Space Grotesk', sans-serif; }
 
-  <!-- Navbar -->
-  <nav class="bg-white border-b border-gray-100 sticky top-0 z-20">
-    <div class="max-w-2xl mx-auto px-4 py-3.5 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-2 font-extrabold text-gray-900">
-        <span class="text-xl">📖</span> VersoZap
+    .shadow-brutal   { box-shadow: 6px 6px 0px #0a0a0a; }
+    .shadow-brutal-sm{ box-shadow: 4px 4px 0px #0a0a0a; }
+    .border-brutal   { border: 4px solid #0a0a0a; }
+
+    .btn-bounce {
+      transition: transform .3s cubic-bezier(.175,.885,.32,1.275), box-shadow .3s cubic-bezier(.175,.885,.32,1.275);
+    }
+    .btn-bounce:hover  { transform: scale(1.04) translateY(-2px); }
+    .btn-bounce:active { transform: scale(.97); box-shadow: 2px 2px 0px #0a0a0a !important; }
+
+    @keyframes wobble {
+      0%  { transform: rotate(0deg); }
+      25% { transform: rotate(-4deg); }
+      75% { transform: rotate(4deg); }
+      100%{ transform: rotate(0deg); }
+    }
+    .btn-wobble:hover { animation: wobble .5s ease-in-out; }
+
+    input, select {
+      font-family: 'DM Sans', sans-serif;
+      border: 4px solid #0a0a0a; border-radius: 0; outline: none; background: #fff;
+      width: 100%; padding: 11px 14px; font-size: 14px; font-weight: 500;
+      transition: box-shadow .15s ease;
+    }
+    input:focus, select:focus { box-shadow: 4px 4px 0px #0a0a0a; }
+
+    label { display:block; font-family:'Space Grotesk'; font-weight:800; font-size:.75rem; letter-spacing:.05em; text-transform:uppercase; margin-bottom:5px; }
+  </style>
+</head>
+<body>
+
+  <!-- Nav bar -->
+  <nav style="background:#0a0a0a;border-bottom:4px solid #0a0a0a;position:sticky;top:0;z-index:20;">
+    <div style="max-width:680px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;">
+      <a href="/" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+        <span style="background:#ccff00;border:3px solid #ccff00;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:14px;">📖</span>
+        <span style="font-family:'Space Grotesk';font-weight:900;color:#fff;font-size:.95rem;letter-spacing:-.02em;">versozap</span>
       </a>
-      <div class="flex items-center gap-3">
-        <span id="nav-nome" class="text-xs text-gray-500 hidden sm:block max-w-[140px] truncate"></span>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span id="nav-nome" style="font-size:12px;font-weight:600;color:#aaa;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
         <button onclick="sair()"
-          class="text-xs font-semibold text-red-500 hover:text-red-700 border border-red-100 hover:border-red-200 px-3 py-1.5 rounded-lg transition-colors">
-          Sair
+          style="background:transparent;border:3px solid #ff0099;color:#ff0099;padding:6px 14px;font-family:'Space Grotesk';font-weight:800;font-size:11px;letter-spacing:.02em;cursor:pointer;"
+          class="btn-bounce">
+          sair
         </button>
       </div>
     </div>
   </nav>
 
-  <div class="max-w-2xl mx-auto px-4 py-8 space-y-5">
+  <div style="max-width:680px;margin:0 auto;padding:24px 16px;display:flex;flex-direction:column;gap:16px;">
 
     <!-- Stats row -->
-    <div class="grid grid-cols-3 gap-3">
-      <div class="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-sm">
-        <p id="stat-dia" class="text-2xl font-extrabold text-emerald-600">—</p>
-        <p class="text-xs text-gray-400 mt-1">Dia atual</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div style="background:#ccff00;border:4px solid #0a0a0a;box-shadow:4px 4px 0px #0a0a0a;padding:16px;text-align:center;transform:rotate(-.5deg);">
+        <p id="stat-dia" style="font-family:'Space Grotesk';font-weight:900;font-size:1.8rem;line-height:1;letter-spacing:-.02em;">—</p>
+        <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-top:4px;">dia atual</p>
       </div>
-      <div class="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-sm">
-        <p id="stat-pct" class="text-2xl font-extrabold text-emerald-600">—</p>
-        <p class="text-xs text-gray-400 mt-1">Concluído</p>
+      <div style="background:#7000ff;border:4px solid #0a0a0a;box-shadow:4px 4px 0px #0a0a0a;padding:16px;text-align:center;transform:rotate(.5deg);">
+        <p id="stat-pct" style="font-family:'Space Grotesk';font-weight:900;font-size:1.8rem;line-height:1;letter-spacing:-.02em;color:#ccff00;">—</p>
+        <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#fff;margin-top:4px;">concluído</p>
       </div>
-      <div class="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-sm">
-        <p id="stat-status" class="text-2xl font-extrabold text-emerald-600">✅</p>
-        <p class="text-xs text-gray-400 mt-1">Leu hoje</p>
+      <div style="background:#0a0a0a;border:4px solid #0a0a0a;box-shadow:4px 4px 0px rgba(0,0,0,.3);padding:16px;text-align:center;transform:rotate(-.3deg);">
+        <p id="stat-status" style="font-family:'Space Grotesk';font-weight:900;font-size:1.8rem;line-height:1;">✅</p>
+        <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#aaa;margin-top:4px;">leu hoje</p>
       </div>
     </div>
 
     <!-- Progresso -->
-    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="font-bold text-gray-800">Meu progresso</h2>
-        <span id="badge-plano" class="text-xs bg-emerald-50 text-emerald-700 font-semibold px-2.5 py-1 rounded-full border border-emerald-100 hidden"></span>
+    <div style="background:#fff;border:4px solid #0a0a0a;box-shadow:6px 6px 0px #0a0a0a;">
+      <div style="background:#ff0099;padding:14px 20px;border-bottom:4px solid #0a0a0a;display:flex;align-items:center;justify-content:space-between;">
+        <p style="font-family:'Space Grotesk';font-weight:900;font-size:1rem;color:#fff;letter-spacing:-.02em;">meu progresso</p>
+        <span id="badge-plano" style="display:none;background:#fff;border:2px solid #0a0a0a;padding:3px 10px;font-family:'Space Grotesk';font-weight:800;font-size:11px;color:#ff0099;"></span>
       </div>
-
-      <div id="sem-plano" class="hidden text-center py-6">
-        <div class="text-4xl mb-3">📋</div>
-        <p class="text-gray-600 text-sm font-medium mb-1">Nenhum plano de leitura selecionado</p>
-        <p class="text-gray-400 text-xs">Configure um plano nas configurações abaixo.</p>
-      </div>
-
-      <div id="com-plano" class="hidden">
-        <div class="flex items-end justify-between mb-3">
-          <p id="plano-progresso" class="text-4xl font-extrabold text-gray-900"></p>
-          <p id="plano-pct" class="text-sm font-bold text-emerald-600 mb-1"></p>
+      <div style="padding:20px;">
+        <div id="sem-plano" style="display:none;text-align:center;padding:28px 0;">
+          <p style="font-size:3rem;margin-bottom:8px;">📋</p>
+          <p style="font-family:'Space Grotesk';font-weight:800;font-size:.95rem;">nenhum plano selecionado</p>
+          <p style="font-size:.8rem;color:#888;margin-top:4px;">configure um plano nas configurações abaixo.</p>
         </div>
-
-        <div class="w-full bg-gray-100 rounded-full h-2 mb-5">
-          <div id="barra-progresso" class="bg-emerald-500 h-2 rounded-full transition-all duration-700" style="width:0%"></div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div class="bg-gray-50 rounded-xl p-3.5">
-            <p class="text-xs text-gray-400 mb-1 font-medium">Último envio</p>
-            <p id="ultimo-envio" class="text-sm font-semibold text-gray-700">—</p>
+        <div id="com-plano" style="display:none;">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:10px;">
+            <p id="plano-progresso" style="font-family:'Space Grotesk';font-weight:900;font-size:2.2rem;line-height:1;letter-spacing:-.03em;"></p>
+            <p id="plano-pct" style="font-family:'Space Grotesk';font-weight:800;font-size:1rem;color:#7000ff;margin-bottom:4px;"></p>
           </div>
-          <div class="bg-gray-50 rounded-xl p-3.5">
-            <p class="text-xs text-gray-400 mb-1 font-medium">Última leitura</p>
-            <p id="ultima-leitura" class="text-sm font-semibold text-gray-700">—</p>
+          <!-- Progress bar -->
+          <div style="background:#f0f0f0;border:3px solid #0a0a0a;height:14px;margin-bottom:16px;">
+            <div id="barra-progresso" style="background:#ccff00;border-right:3px solid #0a0a0a;height:100%;transition:width .7s cubic-bezier(.175,.885,.32,1.275);width:0%;"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div style="background:#f5f5f5;border:3px solid #0a0a0a;padding:12px;">
+              <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#888;margin-bottom:4px;">último envio</p>
+              <p id="ultimo-envio" style="font-family:'Space Grotesk';font-weight:800;font-size:.95rem;">—</p>
+            </div>
+            <div style="background:#f5f5f5;border:3px solid #0a0a0a;padding:12px;">
+              <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#888;margin-bottom:4px;">última leitura</p>
+              <p id="ultima-leitura" style="font-family:'Space Grotesk';font-weight:800;font-size:.95rem;">—</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Configurações -->
-    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-      <h2 class="font-bold text-gray-800 mb-5">Configurações</h2>
+    <div style="background:#fff;border:4px solid #0a0a0a;box-shadow:6px 6px 0px #0a0a0a;">
+      <div style="background:#ccff00;padding:14px 20px;border-bottom:4px solid #0a0a0a;">
+        <p style="font-family:'Space Grotesk';font-weight:900;font-size:1rem;letter-spacing:-.02em;">configurações</p>
+      </div>
+      <div style="padding:20px;">
+        <div id="alert-config" style="display:none;border:3px solid #0a0a0a;padding:10px 14px;margin-bottom:16px;font-size:13px;font-weight:600;box-shadow:3px 3px 0px #0a0a0a;"></div>
 
-      <div id="alert-config" class="hidden mb-4 p-3 rounded-xl text-sm"></div>
-
-      <form id="form-config" class="space-y-4">
-        <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-1.5">Nome</label>
-          <input id="cfg-nome" type="text"
-            class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow"
-            placeholder="Como prefere ser chamado?">
-        </div>
-        <div class="grid grid-cols-2 gap-3">
+        <form id="form-config" style="display:flex;flex-direction:column;gap:14px;">
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Horário de envio</label>
-            <input id="cfg-horario" type="time"
-              class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow">
+            <label>nome</label>
+            <input id="cfg-nome" type="text" placeholder="como prefere ser chamado?">
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div>
+              <label>horário de envio</label>
+              <input id="cfg-horario" type="time">
+            </div>
+            <div>
+              <label>versão da bíblia</label>
+              <select id="cfg-versao">
+                <option value="NVI">NVI</option>
+                <option value="ARC">ARC</option>
+                <option value="ACF">ACF</option>
+                <option value="NVT">NVT</option>
+              </select>
+            </div>
           </div>
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Versão da Bíblia</label>
-            <select id="cfg-versao"
-              class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white transition-shadow">
-              <option value="NVI">NVI</option>
-              <option value="ARC">ARC</option>
-              <option value="ACF">ACF</option>
-              <option value="NVT">NVT</option>
+            <label>plano de leitura</label>
+            <select id="cfg-plano">
+              <option value="">sem plano</option>
             </select>
           </div>
-        </div>
-        <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-1.5">Plano de leitura</label>
-          <select id="cfg-plano"
-            class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white transition-shadow">
-            <option value="">Sem plano</option>
-          </select>
-        </div>
-        <button type="submit" id="btn-salvar"
-          class="w-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold py-2.5 px-4 rounded-xl text-sm transition-colors shadow-sm">
-          Salvar configurações
-        </button>
-      </form>
+          <button type="submit" id="btn-salvar"
+            style="background:#0a0a0a;color:#ccff00;border:4px solid #0a0a0a;box-shadow:6px 6px 0px rgba(0,0,0,.3);padding:14px;font-family:'Space Grotesk';font-weight:900;font-size:1rem;letter-spacing:-.01em;cursor:pointer;"
+            class="btn-bounce btn-wobble w-full">
+            salvar configurações
+          </button>
+        </form>
+      </div>
     </div>
 
   </div>
@@ -132,7 +166,7 @@
       localStorage.getItem('userName') || localStorage.getItem('userEmail') || '';
 
     function sair() {
-      ['userToken', 'userEmail', 'userName'].forEach(k => localStorage.removeItem(k));
+      ['userToken','userEmail','userName'].forEach(k => localStorage.removeItem(k));
       window.location.replace('/login.html');
     }
 
@@ -142,7 +176,16 @@
 
     function formatarData(iso) {
       if (!iso) return '—';
-      return new Date(iso).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      return new Date(iso).toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric' });
+    }
+
+    const alertConfig = document.getElementById('alert-config');
+    function showAlert(msg, ok = false) {
+      alertConfig.textContent = msg;
+      alertConfig.style.background = ok ? '#ccff00' : '#ff0099';
+      alertConfig.style.color = '#0a0a0a';
+      alertConfig.style.display = 'block';
+      setTimeout(() => { alertConfig.style.display = 'none'; }, 4000);
     }
 
     async function carregarPerfil() {
@@ -160,12 +203,12 @@
         leuHojeEl.textContent = u.leu_hoje ? '✅' : '📖';
 
         if (u.plano_id && u.total_dias) {
-          document.getElementById('sem-plano').classList.add('hidden');
-          document.getElementById('com-plano').classList.remove('hidden');
+          document.getElementById('sem-plano').style.display = 'none';
+          document.getElementById('com-plano').style.display = 'block';
 
           const badge = document.getElementById('badge-plano');
           badge.textContent = u.plano_nome || '';
-          badge.classList.remove('hidden');
+          badge.style.display = 'inline-flex';
 
           const dia   = u.dia_atual || 1;
           const total = u.total_dias;
@@ -173,22 +216,20 @@
 
           document.getElementById('stat-dia').textContent    = dia;
           document.getElementById('stat-pct').textContent    = pct + '%';
-          document.getElementById('plano-progresso').textContent = `Dia ${dia} de ${total}`;
+          document.getElementById('plano-progresso').textContent = `dia ${dia} de ${total}`;
           document.getElementById('plano-pct').textContent   = `${pct}% concluído`;
           document.getElementById('barra-progresso').style.width = pct + '%';
           document.getElementById('ultimo-envio').textContent    = formatarData(u.ultimo_envio);
           document.getElementById('ultima-leitura').textContent  = formatarData(u.ultima_leitura);
         } else {
-          document.getElementById('sem-plano').classList.remove('hidden');
-          document.getElementById('com-plano').classList.add('hidden');
+          document.getElementById('sem-plano').style.display = 'block';
+          document.getElementById('com-plano').style.display = 'none';
           document.getElementById('stat-dia').textContent = '—';
           document.getElementById('stat-pct').textContent = '—';
         }
 
         await carregarPlanos(u.plano_id);
-      } catch {
-        // silencioso
-      }
+      } catch {}
     }
 
     async function carregarPlanos(planoAtual) {
@@ -196,27 +237,16 @@
         const r = await fetch('/api/inscricao/planos');
         const planos = await r.json();
         const sel = document.getElementById('cfg-plano');
-        sel.innerHTML = '<option value="">Sem plano</option>' +
+        sel.innerHTML = '<option value="">sem plano</option>' +
           planos.map(p => `<option value="${p.id}" ${p.id == planoAtual ? 'selected' : ''}>${p.nome}</option>`).join('');
       } catch {}
-    }
-
-    const alertConfig = document.getElementById('alert-config');
-
-    function showAlert(msg, ok = false) {
-      alertConfig.textContent = msg;
-      alertConfig.className = 'mb-4 p-3 rounded-xl text-sm ' +
-        (ok ? 'bg-emerald-50 text-emerald-700 border border-emerald-100'
-            : 'bg-red-50 text-red-700 border border-red-100');
-      alertConfig.classList.remove('hidden');
-      setTimeout(() => alertConfig.classList.add('hidden'), 4000);
     }
 
     document.getElementById('form-config').addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = document.getElementById('btn-salvar');
       btn.disabled = true;
-      btn.textContent = 'Salvando...';
+      btn.textContent = 'salvando...';
 
       try {
         const r = await fetch('/api/usuario/me', {
@@ -229,14 +259,14 @@
             plano_id:      document.getElementById('cfg-plano').value || null,
           }),
         });
-        if (!r.ok) { showAlert('Erro ao salvar'); return; }
-        showAlert('Configurações salvas!', true);
+        if (!r.ok) { showAlert('erro ao salvar'); return; }
+        showAlert('configurações salvas!', true);
         carregarPerfil();
       } catch {
-        showAlert('Erro de conexão');
+        showAlert('erro de conexão');
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Salvar configurações';
+        btn.textContent = 'salvar configurações';
       }
     });
 

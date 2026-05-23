@@ -3,84 +3,110 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VersoZap — Inscrição</title>
+  <title>versozap — inscrição</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background: #ff0099; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem; }
+    h1, h2, .font-display { font-family: 'Space Grotesk', sans-serif; }
+
+    .btn-bounce {
+      transition: transform .3s cubic-bezier(.175,.885,.32,1.275), box-shadow .3s cubic-bezier(.175,.885,.32,1.275);
+    }
+    .btn-bounce:hover  { transform: scale(1.04) translateY(-2px); }
+    .btn-bounce:active { transform: scale(.97); box-shadow: 2px 2px 0px #0a0a0a !important; }
+
+    @keyframes wobble {
+      0%  { transform: rotate(0deg); }
+      25% { transform: rotate(-4deg); }
+      75% { transform: rotate(4deg); }
+      100%{ transform: rotate(0deg); }
+    }
+    .btn-wobble:hover { animation: wobble .5s ease-in-out; }
+
+    input, select {
+      font-family: 'DM Sans', sans-serif;
+      border: 4px solid #0a0a0a; border-radius: 0; outline: none; background: #fff;
+      width: 100%; padding: 11px 14px; font-size: 14px; font-weight: 500;
+      transition: box-shadow .15s ease;
+    }
+    input:focus, select:focus { box-shadow: 4px 4px 0px #0a0a0a; }
+    label { display:block; font-family:'Space Grotesk'; font-weight:800; font-size:.75rem; letter-spacing:.05em; text-transform:uppercase; margin-bottom:5px; }
+  </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-emerald-50 flex items-center justify-center p-4">
-  <div class="w-full max-w-md py-8">
+<body>
+  <div style="width:100%;max-width:420px;">
 
-    <div class="text-center mb-8">
-      <a href="/" class="inline-flex flex-col items-center gap-1 group">
-        <span class="text-5xl">📖</span>
-        <span class="font-extrabold text-xl text-gray-900 group-hover:text-emerald-600 transition-colors">VersoZap</span>
-      </a>
-      <p class="text-gray-500 text-sm mt-2">Receba trechos da Bíblia todo dia no seu WhatsApp</p>
-    </div>
-
-    <div id="card-form" class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-      <div id="alert" class="hidden mb-4 p-3 rounded-xl text-sm"></div>
-
-      <form id="form-cadastro" class="space-y-4">
+    <!-- Card form -->
+    <div id="card-form" style="background:#fff;border:4px solid #0a0a0a;box-shadow:10px 10px 0px #0a0a0a;">
+      <div style="background:#0a0a0a;padding:18px 24px;display:flex;align-items:center;gap:12px;">
+        <a href="/" style="background:#ccff00;border:3px solid #ccff00;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:16px;text-decoration:none;" class="btn-bounce">📖</a>
         <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-1.5">Seu nome</label>
-          <input id="nome" type="text"
-            class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow"
-            placeholder="Como prefere ser chamado?">
+          <p style="font-family:'Space Grotesk';font-weight:900;font-size:1rem;color:#fff;letter-spacing:-.02em;">versozap</p>
+          <p style="font-size:11px;font-weight:600;color:#aaa;">receba a bíblia todo dia</p>
         </div>
+      </div>
+      <div style="padding:24px;">
+        <h1 style="font-family:'Space Grotesk';font-weight:900;font-size:1.8rem;line-height:1;letter-spacing:-.04em;margin-bottom:4px;">inscrição</h1>
+        <p style="font-size:.875rem;color:#666;font-weight:500;margin-bottom:20px;">rápido e gratuito</p>
 
-        <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-1.5">WhatsApp <span class="text-red-400">*</span></label>
-          <input id="telefone" type="tel" required
-            class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow"
-            placeholder="(67) 99999-9999">
-          <p class="text-xs text-gray-400 mt-1">Somente Brasil. Inclua o DDD.</p>
-        </div>
+        <div id="alert" style="display:none;background:#ff0099;border:3px solid #0a0a0a;padding:10px 14px;margin-bottom:16px;font-size:13px;font-weight:600;color:#fff;box-shadow:3px 3px 0px #0a0a0a;"></div>
 
-        <div class="grid grid-cols-2 gap-3">
+        <form id="form-cadastro" style="display:flex;flex-direction:column;gap:12px;">
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Plano de leitura</label>
-            <select id="plano_id"
-              class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white transition-shadow">
-              <option value="">Carregando...</option>
+            <label>seu nome</label>
+            <input id="nome" type="text" placeholder="como prefere ser chamado?">
+          </div>
+          <div>
+            <label>whatsapp <span style="color:#ff0099;">*</span></label>
+            <input id="telefone" type="tel" required placeholder="(67) 99999-9999">
+            <p style="font-size:11px;color:#888;font-weight:500;margin-top:4px;">somente brasil. inclua o ddd.</p>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div>
+              <label>plano de leitura</label>
+              <select id="plano_id">
+                <option value="">carregando...</option>
+              </select>
+            </div>
+            <div>
+              <label>horário</label>
+              <input id="horario_envio" type="time" value="07:00">
+            </div>
+          </div>
+          <div>
+            <label>versão da bíblia</label>
+            <select id="versao_biblia">
+              <option value="NVI">NVI — Nova Versão Internacional</option>
+              <option value="ARC">ARC — Almeida Revista e Corrigida</option>
+              <option value="ACF">ACF — Almeida Corrigida Fiel</option>
+              <option value="NVT">NVT — Nova Versão Transformadora</option>
             </select>
           </div>
-          <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Horário</label>
-            <input id="horario_envio" type="time" value="07:00"
-              class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow">
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-1.5">Versão da Bíblia</label>
-          <select id="versao_biblia"
-            class="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white transition-shadow">
-            <option value="NVI">NVI — Nova Versão Internacional</option>
-            <option value="ARC">ARC — Almeida Revista e Corrigida</option>
-            <option value="ACF">ACF — Almeida Corrigida Fiel</option>
-            <option value="NVT">NVT — Nova Versão Transformadora</option>
-          </select>
-        </div>
-
-        <button type="submit" id="btn"
-          class="w-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold py-3 px-4 rounded-xl text-sm transition-colors shadow-sm">
-          Quero receber versículos diários 🙏
-        </button>
-      </form>
+          <button type="submit" id="btn"
+            style="background:#ccff00;color:#0a0a0a;border:4px solid #0a0a0a;border-radius:0;box-shadow:6px 6px 0px #0a0a0a;padding:14px;font-family:'Space Grotesk';font-weight:900;font-size:1rem;letter-spacing:-.01em;cursor:pointer;margin-top:4px;"
+            class="btn-bounce btn-wobble w-full">
+            quero receber versículos diários 🙏
+          </button>
+        </form>
+      </div>
     </div>
 
-    <div id="card-sucesso" class="hidden bg-white rounded-2xl shadow-lg border border-gray-100 p-8 text-center">
-      <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">✅</div>
-      <h2 class="text-xl font-bold text-gray-800 mb-2">Inscrição realizada!</h2>
-      <p class="text-gray-500 text-sm" id="msg-sucesso"></p>
+    <!-- Success card -->
+    <div id="card-sucesso" style="display:none;background:#fff;border:4px solid #0a0a0a;box-shadow:10px 10px 0px #0a0a0a;padding:40px 24px;text-align:center;">
+      <div style="width:64px;height:64px;background:#ccff00;border:4px solid #0a0a0a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 16px;box-shadow:4px 4px 0px #0a0a0a;">✅</div>
+      <h2 style="font-family:'Space Grotesk';font-weight:900;font-size:1.6rem;line-height:1;letter-spacing:-.03em;margin-bottom:8px;">inscrição feita!</h2>
+      <p style="font-size:.875rem;color:#666;font-weight:500;" id="msg-sucesso"></p>
       <button onclick="location.reload()"
-        class="mt-6 text-sm text-emerald-600 hover:text-emerald-700 font-semibold">
-        Inscrever outro número
+        style="margin-top:24px;background:transparent;border:3px solid #0a0a0a;padding:10px 20px;font-family:'Space Grotesk';font-weight:800;font-size:.85rem;cursor:pointer;"
+        class="btn-bounce">
+        inscrever outro número
       </button>
     </div>
 
-    <p class="text-center text-xs text-gray-400 mt-6">
-      Para cancelar, responda <strong>SAIR</strong> a qualquer mensagem recebida.
+    <p style="text-align:center;font-size:11px;font-weight:600;color:rgba(0,0,0,.5);margin-top:16px;">
+      para cancelar, responda <strong>SAIR</strong> a qualquer mensagem.
     </p>
   </div>
 
@@ -94,7 +120,7 @@
           `<option value="${p.id}">${p.nome}</option>`
         ).join('');
       } catch {
-        document.getElementById('plano_id').innerHTML = '<option value="">Erro ao carregar</option>';
+        document.getElementById('plano_id').innerHTML = '<option value="">erro ao carregar</option>';
       }
     }
 
@@ -109,16 +135,15 @@
 
     function showAlert(msg) {
       alertEl.textContent = msg;
-      alertEl.className = 'mb-4 p-3 rounded-xl text-sm bg-red-50 text-red-700 border border-red-100';
-      alertEl.classList.remove('hidden');
+      alertEl.style.display = 'block';
     }
 
     document.getElementById('form-cadastro').addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = document.getElementById('btn');
       btn.disabled = true;
-      btn.textContent = 'Aguarde...';
-      alertEl.classList.add('hidden');
+      btn.textContent = 'aguarde...';
+      alertEl.style.display = 'none';
 
       const tel = formatarTelefone(document.getElementById('telefone').value);
 
@@ -135,16 +160,16 @@
           }),
         });
         const d = await r.json();
-        if (!r.ok) { showAlert(d.erro || 'Erro ao fazer inscrição'); return; }
+        if (!r.ok) { showAlert(d.erro || 'erro ao fazer inscrição'); return; }
 
-        document.getElementById('card-form').classList.add('hidden');
-        document.getElementById('card-sucesso').classList.remove('hidden');
+        document.getElementById('card-form').style.display = 'none';
+        document.getElementById('card-sucesso').style.display = 'block';
         document.getElementById('msg-sucesso').textContent = d.mensagem;
       } catch {
-        showAlert('Erro de conexão. Tente novamente.');
+        showAlert('erro de conexão. tente novamente.');
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Quero receber versículos diários 🙏';
+        btn.textContent = 'quero receber versículos diários 🙏';
       }
     });
 

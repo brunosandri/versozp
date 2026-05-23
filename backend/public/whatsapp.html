@@ -3,80 +3,105 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VersoZap — Conectar WhatsApp</title>
+  <title>versozap — conectar whatsapp</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="min-h-screen bg-gray-50 flex flex-col antialiased">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background: #0a0a0a; color: #fff; min-height: 100vh; display: flex; flex-direction: column; }
+    h1, h2, .font-display { font-family: 'Space Grotesk', sans-serif; }
 
-  <!-- Navbar -->
-  <nav class="bg-white border-b border-gray-100">
-    <div class="max-w-lg mx-auto px-4 py-3.5 flex items-center justify-between">
-      <a href="/dashboard.html" class="text-sm text-gray-500 hover:text-gray-800 font-medium transition-colors flex items-center gap-1">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-        </svg>
-        Painel
+    .btn-bounce {
+      transition: transform .3s cubic-bezier(.175,.885,.32,1.275), box-shadow .3s cubic-bezier(.175,.885,.32,1.275);
+    }
+    .btn-bounce:hover  { transform: scale(1.04) translateY(-2px); }
+    .btn-bounce:active { transform: scale(.97); }
+
+    @keyframes pulse-ring {
+      0%   { transform: scale(1);   opacity: 1; }
+      100% { transform: scale(2.5); opacity: 0; }
+    }
+    .status-pulse::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      animation: pulse-ring 1.5s ease-out infinite;
+      background: inherit;
+    }
+  </style>
+</head>
+<body>
+  <!-- Nav -->
+  <nav style="background:#1a1a1a;border-bottom:4px solid #ccff00;">
+    <div style="max-width:500px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;">
+      <a href="/dashboard.html"
+        style="display:flex;align-items:center;gap:6px;text-decoration:none;font-family:'Space Grotesk';font-weight:800;font-size:.85rem;color:#aaa;border:3px solid #333;padding:6px 14px;box-shadow:3px 3px 0px #333;"
+        class="btn-bounce">
+        ← painel
       </a>
-      <div class="font-bold text-gray-800 flex items-center gap-2">
-        <span class="text-lg">📱</span> Conectar WhatsApp
-      </div>
-      <div class="w-16"></div>
+      <p style="font-family:'Space Grotesk';font-weight:900;font-size:.95rem;color:#ccff00;letter-spacing:-.02em;">📱 conectar whatsapp</p>
+      <div style="width:90px;"></div>
     </div>
   </nav>
 
-  <div class="flex-1 flex items-center justify-center p-4">
-    <div class="w-full max-w-sm space-y-4">
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:24px 16px;">
+    <div style="width:100%;max-width:420px;display:flex;flex-direction:column;gap:14px;">
 
-      <!-- Status -->
-      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 flex items-center gap-3">
-        <div id="dot" class="w-3 h-3 rounded-full bg-gray-300 shrink-0 ring-4 ring-gray-100"></div>
-        <div class="flex-1 min-w-0">
-          <p id="status-texto" class="text-sm font-semibold text-gray-700">Verificando...</p>
-          <p id="status-detalhe" class="text-xs text-gray-400 mt-0.5 hidden"></p>
+      <!-- Status card -->
+      <div style="background:#1a1a1a;border:4px solid #333;box-shadow:6px 6px 0px #ccff00;padding:16px 18px;display:flex;align-items:center;gap:14px;">
+        <div style="position:relative;flex-shrink:0;">
+          <div id="dot" style="width:16px;height:16px;border-radius:50%;background:#555;border:3px solid #333;position:relative;z-index:1;"></div>
         </div>
-        <div class="flex gap-2 shrink-0">
+        <div style="flex:1;min-width:0;">
+          <p id="status-texto" style="font-family:'Space Grotesk';font-weight:800;font-size:.95rem;color:#fff;">verificando...</p>
+          <p id="status-detalhe" style="display:none;font-size:11px;color:#888;font-weight:600;margin-top:2px;"></p>
+        </div>
+        <div style="display:flex;gap:8px;flex-shrink:0;">
           <button id="btn-reconectar" onclick="reconectar()"
-            class="text-xs font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg transition-colors border border-gray-200">
-            Reconectar
+            style="background:transparent;border:3px solid #555;color:#aaa;padding:7px 14px;font-family:'Space Grotesk';font-weight:800;font-size:11px;letter-spacing:.02em;cursor:pointer;box-shadow:3px 3px 0px #333;"
+            class="btn-bounce">
+            reconectar
           </button>
           <button id="btn-novo-qr" onclick="novoQr()"
-            class="text-xs font-semibold bg-amber-50 hover:bg-amber-100 text-amber-700 px-3 py-1.5 rounded-lg transition-colors border border-amber-200">
-            Novo QR
+            style="background:#ff0099;border:3px solid #ff0099;color:#fff;padding:7px 14px;font-family:'Space Grotesk';font-weight:800;font-size:11px;letter-spacing:.02em;cursor:pointer;box-shadow:3px 3px 0px rgba(255,0,153,.4);"
+            class="btn-bounce">
+            novo qr
           </button>
         </div>
       </div>
 
-      <!-- QR Code -->
-      <div id="card-qr" class="hidden bg-white rounded-2xl border border-gray-100 shadow-sm p-6 text-center">
-        <p class="text-sm text-gray-500 mb-1 font-medium">Como conectar:</p>
-        <p class="text-xs text-gray-400 mb-5">Abra o WhatsApp → <strong>Dispositivos conectados</strong> → <strong>Conectar dispositivo</strong></p>
-        <div class="relative inline-block">
-          <img id="qr-img" src="" alt="QR Code"
-            class="w-56 h-56 rounded-2xl border border-gray-100 object-contain shadow-sm">
-          <div id="qr-overlay" class="hidden absolute inset-0 bg-white/80 rounded-2xl flex items-center justify-center backdrop-blur-sm">
-            <div class="text-center">
-              <div class="text-2xl mb-1 animate-spin">⏳</div>
-              <p class="text-xs text-gray-500 font-medium">Atualizando QR...</p>
-            </div>
+      <!-- QR Code card -->
+      <div id="card-qr" style="display:none;background:#1a1a1a;border:4px solid #ccff00;box-shadow:6px 6px 0px #ccff00;padding:24px;text-align:center;">
+        <p style="font-family:'Space Grotesk';font-weight:800;font-size:.85rem;color:#ccff00;margin-bottom:4px;">como conectar</p>
+        <p style="font-size:12px;color:#888;margin-bottom:20px;">WhatsApp → <strong style="color:#fff;">dispositivos conectados</strong> → <strong style="color:#fff;">conectar dispositivo</strong></p>
+        <div style="position:relative;display:inline-block;">
+          <div style="background:#fff;border:4px solid #ccff00;box-shadow:6px 6px 0px #ccff00;padding:8px;display:inline-block;">
+            <img id="qr-img" src="" alt="QR Code" style="width:200px;height:200px;display:block;object-fit:contain;">
+          </div>
+          <div id="qr-overlay" style="display:none;position:absolute;inset:0;background:rgba(26,26,26,.85);display:none;align-items:center;justify-content:center;flex-direction:column;gap:6px;">
+            <p style="font-size:1.5rem;">⏳</p>
+            <p style="font-size:11px;font-weight:700;color:#ccff00;">atualizando qr...</p>
           </div>
         </div>
-        <p class="text-xs text-gray-400 mt-4">O código expira a cada ~20 segundos.</p>
+        <p style="font-size:11px;color:#666;font-weight:600;margin-top:16px;">o código expira a cada ~20 segundos</p>
       </div>
 
-      <!-- Conectado -->
-      <div id="card-ok" class="hidden bg-emerald-50 border border-emerald-200 rounded-2xl shadow-sm p-6 text-center">
-        <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">✅</div>
-        <h2 class="font-bold text-emerald-800 mb-1">WhatsApp conectado!</h2>
-        <p class="text-sm text-emerald-600 mb-5">O bot está pronto para enviar os versículos.</p>
+      <!-- Connected card -->
+      <div id="card-ok" style="display:none;background:#1a1a1a;border:4px solid #ccff00;box-shadow:6px 6px 0px #ccff00;padding:28px;text-align:center;">
+        <div style="width:64px;height:64px;background:#ccff00;border:4px solid #0a0a0a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 16px;box-shadow:4px 4px 0px #0a0a0a;">✅</div>
+        <h2 style="font-family:'Space Grotesk';font-weight:900;font-size:1.3rem;color:#ccff00;letter-spacing:-.02em;margin-bottom:6px;">whatsapp conectado!</h2>
+        <p style="font-size:.875rem;color:#888;margin-bottom:20px;">o bot está pronto para enviar os versículos.</p>
         <a href="/dashboard.html"
-          class="inline-block text-sm bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-xl transition-colors shadow-sm">
-          Ir para o painel
+          style="background:#ccff00;color:#0a0a0a;border:4px solid #ccff00;padding:12px 28px;font-family:'Space Grotesk';font-weight:900;font-size:.9rem;text-decoration:none;display:inline-block;box-shadow:5px 5px 0px rgba(204,255,0,.3);"
+          class="btn-bounce">
+          ir para o painel →
         </a>
       </div>
 
-      <!-- Erro -->
-      <div id="card-erro" class="hidden bg-red-50 border border-red-100 rounded-2xl shadow-sm p-4">
-        <p id="erro-msg" class="text-sm text-red-700 text-center font-medium"></p>
+      <!-- Error card -->
+      <div id="card-erro" style="display:none;background:#1a1a1a;border:4px solid #ff0099;box-shadow:6px 6px 0px #ff0099;padding:16px;">
+        <p id="erro-msg" style="font-size:13px;font-weight:600;color:#ff0099;text-align:center;"></p>
       </div>
 
     </div>
@@ -87,11 +112,11 @@
     if (!TOKEN) window.location.replace('/admin.html');
 
     const statusMap = {
-      conectado:     { cor: 'bg-emerald-500 ring-emerald-100', label: 'Conectado' },
-      aguardando_qr: { cor: 'bg-yellow-400 ring-yellow-100',   label: 'Aguardando escaneamento do QR Code' },
-      conectando:    { cor: 'bg-blue-400 ring-blue-100',        label: 'Conectando ao WhatsApp...' },
-      reconectando:  { cor: 'bg-orange-400 ring-orange-100',    label: 'Reconectando...' },
-      desconectado:  { cor: 'bg-red-500 ring-red-100',          label: 'Desconectado' },
+      conectado:     { cor: '#ccff00', border: '#ccff00', label: 'conectado' },
+      aguardando_qr: { cor: '#ff0099', border: '#ff0099', label: 'aguardando escaneamento do qr code' },
+      conectando:    { cor: '#7000ff', border: '#7000ff', label: 'conectando ao whatsapp...' },
+      reconectando:  { cor: '#ff6600', border: '#ff6600', label: 'reconectando...' },
+      desconectado:  { cor: '#555',    border: '#555',    label: 'desconectado' },
     };
 
     let ultimoQr = null;
@@ -102,57 +127,55 @@
         if (!r.ok) return;
         const d = await r.json();
 
-        const info = statusMap[d.status] || { cor: 'bg-gray-400 ring-gray-100', label: d.status };
-        document.getElementById('dot').className = 'w-3 h-3 rounded-full shrink-0 ring-4 ' + info.cor;
+        const info = statusMap[d.status] || { cor: '#555', border: '#555', label: d.status };
+        const dot = document.getElementById('dot');
+        dot.style.background = info.cor;
+        dot.style.borderColor = info.border;
         document.getElementById('status-texto').textContent = info.label;
 
         const detalheEl = document.getElementById('status-detalhe');
         if (d.tentativasReconexao > 0) {
-          detalheEl.textContent = `Tentativa ${d.tentativasReconexao}`;
-          detalheEl.classList.remove('hidden');
+          detalheEl.textContent = `tentativa ${d.tentativasReconexao}`;
+          detalheEl.style.display = 'block';
         } else {
-          detalheEl.classList.add('hidden');
+          detalheEl.style.display = 'none';
         }
 
         const cardQr  = document.getElementById('card-qr');
         const cardOk  = document.getElementById('card-ok');
         const cardErr = document.getElementById('card-erro');
-
-        cardQr.classList.add('hidden');
-        cardOk.classList.add('hidden');
-        cardErr.classList.add('hidden');
+        cardQr.style.display  = 'none';
+        cardOk.style.display  = 'none';
+        cardErr.style.display = 'none';
 
         if (d.status === 'conectado') {
-          cardOk.classList.remove('hidden');
+          cardOk.style.display = 'block';
         } else if (d.qr) {
-          cardQr.classList.remove('hidden');
+          cardQr.style.display = 'block';
           const qrImg = document.getElementById('qr-img');
           if (d.qr !== ultimoQr) {
             ultimoQr = d.qr;
             qrImg.src = d.qr;
           }
         } else if (d.erro) {
-          cardErr.classList.remove('hidden');
+          cardErr.style.display = 'block';
           document.getElementById('erro-msg').textContent =
-            d.erro.message || 'Erro ao conectar. Tente reconectar.';
+            d.erro.message || 'erro ao conectar. tente reconectar.';
         }
-      } catch {
-        // rede indisponível, tenta de novo no próximo tick
-      }
+      } catch {}
     }
 
-    async function setButtonsDisabled(disabled) {
-      ['btn-reconectar', 'btn-novo-qr'].forEach(id => {
+    function setButtonsDisabled(disabled) {
+      ['btn-reconectar','btn-novo-qr'].forEach(id => {
         document.getElementById(id).disabled = disabled;
       });
     }
 
     async function reconectar() {
       const btn = document.getElementById('btn-reconectar');
-      btn.textContent = 'Aguarde...';
+      btn.textContent = 'aguarde...';
       setButtonsDisabled(true);
       ultimoQr = null;
-
       try {
         await fetch('/api/admin/whatsapp/reconectar', {
           method: 'POST',
@@ -162,19 +185,18 @@
         verificar();
       } finally {
         setTimeout(() => {
-          btn.textContent = 'Reconectar';
+          btn.textContent = 'reconectar';
           setButtonsDisabled(false);
         }, 4000);
       }
     }
 
     async function novoQr() {
-      if (!confirm('Isso vai encerrar a sessão atual e gerar um novo QR para escanear. Continuar?')) return;
+      if (!confirm('isso vai encerrar a sessão atual e gerar um novo qr para escanear. continuar?')) return;
       const btn = document.getElementById('btn-novo-qr');
-      btn.textContent = 'Aguarde...';
+      btn.textContent = 'aguarde...';
       setButtonsDisabled(true);
       ultimoQr = null;
-
       try {
         await fetch('/api/admin/whatsapp/desconectar', {
           method: 'POST',
@@ -184,7 +206,7 @@
         verificar();
       } finally {
         setTimeout(() => {
-          btn.textContent = 'Novo QR';
+          btn.textContent = 'novo qr';
           setButtonsDisabled(false);
         }, 5000);
       }
