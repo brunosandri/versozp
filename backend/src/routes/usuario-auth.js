@@ -86,15 +86,16 @@ router.get('/me', userAuth, (req, res) => {
 
 // PUT /api/usuario/me
 router.put('/me', userAuth, (req, res) => {
-  const { nome, horario_envio, versao_biblia, plano_id } = req.body;
+  const { nome, horario_envio, versao_biblia, plano_id, tamanho_porcao } = req.body;
   const db = getDb();
 
   const campos = [];
   const vals   = [];
-  if (nome          !== undefined) { campos.push('nome = ?');          vals.push(nome || null); }
-  if (horario_envio !== undefined) { campos.push('horario_envio = ?'); vals.push(horario_envio); }
-  if (versao_biblia !== undefined) { campos.push('versao_biblia = ?'); vals.push(versao_biblia); }
-  if (plano_id      !== undefined) { campos.push('plano_id = ?');      vals.push(plano_id || null); }
+  if (nome           !== undefined) { campos.push('nome = ?');           vals.push(nome || null); }
+  if (horario_envio  !== undefined) { campos.push('horario_envio = ?');  vals.push(horario_envio); }
+  if (versao_biblia  !== undefined) { campos.push('versao_biblia = ?');  vals.push(versao_biblia); }
+  if (plano_id       !== undefined) { campos.push('plano_id = ?');       vals.push(plano_id || null); }
+  if (tamanho_porcao !== undefined) { campos.push('tamanho_porcao = ?'); vals.push(tamanho_porcao); }
 
   if (campos.length) {
     vals.push(req.userId);

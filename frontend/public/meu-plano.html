@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VersoZap — Meu Plano</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-50">
+
+  <!-- Navbar -->
+  <nav class="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between sticky top-0 z-10">
+    <div class="flex items-center gap-2">
+      <span class="text-xl">📖</span>
+      <span class="font-bold text-gray-800">VersoZap</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span id="nav-nome" class="text-xs text-gray-500 hidden sm:block"></span>
+      <button onclick="sair()" class="text-xs text-red-500 hover:text-red-700 font-medium">Sair</button>
+    </div>
+  </nav>
+
+  <div class="max-w-md mx-auto px-4 py-8 space-y-5">
+
+    <!-- Card: Conectar WhatsApp -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-9 h-9 rounded-xl bg-green-100 flex items-center justify-center text-lg">📱</div>
+        <div>
+          <h2 class="font-semibold text-gray-800 text-sm">Conexão WhatsApp</h2>
+          <p class="text-xs text-gray-400">Não está recebendo? Conecte novamente.</p>
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div class="flex items-center gap-2 mb-4">
+        <div id="wa-dot" class="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
+        <span id="wa-texto" class="text-sm text-gray-500">Verificando...</span>
+      </div>
+
+      <!-- QR Code -->
+      <div id="bloco-qr" class="hidden text-center mb-4">
+        <img id="qr-img" src="" alt="QR Code WhatsApp"
+          class="w-48 h-48 mx-auto rounded-xl border border-gray-200 object-contain mb-3">
+        <p class="text-xs text-gray-400 mb-3">Escaneie com a câmera ou toque no botão abaixo</p>
+        <a id="btn-abrir-wa" href="#" target="_blank"
+          class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.138.564 4.14 1.544 5.868L.057 23.998l6.305-1.654A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.369l-.359-.213-3.722.976 1.001-3.635-.234-.374A9.818 9.818 0 0112 2.182c5.42 0 9.818 4.398 9.818 9.818 0 5.421-4.398 9.818-9.818 9.818z"/>
+          </svg>
+          Abrir no WhatsApp
+        </a>
+      </div>
+
+      <!-- Bot off -->
+      <div id="bloco-wa-off" class="hidden bg-yellow-50 border border-yellow-200 rounded-xl p-3 text-sm text-yellow-700 mb-4">
+        Sistema temporariamente indisponível. Tente em alguns minutos.
+      </div>
+
+      <button onclick="carregarQR()" id="btn-reconectar"
+        class="w-full border border-gray-200 hover:border-green-400 hover:bg-green-50 text-gray-600 hover:text-green-700 text-sm font-medium py-2.5 rounded-xl transition-colors flex items-center justify-center gap-2">
+        <svg id="icone-reload" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+        </svg>
+        Gerar novo QR / Reconectar
+      </button>
+    </div>
+
+    <!-- Card: Minhas Configurações -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-9 h-9 rounded-xl bg-blue-100 flex items-center justify-center text-lg">⚙️</div>
+        <div>
+          <h2 class="font-semibold text-gray-800 text-sm">Minhas Configurações</h2>
+          <p class="text-xs text-gray-400">Ajuste seu plano e preferências</p>
+        </div>
+      </div>
+
+      <div id="cfg-alert" class="hidden mb-4 p-3 rounded-lg text-sm"></div>
+
+      <form id="form-cfg" class="space-y-4">
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+          <input id="cfg-nome" type="text"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            placeholder="Como prefere ser chamado?">
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Plano de leitura</label>
+          <select id="cfg-plano"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+            <option value="">Carregando...</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Horário de recebimento</label>
+          <input id="cfg-horario" type="time"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+          <p class="text-xs text-gray-400 mt-1">Horário de Brasília</p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Versão da Bíblia</label>
+          <select id="cfg-versao"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+            <option value="NVI">NVI — Nova Versão Internacional</option>
+            <option value="ARC">ARC — Almeida Revista e Corrigida</option>
+            <option value="ACF">ACF — Almeida Corrigida Fiel</option>
+            <option value="NVT">NVT — Nova Versão Transformadora</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Tamanho da porção</label>
+          <div class="grid grid-cols-3 gap-2">
+            <label class="porcao-op cursor-pointer text-center border border-gray-200 rounded-xl py-2.5 text-sm text-gray-600 hover:border-green-400 transition-colors">
+              <input type="radio" name="porcao" value="curto" class="hidden"> Curto
+            </label>
+            <label class="porcao-op cursor-pointer text-center border border-gray-200 rounded-xl py-2.5 text-sm text-gray-600 hover:border-green-400 transition-colors">
+              <input type="radio" name="porcao" value="medio" class="hidden"> Médio
+            </label>
+            <label class="porcao-op cursor-pointer text-center border border-gray-200 rounded-xl py-2.5 text-sm text-gray-600 hover:border-green-400 transition-colors">
+              <input type="radio" name="porcao" value="longo" class="hidden"> Longo
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" id="btn-salvar"
+          class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+          Salvar configurações
+        </button>
+      </form>
+
+      <!-- Progresso atual -->
+      <div id="progresso-card" class="hidden mt-5 pt-5 border-t border-gray-100">
+        <p class="text-xs font-medium text-gray-500 mb-2">Progresso atual</p>
+        <div class="flex items-center justify-between text-sm">
+          <span class="text-gray-600">Dia no plano</span>
+          <span id="prog-dia" class="font-semibold text-gray-800">—</span>
+        </div>
+        <div class="flex items-center justify-between text-sm mt-1">
+          <span class="text-gray-600">Último envio</span>
+          <span id="prog-envio" class="text-gray-500">—</span>
+        </div>
+        <div class="flex items-center justify-between text-sm mt-1">
+          <span class="text-gray-600">Leu hoje</span>
+          <span id="prog-leu" class="text-gray-500">—</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const TOKEN = localStorage.getItem('vzUserToken');
+    if (!TOKEN) window.location.replace('/meu-login.html');
+
+    document.getElementById('nav-nome').textContent = localStorage.getItem('vzUserNome') || '';
+
+    function sair() {
+      localStorage.removeItem('vzUserToken');
+      localStorage.removeItem('vzUserNome');
+      window.location.replace('/meu-login.html');
+    }
+
+    function authHeaders() {
+      return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN };
+    }
+
+    // ── QR Code ──────────────────────────────────────────────────────────────
+    const statusMap = {
+      conectado:     { cor: 'bg-green-500', label: 'Sistema conectado' },
+      aguardando_qr: { cor: 'bg-yellow-400', label: 'Aguardando QR...' },
+      conectando:    { cor: 'bg-blue-400',   label: 'Conectando...' },
+      reconectando:  { cor: 'bg-orange-400', label: 'Reconectando...' },
+      desconectado:  { cor: 'bg-red-500',    label: 'Desconectado' },
+    };
+
+    async function carregarQR() {
+      const btn = document.getElementById('btn-reconectar');
+      const icone = document.getElementById('icone-reload');
+      btn.disabled = true;
+      icone.classList.add('animate-spin');
+      document.getElementById('bloco-qr').classList.add('hidden');
+      document.getElementById('bloco-wa-off').classList.add('hidden');
+      try {
+        const [rs, rn] = await Promise.all([
+          fetch('/api/whatsapp/status'),
+          fetch('/api/whatsapp/numero'),
+        ]);
+        const st = await rs.json();
+        const nd = await rn.json();
+        const info = statusMap[st.status] || { cor: 'bg-gray-400', label: st.status };
+        document.getElementById('wa-dot').className = 'w-2.5 h-2.5 rounded-full ' + info.cor;
+        document.getElementById('wa-texto').textContent = info.label;
+        if (nd.qr && nd.waLink) {
+          document.getElementById('qr-img').src = nd.qr;
+          document.getElementById('btn-abrir-wa').href = nd.waLink;
+          document.getElementById('bloco-qr').classList.remove('hidden');
+        } else {
+          document.getElementById('bloco-wa-off').classList.remove('hidden');
+        }
+      } catch {
+        document.getElementById('bloco-wa-off').classList.remove('hidden');
+        document.getElementById('wa-texto').textContent = 'Erro ao verificar';
+      } finally {
+        btn.disabled = false;
+        icone.classList.remove('animate-spin');
+      }
+    }
+
+    // ── Configurações ─────────────────────────────────────────────────────────
+    function setPorcao(val) {
+      document.querySelectorAll('.porcao-op').forEach(el => {
+        const v = el.querySelector('input').value;
+        if (v === val) {
+          el.classList.add('border-green-500', 'bg-green-50', 'text-green-700', 'font-semibold');
+          el.classList.remove('border-gray-200', 'text-gray-600');
+          el.querySelector('input').checked = true;
+        } else {
+          el.classList.remove('border-green-500', 'bg-green-50', 'text-green-700', 'font-semibold');
+          el.classList.add('border-gray-200', 'text-gray-600');
+        }
+      });
+    }
+
+    document.querySelectorAll('.porcao-op').forEach(el => {
+      el.addEventListener('click', () => setPorcao(el.querySelector('input').value));
+    });
+
+    function fmtData(d) {
+      if (!d) return '—';
+      return new Date(d).toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+    }
+
+    async function carregarPlanos(planoAtual) {
+      try {
+        const r = await fetch('/api/inscricao/planos');
+        const planos = await r.json();
+        const sel = document.getElementById('cfg-plano');
+        sel.innerHTML = '<option value="">Sem plano definido</option>' +
+          planos.map(p => `<option value="${p.id}">${p.nome}</option>`).join('');
+        if (planoAtual) sel.value = planoAtual;
+      } catch {
+        document.getElementById('cfg-plano').innerHTML = '<option value="">Erro ao carregar</option>';
+      }
+    }
+
+    async function carregarUsuario() {
+      try {
+        const r = await fetch('/api/usuario/me', { headers: authHeaders() });
+        if (r.status === 401) { sair(); return; }
+        const u = await r.json();
+
+        document.getElementById('cfg-nome').value    = u.nome || '';
+        document.getElementById('cfg-horario').value = u.horario_envio || '07:00';
+        document.getElementById('cfg-versao').value  = u.versao_biblia || 'NVI';
+        setPorcao(u.tamanho_porcao || 'medio');
+
+        await carregarPlanos(u.plano_id);
+
+        // Progresso
+        if (u.dia_atual != null) {
+          document.getElementById('progresso-card').classList.remove('hidden');
+          const total = u.total_dias ? ` / ${u.total_dias}` : '';
+          document.getElementById('prog-dia').textContent   = u.dia_atual + total;
+          document.getElementById('prog-envio').textContent = fmtData(u.ultimo_envio);
+          document.getElementById('prog-leu').textContent   = u.leu_hoje ? 'Sim ✅' : 'Não';
+        }
+
+        localStorage.setItem('vzUserNome', u.nome || u.email || '');
+        document.getElementById('nav-nome').textContent = u.nome || u.email || '';
+      } catch {
+        showCfgAlert('Erro ao carregar suas informações.');
+      }
+    }
+
+    function showCfgAlert(msg, tipo = 'erro') {
+      const el = document.getElementById('cfg-alert');
+      el.textContent = msg;
+      el.className = 'mb-4 p-3 rounded-lg text-sm ' +
+        (tipo === 'ok'
+          ? 'bg-green-50 text-green-700 border border-green-200'
+          : 'bg-red-50 text-red-700 border border-red-200');
+      el.classList.remove('hidden');
+      if (tipo === 'ok') setTimeout(() => el.classList.add('hidden'), 3000);
+    }
+
+    document.getElementById('form-cfg').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btn-salvar');
+      btn.disabled = true; btn.textContent = 'Salvando...';
+      document.getElementById('cfg-alert').classList.add('hidden');
+
+      const porcaoEl = document.querySelector('input[name="porcao"]:checked');
+      const planoVal = document.getElementById('cfg-plano').value;
+
+      try {
+        const r = await fetch('/api/usuario/me', {
+          method: 'PUT',
+          headers: authHeaders(),
+          body: JSON.stringify({
+            nome:           document.getElementById('cfg-nome').value || null,
+            horario_envio:  document.getElementById('cfg-horario').value,
+            versao_biblia:  document.getElementById('cfg-versao').value,
+            plano_id:       planoVal ? parseInt(planoVal) : null,
+            tamanho_porcao: porcaoEl ? porcaoEl.value : undefined,
+          }),
+        });
+        if (r.status === 401) { sair(); return; }
+        if (!r.ok) { showCfgAlert('Erro ao salvar. Tente novamente.'); return; }
+        showCfgAlert('Configurações salvas!', 'ok');
+        localStorage.setItem('vzUserNome', document.getElementById('cfg-nome').value || '');
+        document.getElementById('nav-nome').textContent = document.getElementById('cfg-nome').value || '';
+      } catch { showCfgAlert('Erro de conexão.'); }
+      finally { btn.disabled = false; btn.textContent = 'Salvar configurações'; }
+    });
+
+    // Inicializa
+    carregarQR();
+    carregarUsuario();
+  </script>
+</body>
+</html>
