@@ -2,7 +2,7 @@
 const express  = require('express');
 const qrcode   = require('qrcode');
 const router   = express.Router();
-const { getState, getBotNumber } = require('../whatsapp/client');
+const { getState, getBotNumber, initWhatsApp } = require('../whatsapp/client');
 
 router.get('/status', (_req, res) => res.json(getState()));
 router.get('/qrcode', (_req, res) => {
@@ -20,6 +20,16 @@ router.get('/numero', async (_req, res) => {
     res.json({ numero, waLink, qr });
   } catch {
     res.json({ numero, waLink: `https://wa.me/${numero}`, qr: null });
+  }
+});
+
+// POST /api/whatsapp/reconectar — dispara nova tentativa de conexão (limpa sessão inválida)
+router.post('/reconectar', async (_req, res) => {
+  try {
+    await initWhatsApp({ limparSessao: true });
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ erro: err.message });
   }
 });
 

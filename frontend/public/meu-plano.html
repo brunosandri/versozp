@@ -38,11 +38,11 @@
         <span id="wa-texto" class="text-sm text-gray-500">Verificando...</span>
       </div>
 
-      <!-- QR Code -->
-      <div id="bloco-qr" class="hidden text-center mb-4">
-        <img id="qr-img" src="" alt="QR Code WhatsApp"
+      <!-- QR Code de contato (bot conectado) -->
+      <div id="bloco-qr-contato" class="hidden text-center mb-4">
+        <p class="text-xs text-gray-400 mb-2">Adicione o VersoZap nos seus contatos</p>
+        <img id="qr-contato-img" src="" alt="QR WhatsApp"
           class="w-48 h-48 mx-auto rounded-xl border border-gray-200 object-contain mb-3">
-        <p class="text-xs text-gray-400 mb-3">Escaneie com a câmera ou toque no botão abaixo</p>
         <a id="btn-abrir-wa" href="#" target="_blank"
           class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors">
           <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -53,17 +53,26 @@
         </a>
       </div>
 
-      <!-- Bot off -->
-      <div id="bloco-wa-off" class="hidden bg-yellow-50 border border-yellow-200 rounded-xl p-3 text-sm text-yellow-700 mb-4">
-        Sistema temporariamente indisponível. Tente em alguns minutos.
+      <!-- QR Code de conexão (bot aguardando scan) -->
+      <div id="bloco-qr-conexao" class="hidden text-center mb-4">
+        <p class="text-xs font-medium text-yellow-700 bg-yellow-50 border border-yellow-200 rounded-lg px-3 py-2 mb-3">
+          Escaneie com o WhatsApp do número remetente para ativar o envio
+        </p>
+        <img id="qr-conexao-img" src="" alt="QR Conexão"
+          class="w-52 h-52 mx-auto rounded-xl border-2 border-yellow-300 object-contain">
       </div>
 
-      <button onclick="carregarQR()" id="btn-reconectar"
+      <!-- Sem QR disponível -->
+      <div id="bloco-wa-off" class="hidden bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm text-gray-500 text-center mb-4">
+        Clique em <strong>Reconectar</strong> para gerar o QR de conexão.
+      </div>
+
+      <button onclick="reconectar()" id="btn-reconectar"
         class="w-full border border-gray-200 hover:border-green-400 hover:bg-green-50 text-gray-600 hover:text-green-700 text-sm font-medium py-2.5 rounded-xl transition-colors flex items-center justify-center gap-2">
         <svg id="icone-reload" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
         </svg>
-        Gerar novo QR / Reconectar
+        Não está recebendo? Reconectar
       </button>
     </div>
 
@@ -180,13 +189,14 @@
       desconectado:  { cor: 'bg-red-500',    label: 'Desconectado' },
     };
 
-    async function carregarQR() {
-      const btn = document.getElementById('btn-reconectar');
-      const icone = document.getElementById('icone-reload');
-      btn.disabled = true;
-      icone.classList.add('animate-spin');
-      document.getElementById('bloco-qr').classList.add('hidden');
+    function esconderTodosQR() {
+      document.getElementById('bloco-qr-contato').classList.add('hidden');
+      document.getElementById('bloco-qr-conexao').classList.add('hidden');
       document.getElementById('bloco-wa-off').classList.add('hidden');
+    }
+
+    async function carregarQR() {
+      esconderTodosQR();
       try {
         const [rs, rn] = await Promise.all([
           fetch('/api/whatsapp/status'),
@@ -194,19 +204,44 @@
         ]);
         const st = await rs.json();
         const nd = await rn.json();
+
         const info = statusMap[st.status] || { cor: 'bg-gray-400', label: st.status };
         document.getElementById('wa-dot').className = 'w-2.5 h-2.5 rounded-full ' + info.cor;
         document.getElementById('wa-texto').textContent = info.label;
+
         if (nd.qr && nd.waLink) {
-          document.getElementById('qr-img').src = nd.qr;
+          // Bot conectado → QR de contato (wa.me)
+          document.getElementById('qr-contato-img').src = nd.qr;
           document.getElementById('btn-abrir-wa').href = nd.waLink;
-          document.getElementById('bloco-qr').classList.remove('hidden');
+          document.getElementById('bloco-qr-contato').classList.remove('hidden');
+        } else if (st.qr) {
+          // Bot aguardando scan → QR de conexão do Baileys
+          document.getElementById('qr-conexao-img').src = st.qr;
+          document.getElementById('bloco-qr-conexao').classList.remove('hidden');
+          // Continua verificando até conectar
+          setTimeout(carregarQR, 5000);
         } else {
           document.getElementById('bloco-wa-off').classList.remove('hidden');
         }
       } catch {
         document.getElementById('bloco-wa-off').classList.remove('hidden');
         document.getElementById('wa-texto').textContent = 'Erro ao verificar';
+      }
+    }
+
+    async function reconectar() {
+      const btn = document.getElementById('btn-reconectar');
+      const icone = document.getElementById('icone-reload');
+      btn.disabled = true;
+      icone.classList.add('animate-spin');
+      esconderTodosQR();
+      document.getElementById('wa-texto').textContent = 'Reconectando...';
+      try {
+        await fetch('/api/whatsapp/reconectar', { method: 'POST' });
+        // Aguarda o Baileys gerar o QR
+        setTimeout(carregarQR, 3000);
+      } catch {
+        document.getElementById('bloco-wa-off').classList.remove('hidden');
       } finally {
         btn.disabled = false;
         icone.classList.remove('animate-spin');
