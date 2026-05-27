@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VersoZap — Meu Painel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-50">
+
+  <!-- Navbar -->
+  <nav class="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between sticky top-0 z-10">
+    <div class="flex items-center gap-2">
+      <span class="text-xl">📖</span>
+      <span class="font-bold text-gray-800">VersoZap</span>
+    </div>
+    <a href="/cadastro.html" class="text-xs text-gray-500 hover:text-gray-700">Nova inscrição</a>
+  </nav>
+
+  <div class="max-w-md mx-auto px-4 py-8 space-y-6">
+
+    <!-- Card de conexão WhatsApp -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+
+      <div class="text-center mb-5">
+        <div class="text-3xl mb-2">📱</div>
+        <h1 class="text-lg font-bold text-gray-800">Conecte seu celular</h1>
+        <p class="text-sm text-gray-500 mt-1">
+          Não está recebendo as mensagens? Conecte novamente pelo WhatsApp.
+        </p>
+      </div>
+
+      <!-- Status da conexão -->
+      <div id="status-bar" class="flex items-center justify-center gap-2 mb-5">
+        <div id="status-dot" class="w-2.5 h-2.5 rounded-full bg-gray-300"></div>
+        <span id="status-texto" class="text-sm text-gray-500">Verificando...</span>
+      </div>
+
+      <!-- QR Code -->
+      <div id="bloco-qr" class="hidden text-center">
+        <img id="qr-img" src="" alt="QR Code WhatsApp"
+          class="w-52 h-52 mx-auto rounded-xl border border-gray-200 object-contain mb-4">
+        <p class="text-xs text-gray-400 mb-4">
+          Abra o WhatsApp no seu celular, aponte a câmera para o QR acima ou toque no botão abaixo
+        </p>
+        <a id="btn-abrir-wa" href="#" target="_blank"
+          class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.138.564 4.14 1.544 5.868L.057 23.998l6.305-1.654A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.369l-.359-.213-3.722.976 1.001-3.635-.234-.374A9.818 9.818 0 0112 2.182c5.42 0 9.818 4.398 9.818 9.818 0 5.421-4.398 9.818-9.818 9.818z"/>
+          </svg>
+          Abrir no WhatsApp
+        </a>
+      </div>
+
+      <!-- Bot desconectado -->
+      <div id="bloco-off" class="hidden text-center">
+        <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-sm text-yellow-700">
+          O sistema está temporariamente indisponível.<br>
+          Tente novamente em alguns minutos.
+        </div>
+      </div>
+
+      <!-- Botão reconectar -->
+      <button id="btn-reconectar"
+        onclick="carregarQR()"
+        class="mt-6 w-full border border-gray-200 hover:border-green-400 hover:bg-green-50 text-gray-600 hover:text-green-700 text-sm font-medium py-2.5 rounded-xl transition-colors flex items-center justify-center gap-2">
+        <svg id="icone-reload" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+        </svg>
+        Gerar novo QR / Reconectar
+      </button>
+    </div>
+
+    <!-- Card de instruções -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+      <h2 class="text-sm font-semibold text-gray-700 mb-3">Como conectar?</h2>
+      <ol class="space-y-2 text-sm text-gray-500 list-none">
+        <li class="flex gap-3">
+          <span class="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 text-green-700 text-xs font-bold flex items-center justify-center">1</span>
+          Abra o <strong class="text-gray-700">WhatsApp</strong> no seu celular
+        </li>
+        <li class="flex gap-3">
+          <span class="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 text-green-700 text-xs font-bold flex items-center justify-center">2</span>
+          Escaneie o QR acima com a câmera ou toque em <strong class="text-gray-700">Abrir no WhatsApp</strong>
+        </li>
+        <li class="flex gap-3">
+          <span class="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 text-green-700 text-xs font-bold flex items-center justify-center">3</span>
+          Salve o contato do VersoZap para garantir que as mensagens cheguem
+        </li>
+        <li class="flex gap-3">
+          <span class="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 text-green-700 text-xs font-bold flex items-center justify-center">4</span>
+          Pronto! Você receberá os versículos no horário cadastrado
+        </li>
+      </ol>
+      <p class="mt-4 text-xs text-gray-400">
+        Para cancelar, responda <strong>SAIR</strong> a qualquer mensagem recebida.
+      </p>
+    </div>
+
+  </div>
+
+  <script>
+    const statusDot   = document.getElementById('status-dot');
+    const statusTexto = document.getElementById('status-texto');
+    const blocoQR     = document.getElementById('bloco-qr');
+    const blocoOff    = document.getElementById('bloco-off');
+    const qrImg       = document.getElementById('qr-img');
+    const btnAbrirWA  = document.getElementById('btn-abrir-wa');
+    const btnRec      = document.getElementById('btn-reconectar');
+    const iconeReload = document.getElementById('icone-reload');
+
+    const statusMap = {
+      conectado:     { cor: 'bg-green-500', label: 'Sistema conectado' },
+      aguardando_qr: { cor: 'bg-yellow-400', label: 'Aguardando QR do sistema...' },
+      conectando:    { cor: 'bg-blue-400',   label: 'Conectando...' },
+      reconectando:  { cor: 'bg-orange-400', label: 'Reconectando...' },
+      desconectado:  { cor: 'bg-red-500',    label: 'Sistema desconectado' },
+    };
+
+    async function carregarQR() {
+      btnRec.disabled = true;
+      iconeReload.classList.add('animate-spin');
+      blocoQR.classList.add('hidden');
+      blocoOff.classList.add('hidden');
+
+      try {
+        // Verifica status geral
+        const rs = await fetch('/api/whatsapp/status');
+        const st = await rs.json();
+        const info = statusMap[st.status] || { cor: 'bg-gray-400', label: st.status };
+        statusDot.className   = 'w-2.5 h-2.5 rounded-full ' + info.cor;
+        statusTexto.textContent = info.label;
+
+        // Busca número e QR do bot
+        const rn = await fetch('/api/whatsapp/numero');
+        const nd = await rn.json();
+
+        if (nd.qr && nd.waLink) {
+          qrImg.src = nd.qr;
+          btnAbrirWA.href = nd.waLink;
+          blocoQR.classList.remove('hidden');
+        } else {
+          blocoOff.classList.remove('hidden');
+        }
+      } catch {
+        blocoOff.classList.remove('hidden');
+        statusTexto.textContent = 'Erro ao verificar conexão';
+      } finally {
+        btnRec.disabled = false;
+        iconeReload.classList.remove('animate-spin');
+      }
+    }
+
+    carregarQR();
+  </script>
+</body>
+</html>
