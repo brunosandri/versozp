@@ -24,6 +24,7 @@ let statusConexao = 'desconectado';
 let lastError = null;
 let reconnectTimer = null;
 let reconnectCount = 0;
+let botNumber = null;
 
 function closeSocket() {
   if (!sock) return;
@@ -80,7 +81,8 @@ async function initWhatsApp({ limparSessao = false } = {}) {
         qrCodeBase64 = null;
         lastError = null;
         reconnectCount = 0;
-        logger.info('WhatsApp conectado com sucesso');
+        botNumber = sock.user?.id?.split(':')[0]?.split('@')[0] || null;
+        logger.info({ botNumber }, 'WhatsApp conectado com sucesso');
       }
 
       if (connection === 'close') {
@@ -192,4 +194,8 @@ function getState() {
   };
 }
 
-module.exports = { initWhatsApp, sendMessage, getStatus, getQrCode, getState };
+function getBotNumber() {
+  return botNumber;
+}
+
+module.exports = { initWhatsApp, sendMessage, getStatus, getQrCode, getState, getBotNumber };
