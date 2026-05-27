@@ -8,9 +8,8 @@
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     :root{--bg:#F5F5F5;--ink:#0D1117;--accent:#25D366;}
-    body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;cursor:none;display:flex;align-items:center;justify-content:center;padding:20px;}
+    body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
     body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.03;pointer-events:none;z-index:9999;}
-    #cursor{position:fixed;width:32px;height:32px;border-radius:100%;background:white;mix-blend-mode:difference;pointer-events:none;z-index:99998;left:0;top:0;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
     .btn-hard{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:var(--accent);padding:16px 32px;border-radius:12px;border:2px solid var(--ink);box-shadow:4px 4px 0 0 var(--ink);font-family:'Dela Gothic One',sans-serif;font-size:.9rem;cursor:pointer;text-decoration:none;transition:transform .1s,box-shadow .1s;letter-spacing:.02em;width:100%;}
     .btn-hard:hover{transform:translate(2px,2px);box-shadow:0 0 0 0 var(--ink);}
     .btn-hard:active{transform:translateY(4px);}
@@ -27,7 +26,6 @@
   </style>
 </head>
 <body>
-<div id="cursor"></div>
 <div style="width:100%;max-width:440px;">
 
   <!-- Card form -->
@@ -126,15 +124,6 @@
     finally { btn.disabled=false; btn.textContent='QUERO RECEBER VERSÍCULOS 📖'; }
   });
   carregarPlanos();
-  const cursor=document.getElementById('cursor');
-  let cx=-100,cy=-100,tx=-100,ty=-100;
-  document.addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY;});
-  function lerp(a,b,t){return a+(b-a)*t;}
-  (function loop(){cx=lerp(cx,tx,.2);cy=lerp(cy,ty,.2);cursor.style.left=cx+'px';cursor.style.top=cy+'px';requestAnimationFrame(loop);})();
-  document.querySelectorAll('a,button').forEach(el=>{
-    el.addEventListener('mouseenter',()=>{cursor.style.width='80px';cursor.style.height='80px';});
-    el.addEventListener('mouseleave',()=>{cursor.style.width='32px';cursor.style.height='32px';});
-  });
 </script>
 </body>
 </html>

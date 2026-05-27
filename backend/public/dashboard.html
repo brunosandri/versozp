@@ -8,9 +8,8 @@
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     :root{--bg:#0D1117;--ink:#F5F5F5;--accent:#25D366;}
-    body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;cursor:none;}
+    body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
     body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.03;pointer-events:none;z-index:9999;}
-    #cursor{position:fixed;width:32px;height:32px;border-radius:100%;background:white;mix-blend-mode:difference;pointer-events:none;z-index:99998;left:0;top:0;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
     input,select{font-family:'Space Grotesk',sans-serif;border:2px solid #30363D;border-radius:8px;outline:none;background:#1C2128;color:var(--ink);width:100%;padding:9px 12px;font-size:13px;font-weight:500;transition:border-color .15s,box-shadow .15s;}
     input::placeholder{color:#555;}
     select option{background:#1C2128;}
@@ -19,7 +18,6 @@
   </style>
 </head>
 <body>
-<div id="cursor"></div>
 
 <!-- Nav -->
 <nav style="background:#161B22;border-bottom:2px solid var(--accent);position:sticky;top:0;z-index:20;">
@@ -374,16 +372,6 @@
     } catch{}
   }
   fetch('/api/auth/me',{headers:{'Authorization':'Bearer '+TOKEN}}).then(r=>{if(!r.ok) sair();});
-
-  const cursor=document.getElementById('cursor');
-  let cx=-100,cy=-100,tx=-100,ty=-100;
-  document.addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY;});
-  function lerp(a,b,t){return a+(b-a)*t;}
-  (function loop(){cx=lerp(cx,tx,.2);cy=lerp(cy,ty,.2);cursor.style.left=cx+'px';cursor.style.top=cy+'px';requestAnimationFrame(loop);})();
-  document.querySelectorAll('a,button').forEach(el=>{
-    el.addEventListener('mouseenter',()=>{cursor.style.width='80px';cursor.style.height='80px';});
-    el.addEventListener('mouseleave',()=>{cursor.style.width='32px';cursor.style.height='32px';});
-  });
 </script>
 </body>
 </html>
