@@ -38,6 +38,11 @@
           <input id="nome" type="text" placeholder="como prefere ser chamado?">
         </div>
         <div>
+          <label>WHATSAPP <span style="color:var(--accent);background:var(--ink);border-radius:4px;padding:1px 4px;font-size:.55rem;">*</span></label>
+          <input id="telefone" type="tel" required placeholder="(67) 99999-9999">
+          <p style="font-size:11px;color:#aaa;font-weight:500;margin-top:4px;">somente brasil. inclua o ddd.</p>
+        </div>
+        <div>
           <label>E-MAIL</label>
           <input id="email" type="email" required placeholder="seu@email.com">
         </div>
@@ -72,12 +77,19 @@
     alertEl.style.color=ok?'var(--ink)':'var(--accent)';
     alertEl.style.display='block';
   }
+  function formatarTelefone(tel) {
+    const nums = tel.replace(/\D/g,'');
+    if(nums.startsWith('55')) return nums;
+    if(nums.length===11||nums.length===10) return '55'+nums;
+    return nums;
+  }
   document.getElementById('form-signup').addEventListener('submit', async e => {
     e.preventDefault();
     const btn = document.getElementById('btn');
     btn.disabled=true; btn.textContent='CRIANDO...'; alertEl.style.display='none';
     try {
-      const r = await fetch('/api/usuario/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nome:document.getElementById('nome').value||null,email:document.getElementById('email').value,senha:document.getElementById('senha').value})});
+      const tel = formatarTelefone(document.getElementById('telefone').value);
+      const r = await fetch('/api/usuario/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nome:document.getElementById('nome').value||null,telefone:tel,email:document.getElementById('email').value,senha:document.getElementById('senha').value})});
       const d = await r.json();
       if(!r.ok){showAlert(d.erro||'erro ao criar conta');return;}
       localStorage.setItem('userToken',d.token);

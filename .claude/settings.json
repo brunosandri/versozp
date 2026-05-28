@@ -23,7 +23,8 @@
       "Bash(curl -s http://localhost:3000/api/admin/stats -H 'Authorization: Bearer token_invalido')",
       "Bash(curl -s -X DELETE http://localhost:3000/api/admin/usuarios/3 -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJicnVub0B2ZXJzb3phcC5jb20iLCJpYXQiOjE3Nzk0NzI0OTQsImV4cCI6MTc4MDA3NzI5NH0.mpelQRNECXYcUP2p4syXHv3e1ynJLrLzA8i1AahmBHk')",
       "Bash(nslookup -type=TXT _railway-verify.app.versozap.com.br 8.8.8.8)",
-      "Bash(nslookup -type=CNAME app.versozap.com.br 8.8.8.8)"
+      "Bash(nslookup -type=CNAME app.versozap.com.br 8.8.8.8)",
+      "PowerShell($procs = Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue; if \\($procs\\) { $procs | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue }; Write-Host \"Servidor parado\" } else { Write-Host \"Nenhum processo na porta 3000\" })"
     ]
   }
 }
