@@ -41,6 +41,37 @@
 
 <div style="max-width:680px;margin:0 auto;padding:28px 20px;display:flex;flex-direction:column;gap:16px;">
 
+  <!-- Conexão WhatsApp -->
+  <div id="card-wa" style="background:var(--ink);border:2px solid var(--ink);border-radius:14px;overflow:hidden;box-shadow:4px 4px 0 0 var(--accent);">
+    <div style="padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #30363D;">
+      <p style="font-family:'Dela Gothic One';font-size:.9rem;color:#F5F5F5;text-transform:uppercase;letter-spacing:.02em;">CONEXÃO WHATSAPP</p>
+      <span id="wa-badge" style="display:none;background:var(--accent);border:2px solid var(--accent);padding:3px 10px;border-radius:999px;font-family:'Dela Gothic One';font-size:.6rem;color:var(--ink);letter-spacing:.05em;">CONECTADO</span>
+    </div>
+    <div id="wa-loading" style="padding:28px;text-align:center;">
+      <p style="font-family:'Dela Gothic One';font-size:.8rem;color:#555;text-transform:uppercase;letter-spacing:.05em;">VERIFICANDO...</p>
+    </div>
+    <div id="wa-qr" style="display:none;padding:20px;text-align:center;">
+      <p style="font-family:'Dela Gothic One';font-size:.7rem;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;">ESCANEIE COM SEU WHATSAPP</p>
+      <img id="wa-qr-img" src="" alt="QR Code WhatsApp" style="width:204px;height:204px;border:3px solid var(--accent);border-radius:12px;background:#fff;display:block;margin:0 auto;">
+      <p style="font-size:.75rem;color:#666;margin-top:12px;line-height:1.5;">Abra o WhatsApp &gt; Dispositivos conectados<br>&gt; Conectar um dispositivo</p>
+    </div>
+    <div id="wa-conectado" style="display:none;padding:24px;text-align:center;">
+      <p style="font-size:2.4rem;margin-bottom:8px;">✅</p>
+      <p style="font-family:'Dela Gothic One';font-size:.9rem;color:var(--accent);text-transform:uppercase;letter-spacing:.03em;">WHATSAPP CONECTADO!</p>
+      <p style="font-size:.78rem;color:#888;margin-top:6px;">Você receberá seus versículos no horário configurado.</p>
+    </div>
+    <div id="wa-desconectado" style="display:none;padding:24px;text-align:center;">
+      <p style="font-size:2rem;margin-bottom:8px;">⚠️</p>
+      <p style="font-family:'Dela Gothic One';font-size:.8rem;color:#ef4444;text-transform:uppercase;letter-spacing:.03em;">SEM CONEXÃO</p>
+      <p style="font-size:.78rem;color:#888;margin-top:6px;">Reconecte abaixo para continuar recebendo versículos.</p>
+    </div>
+    <div style="padding:0 20px 20px;">
+      <button id="btn-reconectar" onclick="reconectar()" style="display:inline-flex;align-items:center;justify-content:center;width:100%;background:transparent;color:var(--accent);padding:13px 20px;border-radius:10px;border:2px solid var(--accent);box-shadow:4px 4px 0 0 var(--accent);font-family:'Dela Gothic One',sans-serif;font-size:.78rem;cursor:pointer;letter-spacing:.04em;transition:transform .1s,box-shadow .1s;" onmouseover="this.style.transform='translate(2px,2px)';this.style.boxShadow='0 0 0 0 var(--accent)';" onmouseout="this.style.transform='';this.style.boxShadow='4px 4px 0 0 var(--accent)';">
+        NÃO ESTÁ RECEBENDO AS MENSAGENS? RECONECTAR
+      </button>
+    </div>
+  </div>
+
   <!-- Stats row -->
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
     <div style="background:var(--accent);border:2px solid var(--ink);border-radius:12px;padding:18px;text-align:center;box-shadow:4px 4px 0 0 var(--ink);transform:rotate(-.5deg);">
@@ -201,6 +232,49 @@
     finally{btn.disabled=false;btn.textContent='SALVAR CONFIGURAÇÕES';}
   });
   carregarPerfil();
+
+  // --- WhatsApp connection polling ---
+  let _lastQr = null;
+  function _waShow(id) {
+    ['wa-loading','wa-qr','wa-conectado','wa-desconectado'].forEach(s => {
+      document.getElementById(s).style.display = s === id ? 'block' : 'none';
+    });
+  }
+  async function verificarWhatsApp() {
+    try {
+      const r = await fetch('/api/whatsapp/status');
+      const d = await r.json();
+      const badge = document.getElementById('wa-badge');
+      if (d.status === 'conectado') {
+        _waShow('wa-conectado');
+        badge.style.display = 'inline-flex';
+      } else if (d.qr) {
+        if (d.qr !== _lastQr) { _lastQr = d.qr; document.getElementById('wa-qr-img').src = d.qr; }
+        _waShow('wa-qr');
+        badge.style.display = 'none';
+      } else if (d.status === 'inicializando' || d.status === 'reconectando') {
+        _waShow('wa-loading');
+        badge.style.display = 'none';
+      } else {
+        _waShow('wa-desconectado');
+        badge.style.display = 'none';
+      }
+    } catch {}
+  }
+  async function reconectar() {
+    const btn = document.getElementById('btn-reconectar');
+    btn.disabled = true; btn.textContent = 'AGUARDE...';
+    try {
+      await fetch('/api/whatsapp/reconectar', { method: 'POST' });
+      _lastQr = null;
+      _waShow('wa-loading');
+      document.getElementById('wa-badge').style.display = 'none';
+    } catch {}
+    finally { btn.disabled = false; btn.textContent = 'NÃO ESTÁ RECEBENDO AS MENSAGENS? RECONECTAR'; }
+    setTimeout(verificarWhatsApp, 3000);
+  }
+  verificarWhatsApp();
+  setInterval(verificarWhatsApp, 3000);
 </script>
 </body>
 </html>
